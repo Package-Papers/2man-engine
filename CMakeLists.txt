@@ -16,3 +16,4 @@ if (WIN32 AND BUILD_SHARED_LIBS)
 endif()
 
 install(TARGETS CMakeSFMLProject)
+
