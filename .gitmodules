@@ -1,11 +1,9 @@
-[submodule "dependencies/sfml"]
-	path = dependencies/sfml
+[submodule "external/sfml"]
+	path = external/sfml
 	url = git@github.com:SFML/SFML.git
-
-[submodule "dependencies/imgui"]
-	path = dependencies/imgui
+[submodule "external/imgui"]
+	path = external/imgui
 	url = git@github.com:ocornut/imgui.git
-
-[submodule "dependencies/sfml-imgui"]
-	path = dependencies/sfml-imgui
+[submodule "external/imgui-sfml"]
+	path = external/imgui-sfml
 	url = git@github.com:SFML/imgui-sfml.git
