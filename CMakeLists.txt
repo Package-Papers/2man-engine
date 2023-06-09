@@ -7,6 +7,9 @@ add_subdirectory(external)
 # Include source
 add_subdirectory(src)
 
-# Link libraries
-target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
+# Link SFML
+target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
 target_compile_features(TwoManEngine PRIVATE cxx_std_20)
+
+# Link SFML-IMGUI
+target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
