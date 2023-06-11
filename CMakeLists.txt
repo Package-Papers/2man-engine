@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 project(TwoManEngine LANGUAGES CXX)
 
+# Generate the compilation database for clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Include dependencies
 add_subdirectory(external)
