@@ -32,10 +32,10 @@ if(CLANG_TIDY)
     ${ALL_CXX_SOURCE_FILES}
     --fix
     --
+    -isystem ${PROJECT_SOURCE_DIR}/external/sfml/
+    -isystem ${PROJECT_SOURCE_DIR}/external/imgui/
+    -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml/
     -std=c++17
-    -isystem ${PROJECT_SOURCE_DIR}/external/sfml 
-    -isystem ${PROJECT_SOURCE_DIR}/external/imgui 
-    -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml
     )
 endif()
 
