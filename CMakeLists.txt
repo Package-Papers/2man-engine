@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.22)
 project(TwoManEngine LANGUAGES CXX)
+
 
 # Include dependencies
 add_subdirectory(external)

@@ -33,7 +33,11 @@ if(CLANG_TIDY)
     --fix
     --
     -std=c++17
-    ${INCLUDE_DIRECTORIES}
+    -isystem ${PROJECT_SOURCE_DIR}/external/sfml 
+    -isystem ${PROJECT_SOURCE_DIR}/external/imgui 
+    -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml
     )
 endif()
 
+
+    
