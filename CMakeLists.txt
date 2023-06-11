@@ -13,3 +13,9 @@ target_compile_features(TwoManEngine PRIVATE cxx_std_20)
 
 # Link SFML-IMGUI
 target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
+
+# Including custom cmake rules
+include(cmake/clang-cxx-dev-tools.cmake)
+
+add_custom_target(dev)
+add_dependencies(dev TwoManEngine clang-tidy clang-format)
