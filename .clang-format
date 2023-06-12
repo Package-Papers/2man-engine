@@ -40,4 +40,4 @@ BraceWrapping:
   AfterUnion:      true
   BeforeCatch:     true
   BeforeElse:      true
-BreakBeforeBraces: Stroustrup
+BreakBeforeBraces: Allman
