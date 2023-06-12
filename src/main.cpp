@@ -11,16 +11,19 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode({1280, 720}), "ImGui + SFML = <3");
     window.setFramerateLimit(60);
-    bool i_mgui_success = ImGui::SFML::Init(window);
+    bool imgui_success = ImGui::SFML::Init(window);
 
-    if (!i_mgui_success)
+    if (!imgui_success)
         std::cerr << "Failed to initialize imgui.";
     sf::Clock delta_clock;
-    while (window.isOpen()) {
+    while (window.isOpen())
+    {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event))
+        {
             ImGui::SFML::ProcessEvent(event);
-            if (event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed)
+            {
                 window.close();
             }
         }
