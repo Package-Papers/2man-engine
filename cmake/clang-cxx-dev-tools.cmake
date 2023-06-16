@@ -11,6 +11,8 @@ file(GLOB_RECURSE ALL_CXX_SOURCE_FILES
      ${PROJECT_SOURCE_DIR}/src/*.[CHI]
 )
 
+add_custom_target(dev)
+
 # Adding clang-format target if executable is found
 find_program(CLANG_FORMAT "clang-format")
 if(CLANG_FORMAT)
@@ -21,6 +23,8 @@ if(CLANG_FORMAT)
     -style=file
     ${ALL_CXX_SOURCE_FILES}
     )
+  
+  add_dependencies(dev TwoManEngine clang-format)
 endif()
 
 # Adding clang-tidy target if executable is found
@@ -37,7 +41,10 @@ if(CLANG_TIDY)
     -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml/
     -std=c++17
     )
+  
+  add_dependencies(dev TwoManEngine clang-tidy)
 endif()
+
 
 
         
