@@ -3,6 +3,7 @@
 #define TME_WINDOW
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 namespace tme
 {
@@ -13,7 +14,9 @@ struct WindowContext
     ushort      width;
     ushort      height;
     std::string title;
-    ushort      m_target_fps;
+    ushort      target_fps;
+    bool        vsync;
+    bool        fullscreen;
 };
 } // namespace tme
 

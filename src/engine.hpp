@@ -3,8 +3,8 @@
 #define TME_ENGINE
 
 #include "window_context.hpp"
-#include <imgui.h>
 #include <imgui-SFML.h>
+#include <imgui.h>
 #include <iostream>
 
 namespace tme
@@ -19,10 +19,8 @@ class Engine final
     void run();
 
   private:
-    explicit Engine(const ushort width, const ushort height, const std::string& title,
-                    const ushort target_fps = 60);
     void init_imgui();
-    void init_window();
+    void init_window(const WindowContext& context);
 
     void handle_events();
     void update_dt();

@@ -1,26 +1,34 @@
 #include "engine.hpp"
 #include "imgui.h"
 
-tme::Engine::Engine(const ushort width, const ushort height, const std::string& title,
-                    const ushort target_fps)
-    : m_video_mode({width, height})
-    , m_window(m_video_mode, title)
-    , m_target_fps(target_fps)
+tme::Engine::Engine(const WindowContext& context)
+    : m_video_mode({context.width, context.height})
+    , m_window(m_video_mode, context.title,
+               context.fullscreen ? sf::Style::Fullscreen : sf::Style::Default)
+    , m_target_fps(context.target_fps)
     , m_TIME_PER_FRAME(sf::seconds(1.f / static_cast<float>(m_target_fps)))
 {
-}
+    // Apply window settings
+    this->init_window(context);
 
-tme::Engine::Engine(const WindowContext& context)
-    : Engine(context.width, context.height, context.title, context.m_target_fps)
-{
     // Initialization goes here...
-    init_imgui();
+    this->init_imgui();
 }
 
-void tme::Engine::init_window()
+void tme::Engine::init_window(const WindowContext& context)
 {
     // Set FPS limit.
-    m_window.setFramerateLimit(m_target_fps);
+    bool has_fps_limit = (context.target_fps != 0);
+
+    if (has_fps_limit)
+    {
+        m_window.setFramerateLimit(context.target_fps);
+    }
+    else if (context.vsync)
+    {
+        // Does not play well when there is a fps limit.
+        m_window.setVerticalSyncEnabled(true);
+    }
 }
 
 void tme::Engine::init_imgui()
@@ -78,11 +86,12 @@ void tme::Engine::update_real_time()
 {
     ImGui::SFML::Update(m_window, m_time_since_last_update);
 
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
+                                    ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
     ImGui::SetNextWindowSize(ImVec2(120, 0));
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Stats", nullptr, window_flags);
-    ImGui::Text("FPS: %d", static_cast<int>(1.f/m_time_since_last_update.asSeconds()));
+    ImGui::Text("FPS: %d", static_cast<int>(1.f / m_time_since_last_update.asSeconds()));
     ImGui::End();
 }
 
