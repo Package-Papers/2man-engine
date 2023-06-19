@@ -9,10 +9,15 @@ add_subdirectory(external)
 
 # Include source
 add_subdirectory(src)
+target_compile_features(TwoManEngine PRIVATE cxx_std_20)
+
+# Include rapidjson
+target_include_directories(TwoManEngine PUBLIC
+  ${PROJECT_SOURCE_DIR}/external/rapidjson
+)
 
 # Link SFML
 target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
-target_compile_features(TwoManEngine PRIVATE cxx_std_20)
 
 # Link SFML-IMGUI
 target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
@@ -21,7 +26,6 @@ target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
 endif()
-
 
 
 if (${MACOSX})
@@ -61,6 +65,7 @@ if (${MACOSX})
       -isystem ${PROJECT_SOURCE_DIR}/external/sfml/
       -isystem ${PROJECT_SOURCE_DIR}/external/imgui/
       -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml/
+      -isystem ${PROJECT_SOURCE_DIR}/external/rapidjson/
       -std=c++17
       )
   endif()

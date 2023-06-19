@@ -39,6 +39,7 @@ if(CLANG_TIDY)
     -isystem ${PROJECT_SOURCE_DIR}/external/sfml/
     -isystem ${PROJECT_SOURCE_DIR}/external/imgui/
     -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml/
+    -isystem ${PROJECT_SOURCE_DIR}/external/rapidjson/
     -std=c++17
     )
   
