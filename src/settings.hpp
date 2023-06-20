@@ -70,7 +70,7 @@ inline std::optional<tme::WindowContext> load_settings(const std::string& filena
 
     if (doc.HasMember("width"))
     {
-        ushort width         = cast(ushort, doc["width"].GetUint64());
+        tme::ushort width   = cast(tme::ushort, doc["width"].GetUint());
         setting_config.width = width;
     }
     else
@@ -80,7 +80,7 @@ inline std::optional<tme::WindowContext> load_settings(const std::string& filena
 
     if (doc.HasMember("height"))
     {
-        ushort height         = cast(ushort, doc["height"].GetUint64());
+        tme::ushort height   = cast(tme::ushort, doc["height"].GetUint());
         setting_config.height = height;
     }
     else
