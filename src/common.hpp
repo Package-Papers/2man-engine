@@ -2,9 +2,12 @@
 #ifndef TME_COMMON
 #define TME_COMMON
 
+////////////////////////////////////
+// Note(Appy): Common utilities.
+
 #define cast(T, v) (static_cast<T>(v))
 
-// Bits
+// Bitwise utilities.
 #define MASK(n)     (~((~(( uint32_t ) 0)) << n))
 #define MASK1(n, p) ((MASK(n)) << (p))
 #define MASK0(n, p) (~(MASK1(n, p)))

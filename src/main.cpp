@@ -5,14 +5,8 @@
 #include "rapidjson/writer.h"
 
 /**
- * Define settings here, else load default.
+ * Settings can be defined in 'settings.json'.
  */
-
-// #define TME_WINDOW_WIDTH        1920
-// #define TME_WINDOW_HEIGH        1080
-// #define TME_WINDOW_FRAMES_LIM   144
-// #define TME_WINDOW_FULLSCREEN 1
-// #define TME_VERTICAL_SYNC       0
 
 #include "settings.hpp"
 
