@@ -2,10 +2,17 @@
 #ifndef TME_ENGINE
 #define TME_ENGINE
 
-#include "window_context.hpp"
+////////////////////////////////////
+// Note(Appy): This file contains the engine class. The engine class holds core components of the engine.
+// This includes the main engine/game loop, the resource holder, the clock resonsible for computing delta time,
+// the state stack.
+
+#include <iostream>
+
 #include <imgui-SFML.h>
 #include <imgui.h>
-#include <iostream>
+
+#include "window_context.hpp"
 
 namespace tme
 {
@@ -19,9 +26,11 @@ class Engine final
     void run();
 
   private:
+    // Initializer methods.
     void init_imgui();
     void init_window(const WindowContext& context);
 
+    // Update methods.
     void handle_events();
     void update_dt();
     void update_real_time();

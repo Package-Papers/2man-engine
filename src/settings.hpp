@@ -1,10 +1,9 @@
-/**
- * @file settings.hpp
- * Default configuration for engine start up.
- */
 #pragma once
 #ifndef TME_SETTINGS
 #define TME_SETTINGS
+
+////////////////////////////////////
+// Note(Appy): Default configuration for engine start up.
 
 #include <fstream>
 #include <iostream>
@@ -42,6 +41,7 @@
 #define TME_WINDOW_TITLE "Two Mans' Game Engine"
 #endif
 
+// Load settings from a JSON file.
 inline std::optional<tme::WindowContext> load_settings(const std::string& filename)
 {
     std::ifstream ifs{filename};
