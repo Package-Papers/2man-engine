@@ -9,7 +9,7 @@ add_subdirectory(external)
 
 # Include source
 add_subdirectory(src)
-target_compile_features(TwoManEngine PRIVATE cxx_std_20)
+set(CMAKE_CXX_STANDARD 23)
 
 # Include rapidjson
 target_include_directories(TwoManEngine PUBLIC
