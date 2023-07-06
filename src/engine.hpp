@@ -3,16 +3,16 @@
 #define TME_ENGINE
 
 ////////////////////////////////////
-// Note(Appy): This file contains the engine class. The engine class holds core components of the engine.
-// This includes the main engine/game loop, the resource holder, the clock resonsible for computing delta time,
-// the state stack.
+// Note(Appy): This file contains the engine class. The engine class holds core components of the
+// engine. This includes the main engine/game loop, the resource holder, the clock resonsible for
+// computing delta time, the state stack.
 
 #include <iostream>
 
+#include "resources.hpp"
+#include "window_context.hpp"
 #include <imgui-SFML.h>
 #include <imgui.h>
-
-#include "window_context.hpp"
 
 namespace tme
 {
@@ -49,6 +49,10 @@ class Engine final
     sf::Clock      m_delta_clock;
     sf::Time       m_time_since_last_update = sf::Time::Zero;
     const sf::Time m_TIME_PER_FRAME;
+
+    // Resource holders.
+    ResourceHolder::TextureHolder m_texture_holder;
+    ResourceHolder::FontHolder    m_font_holder;
 };
 } /* namespace tme */
 
