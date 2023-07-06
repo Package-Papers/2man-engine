@@ -4,7 +4,8 @@
 
 ////////////////////////////////////
 // Note(Appy): This file contains the struct which holds the configuration of the window.
-// This object can be passed into the engine constructor to create the engine window as specified/ desired.
+// This object can be passed into the engine constructor to create the engine window as specified/
+// desired.
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>

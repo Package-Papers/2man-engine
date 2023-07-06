@@ -13,20 +13,20 @@
 template <class Derived>
 class Input
 {
-  void handle_event(const sf::Event& event) noexcept
-  {
-    (static_cast<Derived*>(this))->impl(event);
-  }
+    void handle_event(const sf::Event& event) noexcept
+    {
+        (static_cast<Derived*>(this))->impl(event);
+    }
 };
 
 #else // C++23 syntax
 
 class Input
 {
-  void handle_event(this auto&& self) noexcept
-  {
-    self.impl();
-  }
+    void handle_event(this auto&& self) noexcept
+    {
+        self.impl();
+    }
 };
 
 #endif

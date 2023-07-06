@@ -51,8 +51,8 @@ class Engine final
     const sf::Time m_TIME_PER_FRAME;
 
     // Resource holders.
-    ResourceHolder::TextureHolder m_texture_holder;
-    ResourceHolder::FontHolder    m_font_holder;
+    resource_holder::TextureHolder m_texture_holder;
+    resource_holder::FontHolder    m_font_holder;
 };
 } /* namespace tme */
 

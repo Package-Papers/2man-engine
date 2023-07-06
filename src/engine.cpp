@@ -15,7 +15,6 @@ tme::Engine::Engine(const WindowContext& context)
     this->init_imgui();
 }
 
-
 // Read in the context and applies it to the window created for the engine.
 void tme::Engine::init_window(const WindowContext& context)
 {
@@ -78,8 +77,8 @@ void tme::Engine::update_dt()
     m_time_since_last_update = m_delta_clock.restart();
 }
 
-// Apply the fixed update N times, where N is (m_TIME_PER_FRAME)//(m_time_since_last_update). This ensures
-// that every thing stays consistent.
+// Apply the fixed update N times, where N is (m_TIME_PER_FRAME)//(m_time_since_last_update). This
+// ensures that every thing stays consistent.
 void tme::Engine::update_fixed_time()
 {
     while (m_time_since_last_update >= m_TIME_PER_FRAME)
@@ -89,7 +88,8 @@ void tme::Engine::update_fixed_time()
     }
 }
 
-// Fixed time update. Things which does not strictly require fixed time update can be placed here. For example: GUI.
+// Fixed time update. Things which does not strictly require fixed time update can be placed here.
+// For example: GUI.
 void tme::Engine::update_real_time()
 {
     ImGui::SFML::Update(m_window, m_time_since_last_update);
@@ -103,12 +103,12 @@ void tme::Engine::update_real_time()
     ImGui::End();
 }
 
-// Fixed time update. Things which should have a fixed time step update such as phyics etc. should be placed here.
+// Fixed time update. Things which should have a fixed time step update such as phyics etc. should
+// be placed here.
 void tme::Engine::fixed_update()
 {
     // Update with the value of m_TIME_PER_FRAME.
 }
-
 
 // The main engine loop.
 void tme::Engine::run()
