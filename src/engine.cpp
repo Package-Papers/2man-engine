@@ -1,5 +1,6 @@
 #include "engine.hpp"
 #include "imgui.h"
+#include "input.hpp"
 
 tme::Engine::Engine(const WindowContext& context)
     : m_video_mode({context.width, context.height})
@@ -52,6 +53,7 @@ void tme::Engine::handle_events()
     while (m_window.pollEvent(event))
     {
         ImGui::SFML::ProcessEvent(m_window, event);
+        m_mouse.handle_event(event);
         if (event.type == sf::Event::Closed)
         {
             m_window.close();
@@ -100,6 +102,8 @@ void tme::Engine::update_real_time()
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Stats", nullptr, window_flags);
     ImGui::Text("FPS: %d", static_cast<int>(1.f / m_time_since_last_update.asSeconds()));
+    ImGui::Text("M Pressed: %d", m_mouse.is_pressed());
+    ImGui::Text("M Held: %d", m_mouse.is_held());
     ImGui::End();
 }
 

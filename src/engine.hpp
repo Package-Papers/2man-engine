@@ -14,6 +14,9 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 
+#include "window_context.hpp"
+#include "mouse.hpp"
+
 namespace tme
 {
 class Engine final
@@ -53,6 +56,8 @@ class Engine final
     // Resource holders.
     resource_holder::TextureHolder m_texture_holder;
     resource_holder::FontHolder    m_font_holder;
+    // Input component
+    tme::Mouse m_mouse;
 };
 } /* namespace tme */
 

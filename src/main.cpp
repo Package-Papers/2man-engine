@@ -1,8 +1,5 @@
 #include "common.hpp"
 #include "engine.hpp"
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
 
 /**
  * Settings can be defined in 'settings.json'.
