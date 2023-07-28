@@ -90,20 +90,23 @@ void tme::Engine::update_fixed_time()
     }
 }
 
-// Fixed time update. Things which does not strictly require fixed time update can be placed here.
+// Real time update. Things which does not strictly require fixed time update can be placed here.
 // For example: GUI.
 void tme::Engine::update_real_time()
 {
     ImGui::SFML::Update(m_window, m_time_since_last_update);
+    m_mouse.update_position(m_window);
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
                                     ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-    ImGui::SetNextWindowSize(ImVec2(120, 0));
+    ImGui::SetNextWindowSize(ImVec2(140, 0));
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Stats", nullptr, window_flags);
     ImGui::Text("FPS: %d", static_cast<int>(1.f / m_time_since_last_update.asSeconds()));
     ImGui::Text("M Pressed: %d", m_mouse.is_pressed());
     ImGui::Text("M Held: %d", m_mouse.is_held());
+    auto pos = m_mouse.get_position();
+    ImGui::Text("M Pos: <%d, %d>", pos.x, pos.y);
     ImGui::End();
 }
 

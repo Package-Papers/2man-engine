@@ -2,7 +2,12 @@
 #ifndef INPUT_MOUSE
 #define INPUT_MOUSE
 
+#include <iostream>
+
 #include "SFML/Window/Event.hpp"
+#include "SFML/Window/Mouse.hpp"
+#include "SFML/Window/Window.hpp"
+
 #include "input.hpp"
 
 ////////////////////////////////////
@@ -14,64 +19,30 @@ namespace tme
 
 class Mouse : public tme::Input<Mouse>
 {
-  enum class State
-  {
-    NEUTRAL = 0,
-    HELD,
-    PRESSED
-  };
-
-private:
-  State m_state;
-  sf::Vector2f m_pos; // Position of the mouse.
-
-public:
-  // This function will update all relevant fields according to the event.
-  void impl(const sf::Event& event) noexcept
-  {
-    // If it was previous set as pressed, we have to reset it to neutral.
-    if (m_state == State::PRESSED) m_state = State::NEUTRAL;
-
-    State new_state = State::NEUTRAL;
-
-    switch(event.type)
+    enum class State
     {
-      break; case sf::Event::MouseButtonPressed:
-      {
-        // The mouse is being held
-        if (m_state != State::HELD && event.mouseButton.button == sf::Mouse::Left)
-        {
-          new_state = State::HELD;
-        }
-      }
-      break; case sf::Event::MouseButtonReleased:
-      {
-        if (event.mouseButton.button == sf::Mouse::Left)
-        {
-          new_state = State::PRESSED;
-        }
-      }
-      // TODO: Update position of the mouse on state MOVED.
-      break; default: return; // Keep the same state;
-    }
-    m_state = new_state;
-  }
-public:
-  [[nodiscard]] const sf::Vector2f get_mouse_position() const noexcept
-  {
-    return m_pos;
-  }
+        NEUTRAL = 0,
+        HELD,
+        PRESSED
+    };
 
-  [[nodiscard]] const bool is_held() const noexcept
-  {
-    return m_state == State::HELD;
-  }
-  [[nodiscard]] const bool is_pressed() const noexcept
-  {
-    return m_state == State::PRESSED;
-  }
+  private:
+    State        m_state;
+    sf::Vector2i m_pos; // Position of the mouse.
+
+  public:
+    // This function will update all relevant fields according to the event.
+    void impl(const sf::Event& event) noexcept;
+
+  public:
+    // Getters.
+    [[nodiscard]] const sf::Vector2i get_position() const noexcept;
+    [[nodiscard]] bool               is_held() const noexcept;
+    [[nodiscard]] bool               is_pressed() const noexcept;
+
+    void update_position(const sf::Window& window) noexcept;
 };
 
 } /* namespace tme */
 
-#endif  /* INPUT_MOUSE */
+#endif /* INPUT_MOUSE */

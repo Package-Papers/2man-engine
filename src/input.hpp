@@ -31,7 +31,8 @@ class Input
     {
         self.impl();
     }
-public:
+
+  public:
     void handle_event(this auto&& self, const sf::Event& event) noexcept
     {
         self.impl(event);
