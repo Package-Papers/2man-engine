@@ -1,38 +1,34 @@
 #include "bitmask.hpp"
 
-void Bitmask::clear()
+tme::Bitmask::Bitmask()
+    : m_bits(64, false){};
+
+void tme::Bitmask::clear()
 {
-    m_bits = 0;
+    m_bits = std::vector<bool>(64, false);
 }
 
-bool Bitmask::get_bit(int pos) const
+bool tme::Bitmask::get_bit(int pos) const
 {
-    return (m_bits >> pos) == 1;
+    return m_bits[pos];
 }
 
-void Bitmask::set_bit(int pos, bool on)
+void tme::Bitmask::set_bit(int pos, bool on)
 {
-    if (on)
-    {
-        m_bits |= (1 << pos);
-    }
-    else
-    {
-        clear_bit(pos);
-    }
+    m_bits[pos] = on;
 }
 
-uint32_t Bitmask::get_mask() const
+std::vector<bool> tme::Bitmask::get_mask() const
 {
     return m_bits;
 }
 
-void Bitmask::set_mask(const Bitmask& other)
+void tme::Bitmask::set_mask(const Bitmask& other)
 {
     m_bits = other.m_bits;
 }
 
-void Bitmask::clear_bit(int pos)
+void tme::Bitmask::clear_bit(int pos)
 {
-    m_bits &= (~(1 << pos));
+    m_bits[pos] = false;
 }

@@ -26,10 +26,6 @@ class Mouse : public tme::Input<Mouse>
         PRESSED
     };
 
-  private:
-    State        m_state;
-    sf::Vector2i m_pos; // Position of the mouse.
-
   public:
     // This function will update all relevant fields according to the event.
     void impl(const sf::Event& event) noexcept;
@@ -41,6 +37,10 @@ class Mouse : public tme::Input<Mouse>
     [[nodiscard]] bool               is_pressed() const noexcept;
 
     void update_position(const sf::Window& window) noexcept;
+
+  private:
+    State        m_state;
+    sf::Vector2i m_pos; // Position of the mouse.
 };
 
 } /* namespace tme */
