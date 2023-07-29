@@ -1,6 +1,8 @@
 #include "engine.hpp"
 #include "imgui.h"
 #include "input.hpp"
+#include <filesystem>
+#include <stdexcept>
 
 tme::Engine::Engine(const WindowContext& context)
     : m_video_mode({context.width, context.height})
@@ -14,6 +16,8 @@ tme::Engine::Engine(const WindowContext& context)
 
     // Initialization goes here...
     this->init_imgui();
+
+    this->init_keybinds();
 }
 
 // Read in the context and applies it to the window created for the engine.
@@ -31,6 +35,37 @@ void tme::Engine::init_window(const WindowContext& context)
         // Does not play well when there is a fps limit.
         m_window.setVerticalSyncEnabled(true);
     }
+}
+
+// This reads a file with the following format: `KEYWORD KEY_ID`
+// KEYWORD is a string representation of what the key is (fullcaps), for example,
+// the key 'p' would be 'P' and the spacebar key would be 'SPACEBAR'.
+// This function creates a mapping of key names to their corresponding sf::Keyboard::Key value.
+void tme::Engine::init_keybinds()
+{
+    std::string   path = "meta/keybinds/supported_keybinds.ini";
+    std::ifstream ifs(path);
+
+    if (ifs.is_open())
+    {
+        std::string key{};
+        int         keycode;
+
+        while (ifs >> key >> keycode)
+        {
+            m_supported_keys.try_emplace(key, static_cast<sf::Keyboard::Key>(keycode));
+
+#ifndef NDEBUG
+            std::cout << "Binded: [" << key << "]-[" << keycode << "]\n";
+#endif
+        }
+    }
+    else
+    {
+        throw std::runtime_error("Supported keys file path invalid: " + path);
+    }
+
+    ifs.close();
 }
 
 void tme::Engine::init_imgui()

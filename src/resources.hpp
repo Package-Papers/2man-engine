@@ -1,3 +1,6 @@
+#pragma once
+#ifndef TME_RESOURCES
+#define TME_RESOURCES
 
 #include "imgui.h"
 #include <SFML/Graphics.hpp>
@@ -56,3 +59,5 @@ using TextureHolder = ResourceHolder<sf::Texture, textures::ID>;
 using FontHolder    = ResourceHolder<sf::Font, fonts::ID>;
 
 } // namespace resource_holder
+
+#endif /* TME_RESOURCES */

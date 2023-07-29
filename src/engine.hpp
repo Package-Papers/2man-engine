@@ -7,7 +7,9 @@
 // engine. This includes the main engine/game loop, the resource holder, the clock resonsible for
 // computing delta time, the state stack.
 
-#include <iostream>
+#include <filesystem>
+#include <fstream>
+#include <unordered_map>
 
 #include "resources.hpp"
 #include "window_context.hpp"
@@ -32,6 +34,7 @@ class Engine final
     // Initializer methods.
     void init_imgui();
     void init_window(const WindowContext& context);
+    void init_keybinds();
 
     // Update methods.
     void handle_events();
@@ -58,7 +61,8 @@ class Engine final
     resource_holder::FontHolder    m_font_holder;
 
     // Input components.
-    tme::Mouse m_mouse;
+    std::unordered_map<std::string, sf::Keyboard::Key> m_supported_keys;
+    tme::Mouse                                         m_mouse;
 };
 } /* namespace tme */
 
