@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../../bitmask.hpp"
+#include "component.hpp"
 
 using EntityID                   = uint64_t;
 constexpr uint8_t MAX_COMPONENTS = 64;
@@ -16,14 +17,5 @@ struct EntityInfo
     EntityID      m_id;
     ComponentMask m_mask;
 };
-
-using EntityPool = std::vector<EntityInfo>;
-
-inline EntityID create_entity(EntityPool& entity_pool)
-{
-    EntityID entity_id = entity_pool.size();
-    entity_pool.push_back({entity_id, ComponentMask()});
-    return entity_id;
-}
 
 #endif /* TME_ECS_ENTITY */
