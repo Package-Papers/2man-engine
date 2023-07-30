@@ -83,9 +83,9 @@ class Keyboard : public Input<Keyboard>
     }
 
   private:
-    Keybinds     m_supported_keys;
-    tme::Bitmask m_last_frame_keys;
-    tme::Bitmask m_this_frame_keys;
+    Keybinds         m_supported_keys;
+    tme::Bitmask<64> m_last_frame_keys;
+    tme::Bitmask<64> m_this_frame_keys;
 };
 } /* namespace tme */
 

@@ -4,7 +4,6 @@ target_sources(TwoManEngine
   PRIVATE
     engine.cpp
     mouse.cpp
-    bitmask.cpp
   PUBLIC 
     main.cpp
 )
