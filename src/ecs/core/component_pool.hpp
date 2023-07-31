@@ -1,3 +1,8 @@
+/*
+ * This implementation is referenced from David Colson's wonderful blog.
+ * Found at: https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
+ */
+
 #pragma once
 #ifndef TME_ECS_COMPONENT_POOL
 #define TME_ECS_COMPONENT_POOL
