@@ -139,6 +139,11 @@ class EntityManager
         return component;
     }
 
+    EntityPool& get_entities()
+    {
+        return m_entity_pool;
+    }
+
   private:
     // Note: We want to minimize checking. Checking only happens in debug mode.
     ComponentPool& get_component_pool(std::size_t component_id)

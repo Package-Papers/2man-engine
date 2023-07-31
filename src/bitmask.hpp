@@ -18,6 +18,20 @@ class Bitmask
     void              set_mask(const Bitmask& other);
     void              clear_bit(int pos);
 
+    // Checks if the mask contains all bits of the RHS.
+    bool contains(const Bitmask& other)
+    {
+        for (int i = 0; i < N; i++)
+        {
+            if (other.m_bits[i] && !m_bits[i])
+            {
+                // mismatch
+                return false;
+            }
+        }
+        return true;
+    }
+
   private:
     std::vector<bool> m_bits;
 };

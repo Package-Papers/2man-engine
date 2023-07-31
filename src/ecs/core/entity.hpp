@@ -44,7 +44,7 @@ inline EntityVersion get_entity_version(EntityID entity_id)
 }
 
 // Check if the entity has a valid index.
-inline bool is_entry_valid(EntityID entity_id)
+inline bool is_entity_valid(EntityID entity_id)
 {
     return get_entity_index(entity_id) != EntityIndex(-1);
 }
