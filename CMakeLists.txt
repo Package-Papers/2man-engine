@@ -7,6 +7,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Include dependencies
 add_subdirectory(external)
 
+# CPM
+include(cmake/CPM.cmake)
+
+CPMAddPackage(
+  NAME Observe
+  VERSION 3.0
+  GITHUB_REPOSITORY TheLartians/Observe
+)
+
 # Include source
 add_subdirectory(src)
 set(CMAKE_CXX_STANDARD 23)
@@ -17,7 +26,7 @@ target_include_directories(TwoManEngine PUBLIC
 )
 
 # Link SFML
-target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
+target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio Observe)
 
 # Link SFML-IMGUI
 target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
