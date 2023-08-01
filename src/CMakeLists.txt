@@ -5,6 +5,7 @@ target_sources(TwoManEngine
     engine.cpp
     mouse.cpp
     ecs/core/component.cpp
+    ecs/core/component_pool.cpp
   PUBLIC 
     main.cpp
 )
