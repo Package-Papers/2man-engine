@@ -16,6 +16,8 @@ CPMAddPackage(
   GITHUB_REPOSITORY TheLartians/Observe
 )
 
+CPMAddPackage("gh:doctest/doctest@2.4.11")
+
 # Include source
 add_subdirectory(src)
 set(CMAKE_CXX_STANDARD 23)
@@ -26,10 +28,13 @@ target_include_directories(TwoManEngine PUBLIC
 )
 
 # Link SFML
-target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio Observe)
+target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
 
 # Link SFML-IMGUI
 target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
+
+# Link CPM dependencies
+target_link_libraries(TwoManEngine PRIVATE Observe doctest::doctest)
 
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
