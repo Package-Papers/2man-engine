@@ -7,6 +7,8 @@
 #ifndef TME_ECS_COMPONENT
 #define TME_ECS_COMPONENT
 
+#include <doctest/doctest.h>
+
 #include <cstdint>
 
 extern uint32_t g_component_count;

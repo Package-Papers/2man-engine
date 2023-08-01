@@ -4,6 +4,7 @@ target_sources(TwoManEngine
   PRIVATE
     engine.cpp
     mouse.cpp
+    ecs/core/component.cpp
   PUBLIC 
     main.cpp
 )
