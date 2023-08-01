@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#include <doctest/doctest.h>
+
 #include "../../bitmask.hpp"
 #include "component.hpp"
 
@@ -50,6 +52,66 @@ inline bool is_entity_valid(EntityID entity_id)
 }
 
 constexpr EntityIndex INVALID_ENTITY_INDEX = -1;
-#define INVALID_ENTRY create_entity_id(EntityIndex(-1), 0)
+#define INVALID_ENTITY create_entity_id(EntityIndex(-1), 0)
+
+/*
+ * Tests
+ */
+
+TEST_CASE("Creating a new entity ID")
+{
+    auto entity = create_entity_id(5, 2);
+
+    CHECK((entity >> 32) == 5);
+    CHECK(static_cast<uint32_t>(entity) == 2);
+
+    auto entity_2 = create_entity_id(-1, 0xfe);
+    CHECK(static_cast<uint32_t>(entity_2) == 0xfe);
+    CHECK((entity_2 >> 32) == 0xffffffff);
+}
+
+TEST_CASE("Creatin an invalid entity")
+{
+    auto invalid_entity = INVALID_ENTITY;
+    CHECK(!is_entity_valid(invalid_entity));
+
+    auto entity_1 = create_entity_id(-2, 2);
+    CHECK(is_entity_valid(entity_1));
+
+    auto entity_2 = create_entity_id(2, EntityVersion(-1));
+    CHECK(is_entity_valid(entity_2));
+}
+
+TEST_CASE("Checking entity version")
+{
+    
+    auto entity_1 = create_entity_id(0, 5);
+    CHECK(get_entity_version(entity_1) == 5);
+
+    auto entity_2 = create_entity_id(0, 0xaa);
+    CHECK(get_entity_version(entity_2) == 0xaa);
+
+    auto entity_3 = create_entity_id(0, 0xfeed);
+    CHECK(get_entity_version(entity_3) == 0xfeed);
+
+    auto entity_4 = create_entity_id(0, EntityVersion(-1));
+    CHECK(get_entity_version(entity_4) == EntityVersion(-1));
+}
+
+TEST_CASE("Checking entity index")
+{
+    auto entity_1 = create_entity_id(5, 0);
+    CHECK(get_entity_index(entity_1) == 5);
+
+    auto entity_2 = create_entity_id(0xaa, 0);
+    CHECK(get_entity_index(entity_2) == 0xaa);
+
+    auto entity_3 = create_entity_id(0xfeed, 0);
+    CHECK(get_entity_index(entity_3) == 0xfeed);
+
+    auto entity_4 = create_entity_id(INVALID_ENTITY_INDEX, 0);
+    CHECK(get_entity_index(entity_4) == INVALID_ENTITY_INDEX);
+}
+
 
 #endif /* TME_ECS_ENTITY */
