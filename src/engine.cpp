@@ -67,7 +67,7 @@ void tme::Engine::init_keybinds()
 
     ifs.close();
 
-    m_keyboard.set_keybinds(m_supported_keys);
+    // m_keyboard.set_keybinds(m_supported_keys);
 }
 
 void tme::Engine::init_imgui()
@@ -133,7 +133,7 @@ void tme::Engine::update_real_time()
 {
     ImGui::SFML::Update(m_window, m_time_since_last_update);
     m_mouse.update_position(m_window);
-    m_keyboard.update();
+    // m_keyboard.update();
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
                                     ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;

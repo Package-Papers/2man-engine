@@ -4,6 +4,9 @@ project(TwoManEngine LANGUAGES CXX)
 # Generate the compilation database for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Doctest - Remove test on release mode
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DDOCTEST_CONFIG_DISABLE")
+
 # Include dependencies
 add_subdirectory(external)
 

@@ -1,12 +1,8 @@
-#include "common.hpp"
-#include "engine.hpp"
-
-#ifdef NDEBUG
-#define DOCTEST_CONFIG_DISABLE
-#endif
-
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
+
+#include "common.hpp"
+#include "engine.hpp"
 
 /**
  * Settings can be defined in 'settings.json'.
