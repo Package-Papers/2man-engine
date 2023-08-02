@@ -8,15 +8,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(external)
 
 # CPM
-include(cmake/CPM.cmake)
+# include(cmake/CPM.cmake)
 
-CPMAddPackage(
-  NAME Observe
-  VERSION 3.0
-  GITHUB_REPOSITORY TheLartians/Observe
-)
+# CPMAddPackage(
+#   NAME Observe
+#   VERSION 3.0
+#   GITHUB_REPOSITORY TheLartians/Observe
+# )
 
-CPMAddPackage("gh:doctest/doctest@2.4.11")
+# CPMAddPackage("gh:doctest/doctest@2.4.11")
 
 # Include source
 add_subdirectory(src)
@@ -27,6 +27,11 @@ target_include_directories(TwoManEngine PUBLIC
   ${PROJECT_SOURCE_DIR}/external/rapidjson
 )
 
+# Include doctest
+target_include_directories(TwoManEngine PUBLIC
+  ${PROJECT_SOURCE_DIR}/external/doctest
+)
+
 # Link SFML
 target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
 
@@ -34,8 +39,7 @@ target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
 target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
 
 # Link CPM dependencies
-target_link_libraries(TwoManEngine PRIVATE Observe doctest::doctest)
-
+# target_link_libraries(TwoManEngine PRIVATE Observe)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
@@ -75,11 +79,13 @@ if (${MACOSX})
       COMMAND /usr/bin/clang-tidy
       ${ALL_CXX_SOURCE_FILES}
       --fix
+      --header-filter=${PROJECT_SOURCE_DIR}/src/
       --
       -isystem ${PROJECT_SOURCE_DIR}/external/sfml/
       -isystem ${PROJECT_SOURCE_DIR}/external/imgui/
       -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml/
       -isystem ${PROJECT_SOURCE_DIR}/external/rapidjson/
+      -isystem ${PROJECT_SOURCE_DIR}/external/doctest/
       -std=c++17
       )
   endif()

@@ -7,7 +7,7 @@
 #ifndef TME_ECS_COMPONENT
 #define TME_ECS_COMPONENT
 
-#include <doctest/doctest.h>
+#include "doctest.h"
 
 #include <cstdint>
 

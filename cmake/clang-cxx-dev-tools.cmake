@@ -35,11 +35,14 @@ if(CLANG_TIDY)
     COMMAND /usr/bin/clang-tidy
     ${ALL_CXX_SOURCE_FILES}
     --fix
+    --header-filter=${PROJECT_SOURCE_DIR}/src/
+    --system-headers
     --
     -isystem ${PROJECT_SOURCE_DIR}/external/sfml/
     -isystem ${PROJECT_SOURCE_DIR}/external/imgui/
     -isystem ${PROJECT_SOURCE_DIR}/external/imgui-sfml/
     -isystem ${PROJECT_SOURCE_DIR}/external/rapidjson/
+    -isystem ${PROJECT_SOURCE_DIR}/external/doctest/
     -std=c++17
     )
   

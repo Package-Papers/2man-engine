@@ -1,11 +1,11 @@
 #pragma once
-#include <cstddef>
 #ifndef TME_BITMASK
 #define TME_BITMASK
 
+#include <cstddef>
 #include <vector>
 
-#include <doctest/doctest.h>
+#include "doctest.h"
 
 namespace tme
 {
@@ -160,11 +160,11 @@ TEST_CASE("Bitmask contains")
     CHECK(mask_2.contains(mask_1));
 
     tme::Bitmask<10> mask_3;
-    for (std::size_t i=0; i<mask_3.size(); i++)
+    for (std::size_t i = 0; i < mask_3.size(); i++)
     {
         mask_3.set_bit(i, true);
     }
-   
+
     CHECK(mask_3.contains(mask_1));
     mask_3.clear();
     CHECK(!mask_3.contains(mask_1));

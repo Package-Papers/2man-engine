@@ -20,7 +20,7 @@
 #include "mouse.hpp"
 #include "window_context.hpp"
 
-#include "ecs/core/entity_manager.hpp"
+// #include "ecs/core/entity_manager.hpp"
 
 namespace tme
 {

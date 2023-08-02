@@ -11,6 +11,8 @@
 #include <stdexcept>
 #include <vector>
 
+#include "doctest.h"
+
 #include "component.hpp"
 #include "component_pool.hpp"
 
@@ -42,7 +44,7 @@ class EntityManager
         // Note: Version starts at 0.
         EntityID entity_id = create_entity_id(m_entity_pool.size(), 0);
 
-        if (entity_id >= MAX_ENTITIES)
+        if (get_entity_index(entity_id) >= MAX_ENTITIES)
         {
             throw std::runtime_error(
                 "EntityManager::create_entity. Exceeded max entity, consider up scaling?");

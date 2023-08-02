@@ -9,7 +9,7 @@
 
 #include <stdint.h>
 
-#include <doctest/doctest.h>
+#include "doctest.h"
 
 #include "../../bitmask.hpp"
 #include "component.hpp"
@@ -84,7 +84,7 @@ TEST_CASE("Creatin an invalid entity")
 
 TEST_CASE("Checking entity version")
 {
-    
+
     auto entity_1 = create_entity_id(0, 5);
     CHECK(get_entity_version(entity_1) == 5);
 
@@ -112,6 +112,5 @@ TEST_CASE("Checking entity index")
     auto entity_4 = create_entity_id(INVALID_ENTITY_INDEX, 0);
     CHECK(get_entity_index(entity_4) == INVALID_ENTITY_INDEX);
 }
-
 
 #endif /* TME_ECS_ENTITY */
