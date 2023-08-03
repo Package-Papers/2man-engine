@@ -20,7 +20,10 @@
 #ifndef NDEBUG
 #define LOG(x) std::cout << x
 #else
-#define LOG(x) do {} while(0)
+#define LOG(x)                                                                                     \
+    do                                                                                             \
+    {                                                                                              \
+    } while (0)
 #endif
 
 #endif /* TME_COMMON */

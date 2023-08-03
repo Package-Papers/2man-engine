@@ -4,7 +4,7 @@
  */
 
 #ifndef TME_DEBUG
-#define  TME_DEBUG
+#define TME_DEBUG
 
 #ifndef NDEBUG
 #define DEBUG
@@ -16,4 +16,6 @@
 #endif
 
 #include "doctest.h"
-#endif  /* TME_DEBUG */
+#include <cassert>
+
+#endif /* TME_DEBUG */

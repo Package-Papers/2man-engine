@@ -7,10 +7,10 @@
 #ifndef TME_ECS_COMPONENT_POOL
 #define TME_ECS_COMPONENT_POOL
 
+#include <memory>
 #include <vector>
 
 #include "../../debug.hpp"
-
 #include "entity.hpp"
 
 /*
@@ -39,6 +39,6 @@ struct ComponentPool
     char*    m_data{nullptr};
 };
 
-using ComponentPools = std::vector<ComponentPool>;
+using ComponentPools = std::vector<std::unique_ptr<ComponentPool>>;
 
 #endif /* TME_ECS_COMPONENT_POOL */

@@ -28,13 +28,14 @@ int main(int argc, char** argv)
 {
     LOG("Running - Debug\n");
 
-    #ifdef DOCTEST_RUN
+#ifdef DOCTEST_RUN
     LOG("Running tests...\n");
-    #else
-    LOG("Tests skipped...\n");
-    #endif
-    // Try running doctest.
     doctest_run(argc, argv);
+    return 0;
+#else
+    LOG("Tests skipped...\n");
+#endif
+    // Try running doctest.
 
     const tme::WindowContext default_ctx = {
         TME_WINDOW_WIDTH,

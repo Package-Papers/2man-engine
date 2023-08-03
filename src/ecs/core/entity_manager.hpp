@@ -4,17 +4,18 @@
  */
 
 #pragma once
-#include "entity.hpp"
 #ifndef TME_ECS_ENTITY_MANAGER
 #define TME_ECS_ENTITY_MANAGER
 
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 
 #include "../../debug.hpp"
 
 #include "component.hpp"
 #include "component_pool.hpp"
+#include "entity.hpp"
 
 class EntityManager
 {
@@ -51,6 +52,7 @@ class EntityManager
         }
 
         m_entity_pool.push_back({entity_id, ComponentMask()});
+
         return entity_id;
     }
 
@@ -58,15 +60,16 @@ class EntityManager
     void destroy_entity(EntityID entity_id)
     {
         // Invalidate the index and increment the version.
+        auto reuse_index = get_entity_index(entity_id);
         auto new_version = get_entity_version(entity_id) + 1;
         auto new_id      = create_entity_id(INVALID_ENTITY_INDEX, new_version);
-        m_entity_pool[get_entity_index(entity_id)].m_id = new_id;
+        m_entity_pool[reuse_index].m_id = new_id;
 
         // Reset the components bitmask for reusage.
-        m_entity_pool[get_entity_index(entity_id)].m_mask.clear();
+        m_entity_pool[reuse_index].m_mask.clear();
 
         // Queue entry back for reuse.
-        m_free_entities.push_back(get_entity_index(new_id));
+        m_free_entities.push_back(reuse_index);
     }
 
     template <typename Component>
@@ -84,13 +87,13 @@ class EntityManager
         // If the component pool is not large enough, add another entry for the current type.
         if (m_component_pools.size() <= component_id)
         {
-            m_component_pools.resize(component_id + 1, nullptr);
+            m_component_pools.resize(static_cast<std::size_t>(component_id + 1));
         }
 
         // If the component is new, we need to allocate a new pool for it.
         if (m_component_pools[component_id] == nullptr)
         {
-            m_component_pools[component_id] = new ComponentPool(sizeof(Component));
+            m_component_pools[component_id] = std::make_unique<ComponentPool>(sizeof(Component));
         }
 
         // Allocate the component data and attach it to the entity.
@@ -131,7 +134,7 @@ class EntityManager
         auto entity_index = get_entity_index(entity_id);
 
         // Check to make sure that the entity does have the component.
-        if (!m_entity_pool[(entity_index)].m_mask.get_bit(component_id))
+        if (!m_entity_pool[entity_index].m_mask.get_bit(component_id))
         {
             return nullptr;
         }
@@ -156,7 +159,7 @@ class EntityManager
             throw std::runtime_error("EntityManager::get_component, out of range");
         }
 #endif
-        return m_component_pools[component_id];
+        return *m_component_pools[component_id];
     }
 
     // Returns the memory location of the entity's specified component.

@@ -6,6 +6,7 @@ target_sources(TwoManEngine
     mouse.cpp
     ecs/core/component.cpp
     ecs/core/component_pool.cpp
+    ecs/core/entity_manager.cpp
   PUBLIC 
     main.cpp
 )
