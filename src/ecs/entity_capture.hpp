@@ -4,12 +4,15 @@
  */
 
 #pragma once
-#include "core/component.hpp"
-#include "core/entity.hpp"
-#include <cstdlib>
 #ifndef TME_ECS_ENTITY_CAPTURE
 #define TME_ECS_ENTITY_CAPTURE
 
+#include <cstdlib>
+
+#include "../debug.hpp"
+
+#include "core/component.hpp"
+#include "core/entity.hpp"
 #include "core/entity_manager.hpp"
 
 template <typename... Components>
@@ -35,7 +38,7 @@ struct EntityCapture
 
     struct Iterator
     {
-        Iterator(EntityManager* entity_manager, EntityIndex entity_index, ComponentMask* mask,
+        Iterator(EntityManager* entity_manager, EntityIndex entity_index, const ComponentMask* mask,
                  bool all)
             : m_entity_manager(entity_manager)
             , m_entity_index(entity_index)
@@ -91,10 +94,10 @@ struct EntityCapture
             return *this;
         }
 
-        EntityManager* m_entity_manager;
-        EntityIndex    m_entity_index;
-        ComponentMask* m_mask;
-        bool           m_all;
+        EntityManager*       m_entity_manager;
+        EntityIndex          m_entity_index;
+        const ComponentMask* m_mask;
+        bool                 m_all;
     };
 
     // Get the first valid iterator.
@@ -104,30 +107,30 @@ struct EntityCapture
         auto&       entities      = m_entity_manager->get_entities();
         std::size_t entities_size = entities.size();
 
-#define IN_RANGE       (first_index < entities_size)
-#define NOT_CONTAIN    (!entities[first_index].m_mask.contains(m_component_mask))
-#define INVALID_ENTITY (!is_entity_valid(entities[first_index].m_id))
+#define IN_RANGE           (first_index < entities_size)
+#define NOT_CONTAIN        (!entities[first_index].m_mask.contains(m_component_mask))
+#define GOT_INVALID_ENTITY (!is_entity_valid(entities[first_index].m_id))
 
         // We skip the entity if
         //  1. It doesn't satisfy the component mask.
         //  2. It is invalid (removed).
-        while (IN_RANGE && (NOT_CONTAIN || INVALID_ENTITY))
+        while (IN_RANGE && (NOT_CONTAIN || GOT_INVALID_ENTITY))
         {
             first_index++;
         }
 
 #undef IN_RANGE
 #undef NOT_CONTAIN
-#undef INVALID_ENTITY
+#undef GOT_INVALID_ENTITY
 
-        return Iterator(m_entity_manager, first_index, m_component_mask, m_all);
+        return Iterator(m_entity_manager, first_index, &m_component_mask, m_all);
     }
 
     // Returns the last element.
     const Iterator end() const
     {
         auto last_index = EntityIndex(m_entity_manager->get_entities().size());
-        return Iterator(m_entity_manager, last_index, m_component_mask, m_all);
+        return Iterator(m_entity_manager, last_index, &m_component_mask, m_all);
     }
 
     bool           m_all = false;

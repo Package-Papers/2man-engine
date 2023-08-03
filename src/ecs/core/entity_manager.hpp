@@ -7,9 +7,9 @@
 #ifndef TME_ECS_ENTITY_MANAGER
 #define TME_ECS_ENTITY_MANAGER
 
+#include <iostream>
 #include <stdexcept>
 #include <vector>
-#include <iostream>
 
 #include "../../debug.hpp"
 
@@ -60,9 +60,9 @@ class EntityManager
     void destroy_entity(EntityID entity_id)
     {
         // Invalidate the index and increment the version.
-        auto reuse_index = get_entity_index(entity_id);
-        auto new_version = get_entity_version(entity_id) + 1;
-        auto new_id      = create_entity_id(INVALID_ENTITY_INDEX, new_version);
+        auto reuse_index                = get_entity_index(entity_id);
+        auto new_version                = get_entity_version(entity_id) + 1;
+        auto new_id                     = create_entity_id(INVALID_ENTITY_INDEX, new_version);
         m_entity_pool[reuse_index].m_id = new_id;
 
         // Reset the components bitmask for reusage.

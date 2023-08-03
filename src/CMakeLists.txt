@@ -7,6 +7,7 @@ target_sources(TwoManEngine
     ecs/core/component.cpp
     ecs/core/component_pool.cpp
     ecs/core/entity_manager.cpp
+    ecs/entity_capture.cpp
   PUBLIC 
     main.cpp
 )
