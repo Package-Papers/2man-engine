@@ -1,5 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "doctest.h"
+#include "debug.hpp"
 
 #include "common.hpp"
 #include "engine.hpp"
@@ -26,6 +26,13 @@ void doctest_run(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
+    LOG("Running - Debug\n");
+
+    #ifdef DOCTEST_RUN
+    LOG("Running tests...\n");
+    #else
+    LOG("Tests skipped...\n");
+    #endif
     // Try running doctest.
     doctest_run(argc, argv);
 

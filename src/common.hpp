@@ -17,4 +17,10 @@
     return n > 0;
 }
 
+#ifndef NDEBUG
+#define LOG(x) std::cout << x
+#else
+#define LOG(x) do {} while(0)
+#endif
+
 #endif /* TME_COMMON */

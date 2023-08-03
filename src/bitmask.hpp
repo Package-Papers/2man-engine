@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <vector>
 
-#include "doctest.h"
+#include "debug.hpp"
 
 namespace tme
 {

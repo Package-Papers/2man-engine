@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#include "doctest.h"
+#include "../../debug.hpp"
 
 #include "entity.hpp"
 

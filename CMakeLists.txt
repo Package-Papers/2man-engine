@@ -5,7 +5,7 @@ project(TwoManEngine LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Doctest - Remove test on release mode
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DDOCTEST_CONFIG_DISABLE")
+# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DDOCTEST_CONFIG_DISABLE")
 
 # Include dependencies
 add_subdirectory(external)
@@ -18,8 +18,6 @@ add_subdirectory(external)
 #   VERSION 3.0
 #   GITHUB_REPOSITORY TheLartians/Observe
 # )
-
-# CPMAddPackage("gh:doctest/doctest@2.4.11")
 
 # Include source
 add_subdirectory(src)
@@ -43,6 +41,15 @@ target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
 
 # Link CPM dependencies
 # target_link_libraries(TwoManEngine PRIVATE Observe)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Test")
+    message(STATUS "Configuration: [TEST]... Enabling tests...")
+    target_compile_definitions(TwoManEngine PRIVATE DOCTEST_RUN)
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Configuration: [DEBUG]")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    message(STATUS "Configuration: [RELEASE]")
+endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
@@ -96,4 +103,7 @@ else()
     # Including custom cmake rules
   include(cmake/clang-cxx-dev-tools.cmake)
 endif()
+
+get_target_property(TEST_COMPILE_FLAGS TwoManEngine COMPILE_DEFINITIONS)
+message(STATUS "Test Target Compile Definitions: ${TEST_COMPILE_FLAGS}")
 

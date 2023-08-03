@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "doctest.h"
+#include "../../debug.hpp"
 
 #include "component.hpp"
 #include "component_pool.hpp"

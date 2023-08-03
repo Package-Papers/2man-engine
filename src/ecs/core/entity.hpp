@@ -9,7 +9,7 @@
 
 #include <stdint.h>
 
-#include "doctest.h"
+#include "../../debug.hpp"
 
 #include "../../bitmask.hpp"
 #include "component.hpp"
