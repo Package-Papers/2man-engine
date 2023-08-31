@@ -1,8 +1,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "debug.hpp"
-
 #include "common.hpp"
+#include "debug.hpp"
 #include "engine.hpp"
+#include "state_stack.hpp"
 
 /**
  * Settings can be defined in 'settings.json'.
