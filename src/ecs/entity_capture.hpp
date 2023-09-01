@@ -28,7 +28,9 @@ struct EntityCapture
         }
         else
         {
-            uint32_t component_ids[] = {get_component_id<Components>()...};
+            std::vector<uint32_t> component_ids;
+            (component_ids.push_back(get_component_id<Components>()), ...);
+
             for (int i = 0; i < sizeof...(Components); i++)
             {
                 m_component_mask.set_bit(component_ids[i], true);

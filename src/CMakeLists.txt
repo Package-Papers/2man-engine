@@ -2,8 +2,8 @@ add_executable(TwoManEngine)
 
 target_sources(TwoManEngine 
   PRIVATE
-    engine.cpp
     mouse.cpp
+    engine.cpp
     ecs/core/component.cpp
     ecs/core/component_pool.cpp
     ecs/core/entity_manager.cpp
