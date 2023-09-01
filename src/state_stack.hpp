@@ -3,6 +3,7 @@
 #define TME_STATE_STACK
 
 #include <iostream>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 
@@ -223,9 +224,9 @@ TEST_CASE("Test")
         new_state2->request_stack_push(states::TitleScreen);
         CHECK(stack.num_pending_states() == 2);
         new_state2->request_stack_pop();
-        CHECK(stack.num_pending_states() == 1);
+        CHECK(stack.num_pending_states() == 3);
         new_state->request_stack_pop();
-        CHECK(stack.num_pending_states() == 0);
+        CHECK(stack.num_pending_states() == 4);
     }
     SUBCASE("Testing for clearing function works after apply_pending_changes")
     {

@@ -22,7 +22,7 @@ class TitleState : public State
         , m_text(m_font)
 
     {
-        m_font.loadFromFile("/Users/nambouchara/2man-engine/font.ttf");
+        auto _ = m_font.loadFromFile("/Users/nambouchara/2man-engine/font.ttf");
         m_text.setString("Hello World");
         auto         size     = context.window->getSize();
         sf::Vector2f size_rec = {static_cast<float>(size.x), static_cast<float>(size.y)};
