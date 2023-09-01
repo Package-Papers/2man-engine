@@ -13,21 +13,25 @@
 
 #include "../settings.hpp"
 
-
-
 class GameState : public State
 {
   public:
-    GameState(StateStack& stack, Context context): State(stack, context)
-    {}
+    GameState(StateStack& stack, Context context)
+        : State(stack, context)
+    {
+    }
 
-    void draw(){}
-    bool update(sf::Time dt){return true;}
-    bool handle_event(const sf::Event& event){return true;}
-
-
-    
+    void draw()
+    {
+    }
+    bool update(sf::Time dt)
+    {
+        return true;
+    }
+    bool handle_event(const sf::Event& event)
+    {
+        return true;
+    }
 };
-
 
 #endif /* GAME_STATE */

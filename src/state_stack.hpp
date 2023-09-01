@@ -2,8 +2,8 @@
 #ifndef TME_STATE_STACK
 #define TME_STATE_STACK
 
-#include <iostream>
 #include <functional>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
