@@ -70,6 +70,11 @@ void tme::Engine::init_keybinds()
     // m_keyboard.set_keybinds(m_supported_keys);
 }
 
+// void tme::Engine::register_states()
+// {
+//     m_state_stack.register_state<Title>
+// }
+
 void tme::Engine::init_imgui()
 {
     bool imgui_success = ImGui::SFML::Init(this->m_window);
@@ -146,6 +151,8 @@ void tme::Engine::update_real_time()
     auto pos = m_mouse.get_position();
     ImGui::Text("M Pos: <%d, %d>", pos.x, pos.y);
     ImGui::End();
+
+    ImGui::Button("Look at this pretty button");
 }
 
 // Fixed time update. Things which should have a fixed time step update such as phyics etc. should
@@ -153,6 +160,11 @@ void tme::Engine::update_real_time()
 void tme::Engine::fixed_update()
 {
     // Update with the value of m_TIME_PER_FRAME.
+}
+
+State::Context tme::Engine::get_context()
+{
+    return {&m_window, &m_texture_holder, &m_font_holder};
 }
 
 // The main engine loop.

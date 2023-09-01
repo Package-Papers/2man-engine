@@ -12,6 +12,7 @@
 #include <unordered_map>
 
 #include "resources.hpp"
+#include "state.hpp"
 #include "window_context.hpp"
 #include <imgui-SFML.h>
 #include <imgui.h>
@@ -35,9 +36,13 @@ class Engine final
 
   private:
     // Initializer methods.
+    void register_states();
     void init_imgui();
     void init_window(const WindowContext& context);
     void init_keybinds();
+
+    // Getter methods.
+    State::Context get_context();
 
     // Update methods.
     void handle_events();
@@ -62,6 +67,9 @@ class Engine final
     // Resource holders.
     resource_holder::TextureHolder m_texture_holder;
     resource_holder::FontHolder    m_font_holder;
+
+    // State Stack.
+    StateStack m_state_stack;
 
     // Input components.
     std::unordered_map<std::string, sf::Keyboard::Key> m_supported_keys;
