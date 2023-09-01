@@ -56,7 +56,7 @@ class State
 
     Context get_context() const;
 
-  private:
+  protected:
     StateStack* m_state_stack;
     Context     m_context;
 };
@@ -69,11 +69,11 @@ inline void State::request_stack_push(states::ID stateID)
 }
 inline void State::request_stack_pop()
 {
-    m_state_stack->m_pending_list.pop_back();
+    m_state_stack->m_pending_list.push_back({StateStack::Action::Pop});
 }
 inline void State::request_stack_clear()
 {
-    m_state_stack->m_pending_list.clear();
+    m_state_stack->m_pending_list.push_back({StateStack::Action::Clear});
 }
 
 #endif /* TME_STATE */

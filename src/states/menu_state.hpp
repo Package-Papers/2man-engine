@@ -6,12 +6,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "common.hpp"
-#include "debug.hpp"
+#include "../common.hpp"
+#include "../debug.hpp"
 
-#include "state.hpp"
+#include "../state.hpp"
 
-#include "settings.hpp"
+#include "../settings.hpp"
 
 enum OptionNames
 {
@@ -22,33 +22,27 @@ enum OptionNames
 class MenuState : public State
 {
   public:
-    MenuState(StateStack& stack, Context context);
-
-    virtual void draw();
-    virtual bool update(sf::Time dt);
-    virtual bool handle_event(const sf::Event& event);
-    bool         empty()
+    MenuState(StateStack& stack, Context context)
+        : State(stack, context)
     {
-        return {m_options.size() == 0};
     }
 
+    virtual void draw()
+    {
+    }
+    virtual bool update(sf::Time dt)
+    {
+        return true;
+    }
+    virtual bool handle_event(const sf::Event& event)
+    {
+        return true;
+    }
+
+    void update_option_text();
 };
 
-void MenuState::update_option_text()
-{
-    if (m_options.empty())
-        return;
-
-    for ()
-}
-
-ImGui::Button play_option;
-play_option.setFont(font);
-play_option.setString("Play");
-play_option.setPosition(context.window->getView().getSize() / 2.f);
-m_options.push_back(play_option);
-
-void MenuState::updateOptionText()
+inline void MenuState::update_option_text()
 {
     if (ImGui::Button("play"))
     {
@@ -59,7 +53,7 @@ void MenuState::updateOptionText()
     {
         request_stack_pop();
     }
-        return;
+    return;
 }
 
 #endif /* MENU_STATE */

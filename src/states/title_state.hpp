@@ -6,31 +6,50 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "common.hpp"
-#include "debug.hpp"
+#include "../common.hpp"
+#include "../debug.hpp"
 
-#include "state.hpp"
+#include "../state.hpp"
 
-#include "settings.hpp"
+#include "../settings.hpp"
 
 class TitleState : public State
 {
   public:
-    TitleState(StateStack& stack, Context context);
+    TitleState(StateStack& stack, Context context)
+        : State(stack, context)
+        , m_rectangle_box({200, 200})
+        , m_text(m_font)
+
+    {
+        m_font.loadFromFile("/Users/nambouchara/2man-engine/font.ttf");
+        m_text.setString("Hello World");
+        auto         size     = context.window->getSize();
+        sf::Vector2f size_rec = {static_cast<float>(size.x), static_cast<float>(size.y)};
+        m_rectangle_box.setSize(size_rec);
+        m_rectangle_box.setFillColor(sf::Color::White);
+    }
 
     virtual void draw();
     virtual bool update(sf::Time dt);
     virtual bool handle_event(const sf::Event& event);
 
   private:
-    sf::Sprite m_background_sprite;
-    sf::Text   m_text;
+    sf::RectangleShape m_rectangle_box;
+    sf::Font           m_font;
+    sf::Text           m_text;
 
     bool     m_show_text;
     sf::Time m_text_effect_time;
 };
 
-bool TitleState::handle_event(const sf::Event& event)
+inline void TitleState::draw()
+{
+    m_context.window->draw(m_rectangle_box);
+    m_context.window->draw(m_text);
+}
+
+inline bool TitleState::handle_event(const sf::Event& event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
@@ -40,7 +59,7 @@ bool TitleState::handle_event(const sf::Event& event)
     return true;
 }
 
-bool TitleState::update(sf::Time dt)
+inline bool TitleState::update(sf::Time dt)
 {
     m_text_effect_time += dt;
 

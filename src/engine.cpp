@@ -18,6 +18,10 @@ tme::Engine::Engine(const WindowContext& context)
     this->init_imgui();
 
     this->init_keybinds();
+
+    this->m_state_stack.set_context(get_context());
+
+    this->register_states();
 }
 
 // Read in the context and applies it to the window created for the engine.
@@ -70,10 +74,15 @@ void tme::Engine::init_keybinds()
     // m_keyboard.set_keybinds(m_supported_keys);
 }
 
-// void tme::Engine::register_states()
-// {
-//     m_state_stack.register_state<Title>
-// }
+void tme::Engine::register_states()
+{
+    m_state_stack.register_state<TitleState>(states::TitleScreen);
+    m_state_stack.register_state<MenuState>(states::MainMenu);
+    m_state_stack.register_state<GameState>(states::Game);
+
+    auto title_state = m_state_stack.create_state(states::TitleScreen);
+    m_state_stack.push_state(std::move(title_state));
+}
 
 void tme::Engine::init_imgui()
 {
@@ -100,6 +109,7 @@ void tme::Engine::handle_events()
         {
             m_window.close();
         }
+        m_state_stack.handle_event(event);
     }
 }
 
@@ -110,6 +120,8 @@ void tme::Engine::render()
 
     // Render stuff here.
     ImGui::SFML::Render(m_window);
+
+    m_state_stack.draw();
 
     // Display window.
     m_window.display();

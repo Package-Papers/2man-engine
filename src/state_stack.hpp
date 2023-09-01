@@ -23,6 +23,14 @@ class StateStack : private tme::NonCopyable
     friend State;
 
   public:
+    StateStack() = default;
+
+    void set_context(State::Context context)
+    {
+        this->m_context = context;
+    }
+
+  public:
     enum Action
     {
         Push,
@@ -30,8 +38,17 @@ class StateStack : private tme::NonCopyable
         Clear,
     };
 
-    void update(sf::Time dt);
-    void draw();
+    void update(sf::Time dt)
+    {
+        if (this->is_empty())
+            return;
+    }
+    void draw()
+    {
+        if (this->is_empty())
+            return;
+        this->top()->draw();
+    }
     void push_state(State::Ptr);
     void pop_state()
     {
@@ -40,6 +57,10 @@ class StateStack : private tme::NonCopyable
     void clear_states()
     {
         m_stack.clear();
+    }
+    State* top()
+    {
+        return m_stack.back().get();
     }
     bool is_empty() const
     {
@@ -89,6 +110,8 @@ class StateStack : private tme::NonCopyable
     }
     void handle_event(const sf::Event& event)
     {
+        if (m_stack.empty())
+            return;
         for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); ++itr)
         {
             if (!(*itr)->handle_event(event))
