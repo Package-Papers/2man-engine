@@ -1,6 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "common.hpp"
-#include "debug.hpp"
 #include "engine.hpp"
 
 /**

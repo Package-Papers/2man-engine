@@ -3,19 +3,13 @@
 #define TME_STATE_STACK
 
 #include <functional>
-#include <iostream>
+#include <map>
 
 #include <SFML/Graphics.hpp>
 
-#include "common.hpp"
-#include "debug.hpp"
 #include "imgui.h"
 #include "non_copyable.hpp"
 #include "resources.hpp"
-#include <map>
-#include <unordered_map>
-
-#include "settings.hpp"
 
 class State;
 

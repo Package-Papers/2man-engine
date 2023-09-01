@@ -1,8 +1,4 @@
 #include "engine.hpp"
-#include "imgui.h"
-#include "input.hpp"
-#include <filesystem>
-#include <stdexcept>
 
 tme::Engine::Engine(const WindowContext& context)
     : m_video_mode({context.width, context.height})
@@ -104,7 +100,7 @@ void tme::Engine::handle_events()
     while (m_window.pollEvent(event))
     {
         ImGui::SFML::ProcessEvent(m_window, event);
-        m_mouse.handle_event(event);
+        // m_mouse.handle_event(event);
         if (event.type == sf::Event::Closed)
         {
             m_window.close();
@@ -149,7 +145,7 @@ void tme::Engine::update_fixed_time()
 void tme::Engine::update_real_time()
 {
     ImGui::SFML::Update(m_window, m_time_since_last_update);
-    m_mouse.update_position(m_window);
+    // m_mouse.update_position(m_window);
     // m_keyboard.update();
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
@@ -158,10 +154,10 @@ void tme::Engine::update_real_time()
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Stats", nullptr, window_flags);
     ImGui::Text("FPS: %d", static_cast<int>(1.f / m_time_since_last_update.asSeconds()));
-    ImGui::Text("M Pressed: %d", m_mouse.is_pressed());
-    ImGui::Text("M Held: %d", m_mouse.is_held());
-    auto pos = m_mouse.get_position();
-    ImGui::Text("M Pos: <%d, %d>", pos.x, pos.y);
+    // ImGui::Text("M Pressed: %d", m_mouse.is_pressed());
+    // ImGui::Text("M Held: %d", m_mouse.is_held());
+    // auto pos = m_mouse.get_position();
+    // ImGui::Text("M Pos: <%d, %d>", pos.x, pos.y);
     ImGui::End();
 
     ImGui::Button("Look at this pretty button");

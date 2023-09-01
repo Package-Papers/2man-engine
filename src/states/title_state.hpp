@@ -2,16 +2,7 @@
 #ifndef TITLE_STATE
 #define TITLE_STATE
 
-#include <iostream>
-
-#include <SFML/Graphics.hpp>
-
-#include "../common.hpp"
-#include "../debug.hpp"
-
 #include "../state.hpp"
-
-#include "../settings.hpp"
 
 class TitleState : public State
 {

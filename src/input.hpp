@@ -3,7 +3,7 @@
 #ifndef TME_INPUT
 #define TME_INPUT
 
-#include "SFML/Window/Event.hpp"
+#include <SFML/Window/Event.hpp>
 
 ////////////////////////////////////
 // Note(Appy): Interface for input devices.

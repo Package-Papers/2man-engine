@@ -10,19 +10,18 @@
 #include <filesystem>
 #include <fstream>
 #include <unordered_map>
+#include <stdexcept>
 
-#include "resources.hpp"
-#include "state.hpp"
-#include "states/game_state.hpp"
-#include "states/menu_state.hpp"
-#include "states/title_state.hpp"
-
-#include "window_context.hpp"
 #include <imgui-SFML.h>
 #include <imgui.h>
 
 #include "keyboard.hpp"
-#include "mouse.hpp"
+// #include "mouse.hpp"
+
+#include "resources.hpp"
+#include "states/game_state.hpp"
+#include "states/menu_state.hpp"
+#include "states/title_state.hpp"
 #include "window_context.hpp"
 
 #include "ecs/core/entity_manager.hpp"
@@ -75,14 +74,9 @@ class Engine final
     // State Stack.
     StateStack m_state_stack;
 
-    // States
-    // TitleState m_title_state;
-    // MenuState  m_menu_state;
-    // GameState  m_game_state;
-
     // Input components.
     std::unordered_map<std::string, sf::Keyboard::Key> m_supported_keys;
-    Mouse                                              m_mouse;
+    // Mouse                                              m_mouse;
     Keyboard                                           m_keyboard;
 };
 } /* namespace tme */

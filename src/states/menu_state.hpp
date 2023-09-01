@@ -2,16 +2,7 @@
 #ifndef MENU_STATE
 #define MENU_STATE
 
-#include <iostream>
-
-#include <SFML/Graphics.hpp>
-
-#include "../common.hpp"
-#include "../debug.hpp"
-
 #include "../state.hpp"
-
-#include "../settings.hpp"
 
 enum OptionNames
 {

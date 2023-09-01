@@ -2,11 +2,8 @@
 #ifndef INPUT_MOUSE
 #define INPUT_MOUSE
 
-#include <iostream>
-
-#include "SFML/Window/Event.hpp"
-#include "SFML/Window/Mouse.hpp"
-#include "SFML/Window/Window.hpp"
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Window.hpp>
 
 #include "input.hpp"
 

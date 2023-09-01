@@ -2,16 +2,7 @@
 #ifndef GAME_STATE
 #define GAME_STATE
 
-#include <iostream>
-
-#include <SFML/Graphics.hpp>
-
-#include "../common.hpp"
-#include "../debug.hpp"
-
 #include "../state.hpp"
-
-#include "../settings.hpp"
 
 class GameState : public State
 {
