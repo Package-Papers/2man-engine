@@ -62,7 +62,7 @@ class State
   public:
     void request_stack_push(states::ID stateID);
     void request_stack_pop();
-    void request_state_clear();
+    void request_stack_clear();
 
     Context get_context() const;
 
@@ -82,13 +82,6 @@ class StateStack : private tme::NonCopyable
         Pop,
         Clear,
     };
-    // template <typename T>
-    // void registerState(states::ID stateID);
-    // StateStack(const State::Context& ctx)
-    // : m_context{ctx}
-    // {
-
-    // }
 
     void update(sf::Time dt);
     void draw();
@@ -181,6 +174,14 @@ void State::request_stack_push(states::ID stateID)
 {
     m_state_stack->m_pending_list.push_back({StateStack::Action::Push, stateID});
 }
+void State::request_stack_pop()
+{
+    m_state_stack->m_pending_list.pop_back();
+}
+void State::request_stack_clear()
+{
+    m_state_stack->m_pending_list.clear();
+}
 void StateStack::push_state(State::Ptr state)
 {
     m_stack.push_back(std::move(state));
@@ -208,7 +209,7 @@ TEST_CASE("Test")
         {
         }
     };
-    stack.register_state<MenuState>(states::MainMenu);
+
     SUBCASE("check if the stack is empty after initialising")
     {
         CHECK(stack.size() == 0);
@@ -216,11 +217,11 @@ TEST_CASE("Test")
     }
     SUBCASE("registering a State to a mFactories")
     {
-
-        CHECK(stack.num_registered_states() != 0);
+        CHECK(stack.num_registered_states() == 0);
         stack.register_state<MenuState>(states::MainMenu);
         CHECK(stack.num_registered_states() == 1);
     }
+    stack.register_state<MenuState>(states::MainMenu);
     SUBCASE("Testing for createState function")
     {
         auto new_state = stack.create_state(states::MainMenu);
@@ -235,8 +236,52 @@ TEST_CASE("Test")
         stack.apply_pending_changes();
         CHECK(stack.size() == 1);
     }
-    SUBCASE("Testing for handle_events")
+
+    auto new_state = stack.create_state(states::MainMenu);
+    class TitleState : public State
     {
+      public:
+        virtual void draw()
+        {
+        }
+        virtual bool update(sf::Time dt)
+        {
+            return true;
+        }
+        virtual bool handle_event(const sf::Event& event)
+        {
+            return true;
+        }
+        TitleState(StateStack& stack, Context context)
+            : State(stack, context)
+        {
+        }
+    };
+    stack.register_state<TitleState>(states::TitleScreen);
+    auto new_state2 = stack.create_state(states::TitleScreen);
+    SUBCASE("Testing for apply_pending_changes complex")
+    {
+        new_state->request_stack_push(states::MainMenu);
+        new_state2->request_stack_push(states::TitleScreen);
+        CHECK(stack.num_pending_states() == 2);
+        new_state2->request_stack_pop();
+        CHECK(stack.num_pending_states() == 1);
+        new_state->request_stack_pop();
+        CHECK(stack.num_pending_states() == 0);
+    }
+    SUBCASE("Testing for clearing function works after apply_pending_changes")
+    {
+        new_state->request_stack_push(states::MainMenu);
+        new_state2->request_stack_push(states::TitleScreen);
+        stack.apply_pending_changes();
+        CHECK(stack.num_pending_states() == 0);
+    }
+    SUBCASE("Testing for clearing function works after apply_pending_changes")
+    {
+        new_state->request_stack_push(states::MainMenu);
+        new_state2->request_stack_push(states::TitleScreen);
+        stack.apply_pending_changes();
+        CHECK(stack.num_pending_states() == 0);
     }
 }
 
