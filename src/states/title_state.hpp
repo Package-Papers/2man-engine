@@ -10,11 +10,8 @@ class TitleState : public State
     TitleState(StateStack& stack, Context context)
         : State(stack, context)
         , m_rectangle_box({200, 200})
-        , m_text(m_font)
 
     {
-        auto _ = m_font.loadFromFile("/Users/nambouchara/2man-engine/font.ttf");
-        m_text.setString("Hello World");
         auto         size     = context.window->getSize();
         sf::Vector2f size_rec = {static_cast<float>(size.x), static_cast<float>(size.y)};
         m_rectangle_box.setSize(size_rec);
@@ -28,7 +25,6 @@ class TitleState : public State
   private:
     sf::RectangleShape m_rectangle_box;
     sf::Font           m_font;
-    sf::Text           m_text;
 
     bool     m_show_text;
     sf::Time m_text_effect_time;
@@ -37,7 +33,6 @@ class TitleState : public State
 inline void TitleState::draw()
 {
     m_context.window->draw(m_rectangle_box);
-    m_context.window->draw(m_text);
 }
 
 inline bool TitleState::handle_event(const sf::Event& event)

@@ -144,9 +144,9 @@ void tme::Engine::update_fixed_time()
 // For example: GUI.
 void tme::Engine::update_real_time()
 {
+    m_keyboard.update();
     ImGui::SFML::Update(m_window, m_time_since_last_update);
     // m_mouse.update_position(m_window);
-    // m_keyboard.update();
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
                                     ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
@@ -158,9 +158,10 @@ void tme::Engine::update_real_time()
     // ImGui::Text("M Held: %d", m_mouse.is_held());
     // auto pos = m_mouse.get_position();
     // ImGui::Text("M Pos: <%d, %d>", pos.x, pos.y);
+
     ImGui::End();
 
-    ImGui::Button("Look at this pretty button");
+    m_state_stack.update(m_time_since_last_update);
 }
 
 // Fixed time update. Things which should have a fixed time step update such as phyics etc. should

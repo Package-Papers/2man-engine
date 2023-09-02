@@ -37,6 +37,7 @@ class StateStack : private tme::NonCopyable
     {
         if (this->is_empty())
             return;
+        this->top()->update(dt);
     }
     void draw()
     {

@@ -23,6 +23,7 @@ class MenuState : public State
     }
     virtual bool update(sf::Time dt)
     {
+        this->update_option_text();
         return true;
     }
     virtual bool handle_event(const sf::Event& event)
@@ -44,7 +45,6 @@ inline void MenuState::update_option_text()
     {
         request_stack_pop();
     }
-    return;
 }
 
 #endif /* MENU_STATE */
