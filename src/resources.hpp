@@ -13,6 +13,7 @@ namespace textures
 {
 enum class ID
 {
+    Placeholder,
     Landscape,
     Airplane
 };

@@ -28,13 +28,13 @@ public:
 
   
   template <std::size_t layer>
-	[[nodiscard]] const int at(std::size_t row, std::size_t col) const
+	[[nodiscard]] const textures::ID at(std::size_t row, std::size_t col) const
   {
     return m_layers[layer].get().at(row, col);
   }
 
   template <std::size_t layer>
-	[[nodiscard]] int& at(std::size_t row, std::size_t col) 
+	[[nodiscard]] textures::ID& at(std::size_t row, std::size_t col) 
   {
     return m_layers[layer].get().at(row, col);
   }

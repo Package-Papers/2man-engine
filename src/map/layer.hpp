@@ -8,12 +8,13 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "../structures/Vec2D.hpp"
+#include "tile.hpp"
 
 class Layer : public sf::Drawable
 {
 public:
   explicit Layer(std::size_t width, std::size_t height)
-    : m_grid(width, height)
+    : m_grid(width, height, textures::ID::Placeholder)
   {}
 
   void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override
@@ -30,12 +31,12 @@ public:
     {
       for (auto x=0; x<width; x++)
       {
-        if (m_grid.at(y, x) == 0) continue;
+        if (m_grid.at(y, x) == textures::ID::Placeholder) continue;
 
         switch (m_grid.at(y, x))
         {
-          break; case 1: box.setFillColor(sf::Color::Red);
-          break; case 2: box.setFillColor(sf::Color::Green);
+          // Different cases handled here.
+          // The logic of drawing should actually be handled via the tile itself.
           break; default: continue;
         }
 
@@ -46,18 +47,18 @@ public:
     }
   }
 
-  const Vec2D<int>& get() const
+  const Vec2D<textures::ID>& get() const
   {
     return m_grid;
   }
 
-  Vec2D<int>& get()
+  Vec2D<textures::ID>& get()
   {
     return m_grid;
   }
 
 private:
-  Vec2D<int> m_grid;
+  Vec2D<textures::ID> m_grid;
 };
 
 #endif /* TME_LAYER */
