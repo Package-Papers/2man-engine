@@ -144,6 +144,17 @@ class EntityManager
         return component;
     }
 
+    template <typename Component>
+    [[nodiscard]] bool has_component(EntityID entity_id)
+    {
+        // Check if entity is invalid.
+        if (!entity_is_valid(entity_id)) return false;
+
+        auto entity_index = get_entity_index(entity_id);
+        auto component_id = get_component_id<Component>();
+        return m_entity_pool[entity_index].m_mask.get_bit(component_id);
+    }
+
     EntityPool& get_entities()
     {
         return m_entity_pool;
