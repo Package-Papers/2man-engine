@@ -9,8 +9,8 @@
 
 #include <filesystem>
 #include <fstream>
-#include <unordered_map>
 #include <stdexcept>
+#include <unordered_map>
 
 #include <imgui-SFML.h>
 #include <imgui.h>
@@ -77,7 +77,7 @@ class Engine final
     // Input components.
     std::unordered_map<std::string, sf::Keyboard::Key> m_supported_keys;
     // Mouse                                              m_mouse;
-    Keyboard                                           m_keyboard;
+    Keyboard m_keyboard;
 };
 } /* namespace tme */
 

@@ -148,7 +148,8 @@ class EntityManager
     [[nodiscard]] bool has_component(EntityID entity_id)
     {
         // Check if entity is invalid.
-        if (!entity_is_valid(entity_id)) return false;
+        if (!entity_is_valid(entity_id))
+            return false;
 
         auto entity_index = get_entity_index(entity_id);
         auto component_id = get_component_id<Component>();

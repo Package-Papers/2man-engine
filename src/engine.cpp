@@ -67,7 +67,7 @@ void tme::Engine::init_keybinds()
 
     ifs.close();
 
-    // m_keyboard.set_keybinds(m_supported_keys);
+    m_keyboard.set_keybinds(m_supported_keys);
 }
 
 void tme::Engine::register_states()
@@ -173,7 +173,7 @@ void tme::Engine::fixed_update()
 
 State::Context tme::Engine::get_context()
 {
-    return {&m_window, &m_texture_holder, &m_font_holder};
+    return {&m_window, &m_texture_holder, &m_font_holder, &m_keyboard};
 }
 
 // The main engine loop.

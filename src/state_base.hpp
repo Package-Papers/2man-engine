@@ -6,9 +6,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "resources.hpp"
 #include "debug.hpp"
-
+#include "keyboard.hpp"
+#include "resources.hpp"
 
 class StateStack;
 
@@ -35,6 +35,7 @@ class State
         sf::RenderWindow* window;
         TextureHolder*    textures;
         FontHolder*       fonts;
+        tme::Keyboard*    keyboard;
     };
 
   public:
