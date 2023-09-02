@@ -1,6 +1,7 @@
 external/*/
 build
 test
+release
 out
 .cache
 .idea
