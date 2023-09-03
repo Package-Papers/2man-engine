@@ -7,3 +7,6 @@
 [submodule "external/imgui-sfml"]
 	path = external/imgui-sfml
 	url = git@github.com:SFML/imgui-sfml.git
+[submodule "luacpp"]
+	path = external/luacpp
+	url = git@github.com:jordanvrtanoski/luacpp.git
