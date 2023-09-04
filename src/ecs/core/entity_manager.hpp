@@ -10,18 +10,22 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <functional>
 
 #include "../../debug.hpp"
 
 #include "component.hpp"
 #include "component_pool.hpp"
 #include "entity.hpp"
+#include "../../action.hpp"
 
 class EntityManager
 {
   private:
     using EntityPool  = std::vector<EntityInfo>;
     using EntityQueue = std::vector<EntityIndex>;
+
+    using ActionStack = std::vector<Action>;
 
   public:
     // Creates a new entity. Reuses an entry if available, else allocate a new slot.
@@ -161,6 +165,22 @@ class EntityManager
         return m_entity_pool;
     }
 
+    [[nodiscard]] Action* create_action()
+    {
+        m_action_stack.emplace_back();
+        return &m_action_stack.back();
+    }
+
+    void execute_actions()
+    {
+        while (!m_action_stack.empty())
+        {
+            auto action = m_action_stack.back();
+            m_action_stack.pop_back();
+            action.execute(this);
+        }
+    }
+
   private:
     // Note: We want to minimize checking. Checking only happens in debug mode.
     ComponentPool& get_component_pool(std::size_t component_id)
@@ -193,6 +213,7 @@ class EntityManager
         return m_entity_pool[get_entity_index(entity_id)].m_id == entity_id;
     }
 
+
   private:
     EntityPool m_entity_pool;
 
@@ -202,6 +223,9 @@ class EntityManager
     // A collection of component pools. Each pool holds the data of the component for each entity,
     // which can be accessed via the entity index.
     ComponentPools m_component_pools;
+
+    ActionStack m_action_stack;
+    
 };
 
 #endif /* TME_ECS_ENTITY_MANAGER */
