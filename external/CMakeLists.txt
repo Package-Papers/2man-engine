@@ -8,3 +8,8 @@ set(IMGUI_SFML_IMGUI_DEMO ON)
 
 # sfml-imgui
 add_subdirectory(imgui-sfml)
+
+# lua
+option(LUA_BUILD_AS_CXX "Build lua as C++" ON)
+add_subdirectory(lua)
+

@@ -1,27 +1,17 @@
 cmake_minimum_required(VERSION 3.22)
+
 project(TwoManEngine LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 23)
 
 # Generate the compilation database for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Doctest - Remove test on release mode
-# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DDOCTEST_CONFIG_DISABLE")
-
 # Include dependencies
 add_subdirectory(external)
 
-# CPM
-# include(cmake/CPM.cmake)
-
-# CPMAddPackage(
-#   NAME Observe
-#   VERSION 3.0
-#   GITHUB_REPOSITORY TheLartians/Observe
-# )
-
 # Include source
 add_subdirectory(src)
-set(CMAKE_CXX_STANDARD 23)
 
 # Include rapidjson
 target_include_directories(TwoManEngine PUBLIC
@@ -33,14 +23,14 @@ target_include_directories(TwoManEngine PUBLIC
   ${PROJECT_SOURCE_DIR}/external/doctest
 )
 
+# Link lua
+target_link_libraries(TwoManEngine PRIVATE lua_static)
+
 # Link SFML
 target_link_libraries(TwoManEngine PRIVATE sfml-system sfml-window sfml-audio)
 
 # Link SFML-IMGUI
 target_link_libraries(TwoManEngine PRIVATE ImGui-SFML::ImGui-SFML)
-
-# Link CPM dependencies
-# target_link_libraries(TwoManEngine PRIVATE Observe)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
     message(STATUS "Configuration: [TEST]... Enabling tests...")
