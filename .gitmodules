@@ -10,3 +10,6 @@
 [submodule "luacpp"]
 	path = external/luacpp
 	url = git@github.com:jordanvrtanoski/luacpp.git
+[submodule "external/lua"]
+	path = external/lua
+	url = git@github.com:walterschell/Lua.git
