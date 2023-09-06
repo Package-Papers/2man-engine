@@ -7,17 +7,17 @@
 #ifndef TME_ECS_ENTITY_MANAGER
 #define TME_ECS_ENTITY_MANAGER
 
+#include <functional>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-#include <functional>
 
 #include "../../debug.hpp"
 
+#include "../../action.hpp"
 #include "component.hpp"
 #include "component_pool.hpp"
 #include "entity.hpp"
-#include "../../action.hpp"
 
 class EntityManager
 {
@@ -213,7 +213,6 @@ class EntityManager
         return m_entity_pool[get_entity_index(entity_id)].m_id == entity_id;
     }
 
-
   private:
     EntityPool m_entity_pool;
 
@@ -225,7 +224,6 @@ class EntityManager
     ComponentPools m_component_pools;
 
     ActionStack m_action_stack;
-    
 };
 
 #endif /* TME_ECS_ENTITY_MANAGER */
