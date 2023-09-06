@@ -3,52 +3,9 @@
 #define GAME_STATE
 
 #include "../controller.hpp"
+#include "../ecs/archetypes/lamp.hpp"
+#include "../ecs/systems/vicinity_system.hpp"
 #include "../state.hpp"
-
-struct VicinitySystem
-{
-    using Callback = std::function<void(EntityID, EntityID)>;
-    void update(EntityManager& m_entity_manager)
-    {
-        for (auto e : EntityCapture<Interactable>(m_entity_manager))
-        {
-            for (auto ee : EntityCapture<Controllable>(m_entity_manager))
-            {
-                auto pos1  = m_entity_manager.get<Position>(e);
-                auto inte1 = m_entity_manager.get<Interactable>(e);
-                auto pos2  = m_entity_manager.get<Position>(ee);
-                // std::cout << " abs(pos1->x - pos2->x)" << abs(pos1->x - pos2->x)
-                //           << " abs(pos1->y - pos2->y):" << abs(pos1->y - pos2->y)
-                //           << "  <= inte1->radius_y):" << (inte1->radius_y) << "\n";
-                if ((abs(pos1->x - pos2->x) <= inte1->radius_x) &&
-                    (abs(pos1->y - pos2->y) <= inte1->radius_y))
-                {
-                    std::cout << "size:" << m_handlers.size() << "\n";
-                    execute(e, ee);
-                }
-            }
-        }
-    }
-
-    void listen(Callback cb)
-    {
-        std::cout << "Listening\n";
-        m_handlers.push_back(cb);
-        // std::cout << "size:" << m_handlers.size() << "\n";
-    }
-
-    void execute(EntityID e1, EntityID e2)
-    {
-        for (auto& handler : m_handlers)
-        {
-            std::cout << "CallingHandler\n";
-            handler(e1, e2);
-        }
-    }
-
-  public:
-    std::vector<Callback> m_handlers;
-};
 
 class GameState : public State
 {
@@ -58,7 +15,6 @@ class GameState : public State
         , m_shape(15)
         , m_rectangle_shape({10, 10})
         , m_controller()
-        , m_vicinity_system()
     {
         m_controller.m_entity_manager = &m_entity_manager;
         m_controller.m_keyboard       = m_context.keyboard;
@@ -66,29 +22,40 @@ class GameState : public State
         m_rectangle_shape.setFillColor(sf::Color::Red);
 
         auto e1 = m_entity_manager.create_entity();
-        auto e2 = m_entity_manager.create_entity();
         m_entity_manager.attach<Controllable>(e1);
         m_entity_manager.attach<Position>(e1);
-
-        *m_entity_manager.get<Position>(e1) = {2.5, 2.5};
-
+        *m_entity_manager.get<Position>(e1)   = {2.5, 2.5};
         m_entity_manager.get<Position>(e1)->y = 200;
-        m_entity_manager.attach<Interactable>(e2);
-        m_entity_manager.attach<Position>(e2);
-        m_controller.make_controller();
-        m_controller.get_interactables();
 
-        auto check_interactable = [=](EntityID e1, EntityID e2)
+        LampArchetype lamp_factory{10.f, 10.f};
+        auto          lamp = lamp_factory.create(m_entity_manager);
+
+        LampArchetype lamp_factory2{20.f, 20.f};
+        auto          lamp2 = lamp_factory2.create(m_entity_manager);
+
+        m_controller.make_controller();
+
+        auto check_interactable = [=](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
         {
             if (m_context.keyboard->is_key_pressed(sf::Keyboard::Key::E))
             {
+                std::cout << "interactable\n";
+                auto interactable = m_entity_manager->get<Interactable>(e1);
+                if (interactable->action == nullptr)
+                    std::cout << "empty!\n";
+                m_entity_manager->get<Interactable>(e1)->action(m_entity_manager, e1, e2);
+                std::cout << "interactable2\n";
             }
         };
-        m_vicinity_system.listen(check_interactable);
+        auto vct = new VicinitySystem;
+        vct->listen(check_interactable);
+        m_systems.emplace_back(vct);
     }
 
     void draw()
     {
+        m_rectangle_shape.setFillColor(sf::Color::White);
+
         for (EntityID e : EntityCapture<Controllable>(m_entity_manager))
         {
             auto pos = m_entity_manager.get<Position>(e);
@@ -99,18 +66,17 @@ class GameState : public State
         for (EntityID e : EntityCapture<Interactable>(m_entity_manager))
         {
             auto pos = m_entity_manager.get<Position>(e);
+            auto col = m_entity_manager.get<Colour>(e);
             m_rectangle_shape.setPosition({pos->x, pos->y});
-            if (m_entity_manager.get<Interactable>(e)->is_switch)
-            {
-                m_rectangle_shape.setFillColor(sf::Color::Blue);
-            }
+            m_rectangle_shape.setFillColor(sf::Color(col->r, col->g, col->b));
             m_context.window->draw(m_rectangle_shape);
         }
     }
     bool update(sf::Time dt)
     {
         m_controller.update();
-        m_vicinity_system.update(m_entity_manager);
+        // m_vicinity_system.update(m_entity_manager);
+        update_systems();
         m_entity_manager.execute_actions();
     }
     bool handle_event(const sf::Event& event)
@@ -122,8 +88,6 @@ class GameState : public State
     sf::RectangleShape m_rectangle_shape;
     sf::CircleShape    m_shape;
     Controller         m_controller;
-    EntityManager      m_entity_manager;
-    VicinitySystem     m_vicinity_system;
 };
 
 #endif /* GAME_STATE */

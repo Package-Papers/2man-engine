@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "debug.hpp"
+#include "ecs/systems/system_base.hpp"
 #include "keyboard.hpp"
 #include "resources.hpp"
 
@@ -50,6 +51,7 @@ class State
     virtual void draw()                               = 0;
     virtual bool update(sf::Time dt)                  = 0;
     virtual bool handle_event(const sf::Event& event) = 0;
+    void         update_systems();
 
   public:
     void request_stack_push(states::ID stateID);
@@ -59,8 +61,10 @@ class State
     Context get_context() const;
 
   protected:
-    StateStack* m_state_stack;
-    Context     m_context;
+    StateStack*   m_state_stack;
+    EntityManager m_entity_manager;
+    Systems       m_systems;
+    Context       m_context;
 };
 
 #include "state_stack.hpp"
@@ -76,6 +80,14 @@ inline void State::request_stack_pop()
 inline void State::request_stack_clear()
 {
     m_state_stack->m_pending_list.push_back({StateStack::Action::Clear});
+}
+
+inline void State::update_systems()
+{
+    for (auto& system : m_systems)
+    {
+        system->update(m_entity_manager);
+    }
 }
 
 #endif /* TME_STATE */
