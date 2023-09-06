@@ -20,40 +20,8 @@ public:
     lua_close(m_lua_state);
   }
 
-  std::optional<std::string> get_string_global(const std::string& name)
-  {
-    auto _ = fetch_global(name);
-    if (!lua_isstring(m_lua_state, -1))
-    {
-      set_error(true);
-      return {};
-    }
-
-    return std::string(lua_tostring(m_lua_state, -1));
-  }
-  std::optional<double> get_double_global(const std::string& name)
-  {
-    auto _ = fetch_global(name);
-    if (!lua_isnumber(m_lua_state, -1))
-    {
-      set_error(true);
-      return {};
-    }
-
-    return static_cast<double>(lua_tonumber(m_lua_state, -1));
-  }
-
-  std::optional<float> get_float_global(const std::string& name)
-  {
-    auto _ = fetch_global(name);
-    if (!lua_isnumber(m_lua_state, -1))
-    {
-      set_error(true);
-      return {};
-    }
-
-    return static_cast<float>(lua_tonumber(m_lua_state, -1));
-  }
+  template<typename T>
+  std::optional<T> read(const int index = -1);
 
   int fetch_global(const std::string& name)
   {
@@ -84,5 +52,26 @@ private:
   lua_State* m_lua_state;
   bool m_error_occured;
 };
+
+template<>
+inline std::optional<float> LuaContext::read<float>(const int index)
+{
+  if (!lua_isnumber(m_lua_state, index)) return {};
+  return static_cast<float>(lua_tonumber(m_lua_state, index));
+}
+
+template<>
+inline std::optional<double> LuaContext::read<double>(const int index)
+{
+  if (!lua_isnumber(m_lua_state, index)) return {};
+  return static_cast<double>(lua_tonumber(m_lua_state, index));
+}
+
+template<>
+inline std::optional<std::string> LuaContext::read<std::string>(const int index)
+{
+  if (!lua_isstring(m_lua_state, index)) return {};
+  return static_cast<std::string>(lua_tostring(m_lua_state, index));
+}
 
 #endif /* TME_LUA_CONTEXT */
