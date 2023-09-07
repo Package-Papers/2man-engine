@@ -3,7 +3,11 @@
 #define GAME_STATE
 
 #include "../controller.hpp"
-#include "../ecs/ecs_all.hpp"
+#include "../ecs/archetypes/lamp.hpp"
+#include "../ecs/archetypes/player.hpp"
+#include "../ecs/ecs.hpp"
+#include "../ecs/systems/rendering_system.hpp"
+#include "../ecs/systems/vicinity_system.hpp"
 #include "../state.hpp"
 
 class GameState : public State
@@ -11,14 +15,10 @@ class GameState : public State
   public:
     GameState(StateStack& stack, Context context)
         : State(stack, context)
-        , m_shape(15)
-        , m_rectangle_shape({10, 10})
         , m_controller()
     {
         m_controller.m_entity_manager = &m_entity_manager;
         m_controller.m_keyboard       = m_context.keyboard;
-        m_shape.setFillColor(sf::Color::White);
-        m_rectangle_shape.setFillColor(sf::Color::Red);
 
         LampArchetype lamp_factory{10.f, 10.f};
         auto          lamp = lamp_factory.create(m_entity_manager);
@@ -40,12 +40,10 @@ class GameState : public State
             }
         };
 
-        auto vct = new VicinitySystem;
+        auto vct = m_systems.add_system<VicinitySystem>();
         vct->listen(check_interactable);
-        m_systems.emplace_back(vct);
 
-        auto render_system = new RenderingSystem(m_context);
-        m_systems.emplace_back(render_system);
+        m_systems.add_system<RenderingSystem>(m_context);
     }
 
     void draw()
@@ -65,9 +63,7 @@ class GameState : public State
     }
 
   private:
-    sf::RectangleShape m_rectangle_shape;
-    sf::CircleShape    m_shape;
-    Controller         m_controller;
+    Controller m_controller;
 };
 
 #endif /* GAME_STATE */

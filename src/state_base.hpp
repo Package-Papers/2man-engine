@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "debug.hpp"
-#include "ecs/systems/system_base.hpp"
+#include "ecs/ecs.hpp"
 #include "keyboard.hpp"
 #include "resources.hpp"
 
@@ -85,18 +85,12 @@ inline void State::request_stack_clear()
 
 inline void State::update_systems()
 {
-    for (auto& system : m_systems)
-    {
-        system->update(m_entity_manager);
-    }
+    m_systems.update(m_entity_manager);
 }
 
 inline void State::draw_systems()
 {
-    for (auto& system : m_systems)
-    {
-        system->draw(m_entity_manager);
-    }
+    m_systems.draw(m_entity_manager);
 }
 
 #endif /* TME_STATE */

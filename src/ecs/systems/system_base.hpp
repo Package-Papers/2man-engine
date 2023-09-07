@@ -21,6 +21,4 @@ class SystemBase
     }
 };
 
-using Systems = std::vector<std::unique_ptr<SystemBase>>;
-
 #endif /* TME_SYSTEM_BASE */
