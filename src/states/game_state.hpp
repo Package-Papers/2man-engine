@@ -3,8 +3,7 @@
 #define GAME_STATE
 
 #include "../controller.hpp"
-#include "../ecs/archetypes/lamp.hpp"
-#include "../ecs/systems/vicinity_system.hpp"
+#include "../ecs/ecs_all.hpp"
 #include "../state.hpp"
 
 class GameState : public State
@@ -21,17 +20,14 @@ class GameState : public State
         m_shape.setFillColor(sf::Color::White);
         m_rectangle_shape.setFillColor(sf::Color::Red);
 
-        auto e1 = m_entity_manager.create_entity();
-        m_entity_manager.attach<Controllable>(e1);
-        m_entity_manager.attach<Position>(e1);
-        *m_entity_manager.get<Position>(e1)   = {2.5, 2.5};
-        m_entity_manager.get<Position>(e1)->y = 200;
-
         LampArchetype lamp_factory{10.f, 10.f};
         auto          lamp = lamp_factory.create(m_entity_manager);
 
         LampArchetype lamp_factory2{20.f, 20.f};
         auto          lamp2 = lamp_factory2.create(m_entity_manager);
+
+        PlayerArchetype player_factory{100.f, 100.f};
+        auto            player = player_factory.create(m_entity_manager);
 
         m_controller.make_controller();
 
@@ -56,7 +52,9 @@ class GameState : public State
     {
         m_rectangle_shape.setFillColor(sf::Color::White);
 
-        for (EntityID e : EntityCapture<Controllable>(m_entity_manager))
+        RenderingSystem
+
+            for (EntityID e : EntityCapture<Controllable>(m_entity_manager))
         {
             auto pos = m_entity_manager.get<Position>(e);
 
@@ -75,9 +73,9 @@ class GameState : public State
     bool update(sf::Time dt)
     {
         m_controller.update();
-        // m_vicinity_system.update(m_entity_manager);
         update_systems();
         m_entity_manager.execute_actions();
+        return true;
     }
     bool handle_event(const sf::Event& event)
     {

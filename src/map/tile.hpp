@@ -6,7 +6,7 @@
 
 struct Tile
 {
-  textures::ID m_sprite_texture_id;
+    textures::ID m_sprite_texture_id;
 };
 
 #endif /* TME_TILE */

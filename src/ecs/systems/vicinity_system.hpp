@@ -37,7 +37,7 @@ struct VicinitySystem : public SystemBase
         // std::cout << "size:" << m_handlers.size() << "\n";
     }
 
-    void execute(EntityManager *m_entity_manager, EntityID e1, EntityID e2)
+    void execute(EntityManager* m_entity_manager, EntityID e1, EntityID e2)
     {
         for (auto& handler : m_handlers)
         {

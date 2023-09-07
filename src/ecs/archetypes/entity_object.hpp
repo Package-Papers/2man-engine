@@ -6,12 +6,8 @@
 
 class EntityObject
 {
-    public:
-        virtual EntityID create(EntityManager& em) = 0;
-
+  public:
+    virtual EntityID create(EntityManager& em) = 0;
 };
 
-
-
 #endif /* TME_ENTITY_OBJECT */
-

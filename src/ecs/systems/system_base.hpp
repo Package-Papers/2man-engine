@@ -10,13 +10,14 @@ class EntityManager;
 
 class SystemBase
 {
-    public:
-        virtual void update(EntityManager& m_entity_manager) = 0;
+  public:
+    virtual void update(EntityManager& m_entity_manager) = 0;
 
+    virtual ~SystemBase()
+    {
+    }
 };
 
 using Systems = std::vector<std::unique_ptr<SystemBase>>;
 
-
 #endif /* TME_SYSTEM_BASE */
-
