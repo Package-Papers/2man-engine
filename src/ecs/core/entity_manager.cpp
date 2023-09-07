@@ -201,3 +201,29 @@ TEST_CASE("Invalid assignment")
     CHECK(!entities[index].m_mask.get_bit(get_component_id<Foo>()));
     CHECK(!entities[index].m_mask.get_bit(get_component_id<Bar>()));
 }
+
+TEST_CASE("Testing functions with multiple components")
+{
+    EntityManager em{};
+    auto&         entities = em.get_entities();
+    auto          e1       = em.create_entity();
+    auto          index    = get_entity_index(e1);
+
+    // Now we should not be able to assign anything to it.
+    class Foo
+    {
+    };
+    class Bar
+    {
+    };
+
+    auto [foo, bar] = em.attach<Foo, Bar>(e1);
+    auto [gfoo, gbar] = em.get<Foo, Bar>(e1);
+
+    CHECK(em.get<Foo>(e1) == foo);
+    CHECK(em.get<Bar>(e1) == bar);
+    CHECK(gbar == bar);
+    CHECK(gfoo == foo);
+    CHECK(entities[index].m_mask.get_bit(get_component_id<Foo>()));
+    CHECK(entities[index].m_mask.get_bit(get_component_id<Bar>()));
+}

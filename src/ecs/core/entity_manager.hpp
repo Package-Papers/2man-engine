@@ -11,6 +11,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <tuple>
 
 #include "../../debug.hpp"
 
@@ -26,6 +27,118 @@ class EntityManager
     using EntityQueue = std::vector<EntityIndex>;
 
     using ActionStack = std::vector<Action>;
+
+  private:
+    template <typename Component>
+    Component* p_attach(EntityID entity_id)
+    {
+        // Entity deleted.
+        if (!entity_is_valid(entity_id))
+        {
+            return nullptr;
+        }
+
+        auto component_id = get_component_id<Component>();
+        assert(component_id < MAX_COMPONENTS); // Prevent out of range.
+
+        // If the component pool is not large enough, add another entry for the current type.
+        if (m_component_pools.size() <= component_id)
+        {
+            m_component_pools.resize(static_cast<std::size_t>(component_id + 1));
+        }
+
+        // If the component is new, we need to allocate a new pool for it.
+        if (m_component_pools[component_id] == nullptr)
+        {
+            m_component_pools[component_id] = std::make_unique<ComponentPool>(sizeof(Component));
+        }
+
+        // Allocate the component data and attach it to the entity.
+        auto       entity_index         = get_entity_index(entity_id);
+        auto       component_memory_loc = get_entity_component_mem(entity_index, component_id);
+        Component* component            = new (component_memory_loc) Component();
+
+        // Mark component ownership.
+        m_entity_pool[entity_index].m_mask.set_bit(component_id, true);
+
+        return component;
+    }
+
+    template <typename Component>
+    Component* p_get(EntityID entity_id)
+    {
+        // Entity already deleted.
+        if (!entity_is_valid(entity_id))
+        {
+            return nullptr;
+        }
+
+        auto component_id = get_component_id<Component>();
+        auto entity_index = get_entity_index(entity_id);
+
+        // Check to make sure that the entity does have the component.
+        if (!m_entity_pool[entity_index].m_mask.get_bit(component_id))
+        {
+            return nullptr;
+        }
+
+        Component* component =
+            static_cast<Component*>(get_entity_component_mem(entity_index, component_id));
+        return component;
+    }
+
+    template<std::size_t, typename... Components>
+    struct ComponentRet
+    {
+        using RetType = std::tuple<Components*...>;
+
+        // Base case
+        template <typename Component>
+        static std::tuple<Component*> make_tuple(bool attach, EntityManager& em, const EntityID e)
+        {
+            if (attach)
+                return std::make_tuple(em.p_attach<Component>(e));
+            else
+                return std::make_tuple(em.p_get<Component>(e));
+        }
+
+        // Recursive case
+        template <typename Component1, typename Component2, typename... Rest>
+        static std::tuple<Component1*, Component2*, Rest*...> make_tuple(bool attach, EntityManager& em, const EntityID e)
+        {
+            return std::tuple_cat(
+                make_tuple<Component1>(attach, em, e),            // Form the head and attach it to the rest.
+                make_tuple<Component2, Rest...>(attach, em, e)
+            );
+        }
+
+        static RetType attach(EntityManager& em, const EntityID e)
+        {
+            return make_tuple<Components...>(true, em, e);
+        }
+
+        static RetType get(EntityManager& em, const EntityID e)
+        {
+            return make_tuple<Components...>(false, em, e);
+        }
+    };
+
+
+    template<typename... Components>
+    struct ComponentRet<0, Components...>
+    {
+        using RetType = void;
+        static RetType attach(EntityManager&, const EntityID) {}
+        static RetType get(EntityManager&, const EntityID) {}
+    };
+
+    template<typename Component>
+    struct ComponentRet<1, Component>
+    {
+        using RetType = Component*;
+        static RetType attach(EntityManager& em, const EntityID e) { return em.p_attach<Component>(e); }
+        static RetType get(EntityManager& em, const EntityID e) { return em.p_get<Component>(e); }
+    };
 
   public:
     // Creates a new entity. Reuses an entry if available, else allocate a new slot.
@@ -76,39 +189,18 @@ class EntityManager
         m_free_entities.push_back(reuse_index);
     }
 
-    template <typename Component>
-    Component* attach(EntityID entity_id)
+    // attach<Foo>
+    // ComponentRet<1, Foo> <--> Component<1, Component>
+    template<typename ...Components>
+    typename ComponentRet<sizeof...(Components), Components...>::RetType attach(const EntityID entity_id)
     {
-        // Entity deleted.
-        if (!entity_is_valid(entity_id))
-        {
-            return nullptr;
-        }
+        return ComponentRet<sizeof...(Components), Components...>::attach(*this, entity_id);
+    }
 
-        auto component_id = get_component_id<Component>();
-        assert(component_id < MAX_COMPONENTS); // Prevent out of range.
-
-        // If the component pool is not large enough, add another entry for the current type.
-        if (m_component_pools.size() <= component_id)
-        {
-            m_component_pools.resize(static_cast<std::size_t>(component_id + 1));
-        }
-
-        // If the component is new, we need to allocate a new pool for it.
-        if (m_component_pools[component_id] == nullptr)
-        {
-            m_component_pools[component_id] = std::make_unique<ComponentPool>(sizeof(Component));
-        }
-
-        // Allocate the component data and attach it to the entity.
-        auto       entity_index         = get_entity_index(entity_id);
-        auto       component_memory_loc = get_entity_component_mem(entity_index, component_id);
-        Component* component            = new (component_memory_loc) Component();
-
-        // Mark component ownership.
-        m_entity_pool[entity_index].m_mask.set_bit(component_id, true);
-
-        return component;
+    template<typename ...Components>
+    typename ComponentRet<sizeof...(Components), Components...>::RetType get(const EntityID entity_id)
+    {
+        return ComponentRet<sizeof...(Components), Components...>::get(*this, entity_id);
     }
 
     template <typename Component>
@@ -123,29 +215,6 @@ class EntityManager
         auto component_id = get_component_id<Component>();
         assert(component_id < MAX_COMPONENTS); // Prevent out of range.
         m_entity_pool[get_entity_index(entity_id)].m_mask.set_bit(component_id, false);
-    }
-
-    template <typename Component>
-    Component* get(EntityID entity_id)
-    {
-        // Entity already deleted.
-        if (!entity_is_valid(entity_id))
-        {
-            return nullptr;
-        }
-
-        auto component_id = get_component_id<Component>();
-        auto entity_index = get_entity_index(entity_id);
-
-        // Check to make sure that the entity does have the component.
-        if (!m_entity_pool[entity_index].m_mask.get_bit(component_id))
-        {
-            return nullptr;
-        }
-
-        Component* component =
-            static_cast<Component*>(get_entity_component_mem(entity_index, component_id));
-        return component;
     }
 
     template <typename Component>
