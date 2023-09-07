@@ -215,7 +215,7 @@ class EntityManager
     }
 
     template <typename Component>
-    void detach(EntityID entity_id)
+    void p_detach(EntityID entity_id)
     {
         // Entity already deleted.
         if (!entity_is_valid(entity_id))
@@ -227,6 +227,14 @@ class EntityManager
         assert(component_id < MAX_COMPONENTS); // Prevent out of range.
         m_entity_pool[get_entity_index(entity_id)].m_mask.set_bit(component_id, false);
     }
+
+
+    template <typename... Components>
+    void detach(EntityID entity_id)
+    {
+        (p_detach<Components>(entity_id), ...);
+    }
+
 
     template <typename Component>
     [[nodiscard]] bool has_component(EntityID entity_id)

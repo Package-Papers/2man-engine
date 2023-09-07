@@ -226,4 +226,28 @@ TEST_CASE("Testing functions with multiple components")
     CHECK(gfoo == foo);
     CHECK(entities[index].m_mask.get_bit(get_component_id<Foo>()));
     CHECK(entities[index].m_mask.get_bit(get_component_id<Bar>()));
+
+    SUBCASE("Removing multiple components")
+    {
+        EntityManager em{};
+        auto e = em.create_entity();
+
+        class Foo {};
+        class Bar {};
+        class Car {};
+        
+        auto [f, b, g] = em.attach<Foo, Bar, Car>(e);
+
+        CHECK(f != nullptr);
+        CHECK(b != nullptr);
+        CHECK(g != nullptr);
+
+        em.detach<Foo, Bar>(e);
+
+        auto [c, d, z] = em.get<Foo, Bar, Car>(e);
+
+        CHECK(c == nullptr);
+        CHECK(d == nullptr);
+        CHECK(z != nullptr);
+    }
 }
