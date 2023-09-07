@@ -217,7 +217,7 @@ TEST_CASE("Testing functions with multiple components")
     {
     };
 
-    auto [foo, bar] = em.attach<Foo, Bar>(e1);
+    auto [foo, bar]   = em.attach<Foo, Bar>(e1);
     auto [gfoo, gbar] = em.get<Foo, Bar>(e1);
 
     CHECK(em.get<Foo>(e1) == foo);

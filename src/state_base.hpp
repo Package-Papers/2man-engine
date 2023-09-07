@@ -52,6 +52,7 @@ class State
     virtual bool update(sf::Time dt)                  = 0;
     virtual bool handle_event(const sf::Event& event) = 0;
     void         update_systems();
+    void         draw_systems();
 
   public:
     void request_stack_push(states::ID stateID);
@@ -87,6 +88,14 @@ inline void State::update_systems()
     for (auto& system : m_systems)
     {
         system->update(m_entity_manager);
+    }
+}
+
+inline void State::draw_systems()
+{
+    for (auto& system : m_systems)
+    {
+        system->draw(m_entity_manager);
     }
 }
 

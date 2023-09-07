@@ -35,40 +35,22 @@ class GameState : public State
         {
             if (m_context.keyboard->is_key_pressed(sf::Keyboard::Key::E))
             {
-                std::cout << "interactable\n";
                 auto interactable = m_entity_manager->get<Interactable>(e1);
-                if (interactable->action == nullptr)
-                    std::cout << "empty!\n";
                 m_entity_manager->get<Interactable>(e1)->action(m_entity_manager, e1, e2);
-                std::cout << "interactable2\n";
             }
         };
+
         auto vct = new VicinitySystem;
         vct->listen(check_interactable);
         m_systems.emplace_back(vct);
+
+        auto render_system = new RenderingSystem(m_context);
+        m_systems.emplace_back(render_system);
     }
 
     void draw()
     {
-        m_rectangle_shape.setFillColor(sf::Color::White);
-
-        RenderingSystem
-
-            for (EntityID e : EntityCapture<Controllable>(m_entity_manager))
-        {
-            auto pos = m_entity_manager.get<Position>(e);
-
-            m_shape.setPosition({pos->x, pos->y});
-            m_context.window->draw(m_shape);
-        }
-        for (EntityID e : EntityCapture<Interactable>(m_entity_manager))
-        {
-            auto pos = m_entity_manager.get<Position>(e);
-            auto col = m_entity_manager.get<Colour>(e);
-            m_rectangle_shape.setPosition({pos->x, pos->y});
-            m_rectangle_shape.setFillColor(sf::Color(col->r, col->g, col->b));
-            m_context.window->draw(m_rectangle_shape);
-        }
+        draw_systems();
     }
     bool update(sf::Time dt)
     {

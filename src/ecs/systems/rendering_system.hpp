@@ -11,12 +11,18 @@
 class RenderingSystem: public SystemBase
 {
 
-    RenderingSystem(State::Context context): Context(m_context), m_shape(15), m_rectangle_shape({10,10})
+    public:
+    RenderingSystem(State::Context context): m_context(context), m_shape(15), m_rectangle_shape({10,10})
     {
         m_rectangle_shape.setFillColor(sf::Color::White);
     }
 
     virtual void update(EntityManager& m_entity_manager) override   
+    {
+
+    }
+
+    virtual void draw(EntityManager& m_entity_manager) override
     {
         for (EntityID e : EntityCapture<Controllable>(m_entity_manager))
         {
@@ -33,7 +39,6 @@ class RenderingSystem: public SystemBase
             m_rectangle_shape.setFillColor(sf::Color(col->r, col->g, col->b));
             m_context.window->draw(m_rectangle_shape);
         }
-
     }
 
     private:

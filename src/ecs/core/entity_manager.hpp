@@ -10,8 +10,8 @@
 #include <functional>
 #include <iostream>
 #include <stdexcept>
-#include <vector>
 #include <tuple>
+#include <vector>
 
 #include "../../debug.hpp"
 
@@ -87,7 +87,7 @@ class EntityManager
         return component;
     }
 
-    template<std::size_t, typename... Components>
+    template <std::size_t, typename... Components>
     struct ComponentRet
     {
         using RetType = std::tuple<Components*...>;
@@ -104,12 +104,12 @@ class EntityManager
 
         // Recursive case
         template <typename Component1, typename Component2, typename... Rest>
-        static std::tuple<Component1*, Component2*, Rest*...> make_tuple(bool attach, EntityManager& em, const EntityID e)
+        static std::tuple<Component1*, Component2*, Rest*...>
+            make_tuple(bool attach, EntityManager& em, const EntityID e)
         {
             return std::tuple_cat(
-                make_tuple<Component1>(attach, em, e),            // Form the head and attach it to the rest.
-                make_tuple<Component2, Rest...>(attach, em, e)
-            );
+                make_tuple<Component1>(attach, em, e), // Form the head and attach it to the rest.
+                make_tuple<Component2, Rest...>(attach, em, e));
         }
 
         static RetType attach(EntityManager& em, const EntityID e)
@@ -123,21 +123,30 @@ class EntityManager
         }
     };
 
-
-    template<typename... Components>
+    template <typename... Components>
     struct ComponentRet<0, Components...>
     {
         using RetType = void;
-        static RetType attach(EntityManager&, const EntityID) {}
-        static RetType get(EntityManager&, const EntityID) {}
+        static RetType attach(EntityManager&, const EntityID)
+        {
+        }
+        static RetType get(EntityManager&, const EntityID)
+        {
+        }
     };
 
-    template<typename Component>
+    template <typename Component>
     struct ComponentRet<1, Component>
     {
         using RetType = Component*;
-        static RetType attach(EntityManager& em, const EntityID e) { return em.p_attach<Component>(e); }
-        static RetType get(EntityManager& em, const EntityID e) { return em.p_get<Component>(e); }
+        static RetType attach(EntityManager& em, const EntityID e)
+        {
+            return em.p_attach<Component>(e);
+        }
+        static RetType get(EntityManager& em, const EntityID e)
+        {
+            return em.p_get<Component>(e);
+        }
     };
 
   public:
@@ -191,14 +200,16 @@ class EntityManager
 
     // attach<Foo>
     // ComponentRet<1, Foo> <--> Component<1, Component>
-    template<typename ...Components>
-    typename ComponentRet<sizeof...(Components), Components...>::RetType attach(const EntityID entity_id)
+    template <typename... Components>
+    typename ComponentRet<sizeof...(Components), Components...>::RetType
+        attach(const EntityID entity_id)
     {
         return ComponentRet<sizeof...(Components), Components...>::attach(*this, entity_id);
     }
 
-    template<typename ...Components>
-    typename ComponentRet<sizeof...(Components), Components...>::RetType get(const EntityID entity_id)
+    template <typename... Components>
+    typename ComponentRet<sizeof...(Components), Components...>::RetType
+        get(const EntityID entity_id)
     {
         return ComponentRet<sizeof...(Components), Components...>::get(*this, entity_id);
     }

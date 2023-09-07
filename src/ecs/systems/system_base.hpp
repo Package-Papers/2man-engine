@@ -12,6 +12,9 @@ class SystemBase
 {
   public:
     virtual void update(EntityManager& m_entity_manager) = 0;
+    virtual void draw(EntityManager& m_entity_manager)
+    {
+    }
 
     virtual ~SystemBase()
     {
