@@ -1,4 +1,5 @@
 #pragma once
+#include "SFML/System/Vector3.hpp"
 #ifndef TME_LAYER
 #define TME_LAYER
 
@@ -9,60 +10,52 @@
 
 #include "../structures/Vec2D.hpp"
 #include "tile.hpp"
+#include "../state.hpp"
 
-class Layer : public sf::Drawable
+class Map;
+
+class Layer
 {
   public:
-    explicit Layer(std::size_t width, std::size_t height)
-        : m_grid(width, height, textures::ID::Placeholder)
+    explicit Layer(Map* map, State::Context ctx, std::size_t width, std::size_t height);
+
+    // Load and cache texture
+    sf::Texture* load_texture(textures::ID tid);
+
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states = sf::RenderStates::Default)
     {
-    }
-
-    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override
-    {
-        sf::RectangleShape box;
-        auto               size = sf::Vector2f{20.f, 20.f};
-
-        box.setSize(size);
-        box.setOutlineThickness(0.5f);
-
         const auto [width, height] = m_grid.dim();
 
         for (auto y = 0; y < height; y++)
         {
             for (auto x = 0; x < width; x++)
             {
-                if (m_grid.at(y, x) == textures::ID::Placeholder)
+                if (m_grid.at(y, x).m_sprite_texture_id == textures::ID::Placeholder)
                     continue;
 
-                switch (m_grid.at(y, x))
-                {
-                    // Different cases handled here.
-                    // The logic of drawing should actually be handled via the tile itself.
-                    break;
-                    default:
-                        continue;
-                }
-
-                auto pos = sf::Vector2f{static_cast<float>(x), static_cast<float>(y)};
-                box.setPosition(pos * size.x);
-                target.draw(box, states);
+                draw_tile(x, y);
             }
         }
     }
 
-    const Vec2D<textures::ID>& get() const
+    void draw_tile(std::size_t x, std::size_t y);
+
+    const Vec2D<Tile>& get() const
     {
         return m_grid;
     }
 
-    Vec2D<textures::ID>& get()
+    Vec2D<Tile>& get()
     {
         return m_grid;
     }
 
   private:
-    Vec2D<textures::ID> m_grid;
+    Map*                                           m_parent_map;
+    State::Context                                 m_context;
+    Vec2D<Tile>                                    m_grid;
+    sf::RectangleShape                             m_shape;
+    std::unordered_map<textures::ID, sf::Texture*> m_texture_cache;
 };
 
 #endif /* TME_LAYER */

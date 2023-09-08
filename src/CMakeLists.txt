@@ -4,6 +4,7 @@ target_sources(TwoManEngine
   PRIVATE
     mouse.cpp
     engine.cpp
+    map/layer.cpp
     ecs/core/component.cpp
     ecs/core/component_pool.cpp
     ecs/core/entity_manager.cpp
