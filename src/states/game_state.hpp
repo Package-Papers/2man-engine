@@ -9,6 +9,7 @@
 #include "../ecs/systems/rendering_system.hpp"
 #include "../ecs/systems/vicinity_system.hpp"
 #include "../state.hpp"
+#include "../map/map.hpp"
 
 class GameState : public State
 {
@@ -16,7 +17,12 @@ class GameState : public State
     GameState(StateStack& stack, Context context)
         : State(stack, context)
         , m_controller()
+        , m_map(m_context, 10, 10)
     {
+        m_context.textures->load(textures::ID::Tile1, "assets/graphics/floor_tile.png");
+
+        init_map();
+
         m_controller.m_entity_manager = &m_entity_manager;
         m_controller.m_keyboard       = m_context.keyboard;
 
@@ -31,7 +37,7 @@ class GameState : public State
 
         m_controller.make_controller();
 
-        auto check_interactable = [=](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
+        auto check_interactable = [=, this](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
         {
             if (m_context.keyboard->is_key_pressed(sf::Keyboard::Key::E))
             {
@@ -46,10 +52,25 @@ class GameState : public State
         m_systems.add_system<RenderingSystem>(m_context);
     }
 
+    void init_map()
+    {
+        auto [width, height] = m_map.dims();
+
+        for (auto y = 5; y < width; y++)
+        {
+            for (auto x = 5; x < height; x++)
+            {
+                m_map.at<0>(y, x) = {{}, {0, 0}, textures::ID::Tile1};
+            }
+        }
+    }
+
     void draw()
     {
+        m_map.draw(*m_context.window);
         draw_systems();
     }
+
     bool update(sf::Time dt)
     {
         m_controller.update();
@@ -64,6 +85,7 @@ class GameState : public State
 
   private:
     Controller m_controller;
+    Map        m_map;
 };
 
 #endif /* GAME_STATE */
