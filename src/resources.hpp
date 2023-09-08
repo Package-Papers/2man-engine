@@ -14,8 +14,7 @@ namespace textures
 enum class ID
 {
     Placeholder,
-    Landscape,
-    Airplane
+    Tile1,
 };
 }
 namespace fonts
