@@ -2,9 +2,8 @@
 #ifndef TME_STATE_BASE
 #define TME_STATE_BASE
 
-#include <iostream>
-
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "debug.hpp"
 #include "ecs/ecs.hpp"

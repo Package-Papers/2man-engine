@@ -228,13 +228,11 @@ class EntityManager
         m_entity_pool[get_entity_index(entity_id)].m_mask.set_bit(component_id, false);
     }
 
-
     template <typename... Components>
     void detach(EntityID entity_id)
     {
         (p_detach<Components>(entity_id), ...);
     }
-
 
     template <typename Component>
     [[nodiscard]] bool has_component(EntityID entity_id)

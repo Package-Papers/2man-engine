@@ -8,9 +8,9 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
+#include "../state.hpp"
 #include "../structures/Vec2D.hpp"
 #include "tile.hpp"
-#include "../state.hpp"
 
 class Map;
 

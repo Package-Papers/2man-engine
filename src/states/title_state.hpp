@@ -24,10 +24,11 @@ class TitleState : public State
         , m_rectangle_box({50, 50})
 
     {
+        m_context.textures->load(textures::ID::Button1, "assets/graphics/buttons/menu-button.png");
         auto size = context.window->getSize();
         m_rectangle_box.setFillColor(sf::Color::White);
         auto [x, y] = m_context.window->getSize();
-        ButtonArchetype button_factory(100.f, 100.f);
+        ButtonArchetype button_factory(100.f, 100.f, textures::ID::Button1);
         auto            start_entity = button_factory.create_button(
             m_entity_manager, static_cast<float>(x) / 2.f, static_cast<float>(y) / 2.f, "Start");
         auto end_entity = button_factory.create_button(

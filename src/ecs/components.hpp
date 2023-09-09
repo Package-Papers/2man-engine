@@ -38,8 +38,9 @@ struct Button
     State                 state;
     std::function<void()> action;
 
-    float size_x;
-    float size_y;
+    float        size_x;
+    float        size_y;
+    textures::ID texture_ID;
 };
 
 struct Interactable

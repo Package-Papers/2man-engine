@@ -15,6 +15,7 @@ enum class ID
 {
     Placeholder,
     Tile1,
+    Button1,
 };
 }
 namespace fonts

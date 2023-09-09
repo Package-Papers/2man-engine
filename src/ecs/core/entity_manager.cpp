@@ -230,12 +230,18 @@ TEST_CASE("Testing functions with multiple components")
     SUBCASE("Removing multiple components")
     {
         EntityManager em{};
-        auto e = em.create_entity();
+        auto          e = em.create_entity();
 
-        class Foo {};
-        class Bar {};
-        class Car {};
-        
+        class Foo
+        {
+        };
+        class Bar
+        {
+        };
+        class Car
+        {
+        };
+
         auto [f, b, g] = em.attach<Foo, Bar, Car>(e);
 
         CHECK(f != nullptr);

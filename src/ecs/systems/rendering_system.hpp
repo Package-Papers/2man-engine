@@ -4,22 +4,24 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "system_base.hpp"
-#include "../entity_capture.hpp"
 #include "../../state_base.hpp"
+#include "../entity_capture.hpp"
+#include "system_base.hpp"
 
-class RenderingSystem: public SystemBase
+class RenderingSystem : public SystemBase
 {
 
-    public:
-    RenderingSystem(State::Context context): m_context(context), m_shape(15), m_rectangle_shape({10,10})
+  public:
+    RenderingSystem(State::Context context)
+        : m_context(context)
+        , m_shape(15)
+        , m_rectangle_shape({10, 10})
     {
         m_rectangle_shape.setFillColor(sf::Color::White);
     }
 
-    virtual void update(EntityManager& m_entity_manager) override   
+    virtual void update(EntityManager& m_entity_manager) override
     {
-
     }
 
     virtual void draw(EntityManager& m_entity_manager) override
@@ -41,12 +43,10 @@ class RenderingSystem: public SystemBase
         }
     }
 
-    private:
-        sf::RectangleShape m_rectangle_shape;
-        sf::CircleShape    m_shape;
-        State::Context     m_context;
-
+  private:
+    sf::RectangleShape m_rectangle_shape;
+    sf::CircleShape    m_shape;
+    State::Context     m_context;
 };
-
 
 #endif /* TME_RENDERING_SYSTEM */

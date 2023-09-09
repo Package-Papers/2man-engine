@@ -7,4 +7,4 @@ struct TileType
 {
 };
 
-#endif  /* TME_TILE_TYPE */
+#endif /* TME_TILE_TYPE */

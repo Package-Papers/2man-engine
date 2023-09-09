@@ -79,24 +79,6 @@ class Vec2D
     }
 
     /**
-     * Initializes a Vec2D object from a raw 2D vector.
-     */
-    explicit Vec2D(const std::vector<std::vector<T>>& other)
-        : width(std::reduce(other.begin(), other.end(), std::size_t{0},
-                            [](const auto& a, const auto& b) { return std::max(a, b.size()); }))
-        , height(other.size())
-        , data(width * height)
-    {
-        for (std::size_t y = 0; y < other.size(); ++y)
-        {
-            for (std::size_t x = 0; x < other[y].size(); ++x)
-            {
-                this->at(y, x) = other[y][x];
-            }
-        }
-    }
-
-    /**
      * Returns the element at row, column. Const qualified.
      */
     [[nodiscard]] const T& at(std::size_t row, std::size_t col) const

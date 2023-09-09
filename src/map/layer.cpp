@@ -34,9 +34,9 @@ sf::Texture* Layer::load_texture(textures::ID tid)
     {
         return m_texture_cache[tid];
     }
-    else 
+    else
     {
-        auto& texture = m_context.textures->get(tid);
+        auto& texture        = m_context.textures->get(tid);
         m_texture_cache[tid] = &texture;
         return &texture;
     }

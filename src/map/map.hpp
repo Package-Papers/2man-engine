@@ -13,7 +13,7 @@
 
 class Map
 {
-private:
+  private:
     friend Layer;
 
   public:
@@ -49,12 +49,10 @@ private:
         return m_size;
     }
 
-
   private:
     std::vector<Layer> m_layers;
     State::Context     m_context;
     sf::Vector2u       m_size;
-
 };
 
 #endif /* TME_MAP */
