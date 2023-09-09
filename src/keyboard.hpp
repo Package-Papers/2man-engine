@@ -44,9 +44,12 @@ class Keyboard : public Input<Keyboard>
         }
 
 #ifndef NDEBUG
+
         for (auto const& [keyword, keynum] : m_supported_keys)
         {
-            if (is_key_down(keynum))
+            if (keynum == sf::Keyboard::Key::Unknown)
+                continue;
+            else if (is_key_down(keynum))
             {
                 std::cout << "Key down: " << keyword << '\n';
             }
