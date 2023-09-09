@@ -3,6 +3,7 @@
 #define GAME_STATE
 
 #include "../controller.hpp"
+#include "../ecs/archetypes/button.hpp"
 #include "../ecs/archetypes/lamp.hpp"
 #include "../ecs/archetypes/player.hpp"
 #include "../ecs/ecs.hpp"

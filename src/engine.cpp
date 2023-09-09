@@ -17,6 +17,11 @@ tme::Engine::Engine(const WindowContext& context)
 
     this->m_state_stack.set_context(get_context());
 
+    this->m_font_holder.load(fonts::ID::Aerial, "font.ttf");
+    std::cout << "yes!\n";
+    this->m_font_holder.get(fonts::ID::Aerial);
+    std::cout << "yes1\n";
+
     this->register_states();
 }
 
@@ -99,8 +104,8 @@ void tme::Engine::handle_events()
     sf::Event event;
     while (m_window.pollEvent(event))
     {
+        m_mouse.handle_event(event);
         ImGui::SFML::ProcessEvent(m_window, event);
-        // m_mouse.handle_event(event);
         if (event.type == sf::Event::Closed)
         {
             m_window.close();
@@ -145,8 +150,8 @@ void tme::Engine::update_fixed_time()
 void tme::Engine::update_real_time()
 {
     m_keyboard.update();
+    m_mouse.update_position(m_window);
     ImGui::SFML::Update(m_window, m_time_since_last_update);
-    // m_mouse.update_position(m_window);
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
                                     ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
@@ -173,7 +178,7 @@ void tme::Engine::fixed_update()
 
 State::Context tme::Engine::get_context()
 {
-    return {&m_window, &m_texture_holder, &m_font_holder, &m_keyboard};
+    return {&m_window, &m_texture_holder, &m_font_holder, &m_keyboard, &m_mouse};
 }
 
 // The main engine loop.

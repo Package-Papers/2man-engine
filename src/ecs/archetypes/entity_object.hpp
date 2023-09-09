@@ -8,6 +8,9 @@ class EntityObject
 {
   public:
     virtual EntityID create(EntityManager& em) = 0;
+    auto             make()
+    {
+    }
 };
 
 #endif /* TME_ENTITY_OBJECT */

@@ -2,6 +2,18 @@
 #ifndef TITLE_STATE
 #define TITLE_STATE
 
+#include "../controller.hpp"
+#include "../ecs/archetypes/button.hpp"
+#include "../ecs/ecs.hpp"
+#include "../state.hpp"
+
+#include "../controller.hpp"
+#include "../ecs/archetypes/button.hpp"
+#include "../ecs/archetypes/lamp.hpp"
+#include "../ecs/archetypes/player.hpp"
+#include "../ecs/ecs.hpp"
+#include "../ecs/systems/rendering_system.hpp"
+#include "../ecs/systems/vicinity_system.hpp"
 #include "../state.hpp"
 
 class TitleState : public State
@@ -9,13 +21,27 @@ class TitleState : public State
   public:
     TitleState(StateStack& stack, Context context)
         : State(stack, context)
-        , m_rectangle_box({200, 200})
+        , m_rectangle_box({50, 50})
 
     {
-        auto         size     = context.window->getSize();
-        sf::Vector2f size_rec = {static_cast<float>(size.x), static_cast<float>(size.y)};
-        m_rectangle_box.setSize(size_rec);
+        auto size = context.window->getSize();
         m_rectangle_box.setFillColor(sf::Color::White);
+        auto [x, y] = m_context.window->getSize();
+        ButtonArchetype button_factory(100.f, 100.f);
+        auto            start_entity = button_factory.create_button(
+            m_entity_manager, static_cast<float>(x) / 2.f, static_cast<float>(y) / 2.f, "Start");
+        auto end_entity = button_factory.create_button(
+            m_entity_manager, static_cast<float>(x) / 8.f, static_cast<float>(y) / 8.f, "End");
+
+        m_entity_manager.get<Button>(start_entity)->action = [=, this]()
+        {
+            request_stack_pop();
+            request_stack_push(states::MainMenu);
+        };
+
+        m_entity_manager.get<Button>(end_entity)->action = [=, this]() { request_stack_pop(); };
+
+        m_systems.add_system<RenderingButtonsSystem>(m_entity_manager, m_context);
     }
 
     virtual void draw();
@@ -32,16 +58,12 @@ class TitleState : public State
 
 inline void TitleState::draw()
 {
-    m_context.window->draw(m_rectangle_box);
+    // m_context.window->draw(m_rectangle_box);
+    draw_systems();
 }
 
 inline bool TitleState::handle_event(const sf::Event& event)
 {
-    if (event.type == sf::Event::KeyPressed)
-    {
-        request_stack_pop();
-        request_stack_push(states::MainMenu);
-    }
     return true;
 }
 
@@ -54,6 +76,9 @@ inline bool TitleState::update(sf::Time dt)
         m_show_text        = !m_show_text;
         m_text_effect_time = sf::Time::Zero;
     }
+
+    m_systems.update(m_entity_manager);
+
     return true;
 }
 

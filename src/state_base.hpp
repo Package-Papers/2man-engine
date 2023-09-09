@@ -9,6 +9,7 @@
 #include "debug.hpp"
 #include "ecs/ecs.hpp"
 #include "keyboard.hpp"
+#include "mouse.hpp"
 #include "resources.hpp"
 
 class StateStack;
@@ -37,6 +38,7 @@ class State
         TextureHolder*    textures;
         FontHolder*       fonts;
         tme::Keyboard*    keyboard;
+        tme::Mouse*       mouse;
     };
 
   public:

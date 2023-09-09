@@ -24,6 +24,24 @@ struct Colour
     uint8_t b;
 };
 
+struct Button
+{
+    std::string text;
+
+    enum State
+    {
+        active = 0,
+        hover  = 1,
+        idle   = 2
+    };
+
+    State                 state;
+    std::function<void()> action;
+
+    float size_x;
+    float size_y;
+};
+
 struct Interactable
 {
     std::function<void(EntityManager* m_entity_manager, EntityID e1, EntityID e2)> action;

@@ -76,8 +76,8 @@ class Engine final
 
     // Input components.
     std::unordered_map<std::string, sf::Keyboard::Key> m_supported_keys;
-    // Mouse                                              m_mouse;
-    Keyboard m_keyboard;
+    Mouse                                              m_mouse;
+    Keyboard                                           m_keyboard;
 };
 } /* namespace tme */
 
