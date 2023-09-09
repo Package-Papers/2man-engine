@@ -44,7 +44,7 @@ int main(int argc, char** argv)
         int_to_bool(TME_WINDOW_FULLSCREEN),
     };
 
-    auto loaded_settings = load_settings("settings.json");
+    auto loaded_settings = load_settings("meta/settings.json");
 
     tme::Engine engine(loaded_settings.value_or(default_ctx));
     engine.run();

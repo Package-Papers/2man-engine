@@ -114,10 +114,10 @@ void tme::Engine::render()
     // Clear window.
     m_window.clear();
 
+    m_state_stack.draw();
+
     // Render stuff here.
     ImGui::SFML::Render(m_window);
-
-    m_state_stack.draw();
 
     // Display window.
     m_window.display();
@@ -196,4 +196,6 @@ void tme::Engine::run()
         // Render
         this->render();
     }
+
+    ImGui::SFML::Shutdown();
 }
