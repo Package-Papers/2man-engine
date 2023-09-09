@@ -8,3 +8,4 @@ out
 .vscode
 .vscode
 imgui.ini
+CMakeSettings.json

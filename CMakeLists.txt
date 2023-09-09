@@ -13,6 +13,9 @@ add_subdirectory(external)
 # Include source
 add_subdirectory(src)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/meta/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/src/meta/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/src/assets/)
+
 # Include rapidjson
 target_include_directories(TwoManEngine PUBLIC
   ${PROJECT_SOURCE_DIR}/external/rapidjson
