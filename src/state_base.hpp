@@ -7,6 +7,7 @@
 
 #include "debug.hpp"
 #include "ecs/ecs.hpp"
+#include "ecs/systems/system_base.hpp"
 #include "keyboard.hpp"
 #include "mouse.hpp"
 #include "resources.hpp"

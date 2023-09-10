@@ -16,8 +16,10 @@ class RenderingButtonsSystem : public SystemBase
     RenderingButtonsSystem(EntityManager& em, State::Context context)
         : m_context(context)
         , m_rect({200, 200})
+        , m_textures_cache(m_context.textures)
         , m_text(m_context.fonts->get(fonts::ID::Aerial))
     {
+        m_textures_cache.m_resource_holder = m_context.textures;
         m_rect.setFillColor(sf::Color::Red);
         auto rectangle_bound = m_rect.getLocalBounds();
         m_rect.setOrigin({rectangle_bound.width / 2, rectangle_bound.height / 2});
@@ -58,8 +60,9 @@ class RenderingButtonsSystem : public SystemBase
             auto [pos, button] = em.get<Position, Button>(e);
             m_text.setString(button->text);
             m_rect.setPosition({pos->x, pos->y});
-            const auto texture = &m_context.textures->get(button->texture_ID);
-            m_rect.setTexture(texture);
+            const auto texture1 = m_textures_cache.load(button->texture_ID);
+            // const auto texture = &m_context.textures->get(button->texture_ID);
+            m_rect.setTexture(texture1);
             m_context.window->draw(m_rect);
 
             switch (button->state)
@@ -90,9 +93,10 @@ class RenderingButtonsSystem : public SystemBase
     }
 
   private:
-    State::Context     m_context;
-    sf::RectangleShape m_rect;
-    sf::Text           m_text;
+    State::Context                           m_context;
+    ResourceCache<sf::Texture, textures::ID> m_textures_cache;
+    sf::RectangleShape                       m_rect;
+    sf::Text                                 m_text;
 };
 
 #endif /* TME_RENDERING_BUTTON_SYSTEM */
