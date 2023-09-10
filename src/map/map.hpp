@@ -2,13 +2,9 @@
 #ifndef TME_MAP
 #define TME_MAP
 
-#include "SFML/Graphics/Color.hpp"
-#include "SFML/System/Vector2.hpp"
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Color.hpp>
 
-#include "../state.hpp"
 #include "layer.hpp"
 
 class Map
@@ -17,7 +13,7 @@ class Map
     friend Layer;
 
   public:
-    explicit Map(State::Context ctx, std::size_t width, std::size_t height, std::size_t layers = 1)
+    explicit Map(Context ctx, std::size_t width, std::size_t height, std::size_t layers = 1)
         : m_layers(layers, Layer(this, ctx, width, height))
         , m_size{static_cast<unsigned int>(width), static_cast<unsigned int>(height)}
         , m_context{ctx}
@@ -51,7 +47,7 @@ class Map
 
   private:
     std::vector<Layer> m_layers;
-    State::Context     m_context;
+    Context            m_context;
     sf::Vector2u       m_size;
 };
 

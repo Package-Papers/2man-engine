@@ -2,16 +2,15 @@
 #ifndef TME_STATE_STACK
 #define TME_STATE_STACK
 
+// DO NOT TOUCH THESE HEADERS. OTHER NECESSARY 
+// INCLUDES ARE PROVIDED BY `state_base.hpp`.
+
 #include <functional>
 #include <map>
-
-#include <SFML/Graphics.hpp>
-
-#include "imgui.h"
 #include "non_copyable.hpp"
-#include "resources.hpp"
 
-class State;
+class State;   // Provided by state base.
+class Context; // Provided by state base.
 
 class StateStack : private tme::NonCopyable
 {
@@ -20,7 +19,7 @@ class StateStack : private tme::NonCopyable
   public:
     StateStack() = default;
 
-    void set_context(State::Context context)
+    void set_context(Context context)
     {
         this->m_context = context;
     }
@@ -84,7 +83,7 @@ class StateStack : private tme::NonCopyable
     };
     std::vector<State::Ptr>    m_stack;
     std::vector<PendingChange> m_pending_list;
-    State::Context             m_context;
+    Context                    m_context;
     // Given that we do not want to create all state objects from the beginning,
     // we can instead use factory functions that createa  new state on-demand.
     std::map<states::ID, std::function<State::Ptr()>> m_factories;

@@ -1,15 +1,15 @@
 #pragma once
-#include "SFML/System/Vector3.hpp"
 #ifndef TME_LAYER
 #define TME_LAYER
 
-#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
-#include "../state.hpp"
+#include "../engine_context.hpp"
 #include "../structures/Vec2D.hpp"
+
 #include "tile.hpp"
 
 class Map;
@@ -17,7 +17,7 @@ class Map;
 class Layer
 {
   public:
-    explicit Layer(Map* map, State::Context ctx, std::size_t width, std::size_t height);
+    explicit Layer(Map* map, Context ctx, std::size_t width, std::size_t height);
 
     // Load and cache texture
     sf::Texture* load_texture(textures::ID tid);
@@ -52,7 +52,7 @@ class Layer
 
   private:
     Map*                                           m_parent_map;
-    State::Context                                 m_context;
+    Context                                        m_context;
     Vec2D<Tile>                                    m_grid;
     sf::RectangleShape                             m_shape;
     std::unordered_map<textures::ID, sf::Texture*> m_texture_cache;

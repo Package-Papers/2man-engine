@@ -2,14 +2,17 @@
 #ifndef GAME_STATE
 #define GAME_STATE
 
+#include "../state.hpp"
+
 #include "../controller.hpp"
-#include "../ecs/archetypes/button.hpp"
+
+#include "../ecs/ecs.hpp"
+
 #include "../ecs/archetypes/lamp.hpp"
 #include "../ecs/archetypes/player.hpp"
-#include "../ecs/ecs.hpp"
+
 #include "../ecs/systems/rendering_system.hpp"
 #include "../ecs/systems/vicinity_system.hpp"
-#include "../state.hpp"
 
 class GameState : public State
 {
@@ -32,7 +35,7 @@ class GameState : public State
 
         m_controller.make_controller();
 
-        auto check_interactable = [=](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
+        auto check_interactable = [=, this](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
         {
             if (m_context.keyboard->is_key_pressed(sf::Keyboard::Key::E))
             {

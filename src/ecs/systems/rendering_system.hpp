@@ -12,7 +12,7 @@ class RenderingSystem : public SystemBase
 {
 
   public:
-    RenderingSystem(State::Context context)
+    RenderingSystem(Context context)
         : m_context(context)
         , m_shape(15)
         , m_rectangle_shape({10, 10})
@@ -46,7 +46,7 @@ class RenderingSystem : public SystemBase
   private:
     sf::RectangleShape m_rectangle_shape;
     sf::CircleShape    m_shape;
-    State::Context     m_context;
+    Context            m_context;
 };
 
 #endif /* TME_RENDERING_SYSTEM */

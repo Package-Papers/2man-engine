@@ -2,15 +2,10 @@
 #ifndef TME_STATE_BASE
 #define TME_STATE_BASE
 
-#include <SFML/Graphics.hpp>
-#include <iostream>
-
-#include "debug.hpp"
 #include "ecs/ecs.hpp"
-#include "ecs/systems/system_base.hpp"
+#include "engine_context.hpp"
 #include "keyboard.hpp"
 #include "mouse.hpp"
-#include "resources.hpp"
 
 class StateStack;
 
@@ -31,15 +26,6 @@ class State
     using Ptr           = std::unique_ptr<State>;
     using FontHolder    = resource_holder::FontHolder;
     using TextureHolder = resource_holder::TextureHolder;
-
-    struct Context
-    {
-        sf::RenderWindow* window;
-        TextureHolder*    textures;
-        FontHolder*       fonts;
-        tme::Keyboard*    keyboard;
-        tme::Mouse*       mouse;
-    };
 
   public:
     State(StateStack& stack, Context context)

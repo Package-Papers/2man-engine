@@ -2,19 +2,15 @@
 #ifndef TITLE_STATE
 #define TITLE_STATE
 
-#include "../controller.hpp"
-#include "../ecs/archetypes/button.hpp"
-#include "../ecs/ecs.hpp"
 #include "../state.hpp"
 
 #include "../controller.hpp"
-#include "../ecs/archetypes/button.hpp"
-#include "../ecs/archetypes/lamp.hpp"
-#include "../ecs/archetypes/player.hpp"
+
 #include "../ecs/ecs.hpp"
+
+#include "../ecs/archetypes/button.hpp"
+
 #include "../ecs/systems/rendering_system.hpp"
-#include "../ecs/systems/vicinity_system.hpp"
-#include "../state.hpp"
 
 class TitleState : public State
 {
@@ -30,7 +26,7 @@ class TitleState : public State
         auto [x, y] = m_context.window->getSize();
         ButtonArchetype button_factory(100.f, 100.f, textures::ID::Button1);
         auto            start_entity = button_factory.create_button(
-            m_entity_manager, static_cast<float>(x) / 2.f, static_cast<float>(y) / 2.f, "Start");
+                       m_entity_manager, static_cast<float>(x) / 2.f, static_cast<float>(y) / 2.f, "Start");
         auto end_entity = button_factory.create_button(
             m_entity_manager, static_cast<float>(x) / 8.f, static_cast<float>(y) / 8.f, "End");
 

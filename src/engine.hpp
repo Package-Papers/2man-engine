@@ -15,9 +15,7 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 
-#include "keyboard.hpp"
-// #include "mouse.hpp"
-
+#include "engine_context.hpp"
 #include "resources.hpp"
 #include "states/game_state.hpp"
 #include "states/menu_state.hpp"
@@ -45,7 +43,7 @@ class Engine final
     void init_keybinds();
 
     // Getter methods.
-    State::Context get_context();
+    Context get_context();
 
     // Update methods.
     void handle_events();

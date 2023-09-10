@@ -2,6 +2,8 @@
 #ifndef MENU_STATE
 #define MENU_STATE
 
+#include <imgui.h>
+
 #include "../state.hpp"
 
 enum OptionNames

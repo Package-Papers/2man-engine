@@ -2,12 +2,10 @@
 #ifndef TME_RESOURCES
 #define TME_RESOURCES
 
-#include <SFML/Graphics.hpp>
-
-#include <iostream>
 #include <unordered_map>
 
-#include "imgui.h"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 namespace textures
 {

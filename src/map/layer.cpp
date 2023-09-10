@@ -2,7 +2,7 @@
 #include "SFML/Graphics/Color.hpp"
 #include "map.hpp"
 
-Layer::Layer(Map* map, State::Context ctx, std::size_t width, std::size_t height)
+Layer::Layer(Map* map, Context ctx, std::size_t width, std::size_t height)
     : m_parent_map(map)
     , m_context{ctx}
     , m_grid(width, height)

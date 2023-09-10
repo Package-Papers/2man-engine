@@ -4,8 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../../engine_context.hpp"
 #include "../../state_base.hpp"
-#include "../archetypes/button.hpp"
 #include "../entity_capture.hpp"
 #include "system_base.hpp"
 
@@ -13,7 +13,7 @@ class RenderingButtonsSystem : public SystemBase
 {
 
   public:
-    RenderingButtonsSystem(EntityManager& em, State::Context context)
+    RenderingButtonsSystem(EntityManager& em, Context context)
         : m_context(context)
         , m_rect({200, 200})
         , m_textures_cache(m_context.textures)
@@ -48,8 +48,6 @@ class RenderingButtonsSystem : public SystemBase
             {
                 button->state = Button::State::idle;
             }
-            if (m_context.mouse->is_held())
-                std::cout << "Hello\n";
         }
     }
 
@@ -93,7 +91,7 @@ class RenderingButtonsSystem : public SystemBase
     }
 
   private:
-    State::Context                           m_context;
+    Context                                  m_context;
     ResourceCache<sf::Texture, textures::ID> m_textures_cache;
     sf::RectangleShape                       m_rect;
     sf::Text                                 m_text;

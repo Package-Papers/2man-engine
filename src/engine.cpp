@@ -18,9 +18,7 @@ tme::Engine::Engine(const WindowContext& context)
     this->m_state_stack.set_context(get_context());
 
     this->m_font_holder.load(fonts::ID::Aerial, "font.ttf");
-    std::cout << "yes!\n";
     this->m_font_holder.get(fonts::ID::Aerial);
-    std::cout << "yes1\n";
 
     this->register_states();
 }
@@ -176,7 +174,7 @@ void tme::Engine::fixed_update()
     // Update with the value of m_TIME_PER_FRAME.
 }
 
-State::Context tme::Engine::get_context()
+Context tme::Engine::get_context()
 {
     return {&m_window, &m_texture_holder, &m_font_holder, &m_keyboard, &m_mouse};
 }
