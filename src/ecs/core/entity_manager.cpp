@@ -3,6 +3,70 @@
 #include "component.hpp"
 #include "entity.hpp"
 
+void EntityManager::execute_actions()
+{
+    while (!m_action_stack.empty())
+    {
+        auto action = m_action_stack.back();
+        m_action_stack.pop_back();
+        action.execute(this);
+    }
+}
+
+Action* EntityManager::create_action()
+{
+    m_action_stack.emplace_back();
+    return &m_action_stack.back();
+}
+
+EntityManager::EntityPool& EntityManager::get_entities()
+{
+    return m_entity_pool;
+}
+
+void EntityManager::destroy_entity(EntityID entity_id)
+{
+    // Invalidate the index and increment the version.
+    auto reuse_index                = get_entity_index(entity_id);
+    auto new_version                = get_entity_version(entity_id) + 1;
+    auto new_id                     = create_entity_id(INVALID_ENTITY_INDEX, new_version);
+    m_entity_pool[reuse_index].m_id = new_id;
+
+    // Reset the components bitmask for reusage.
+    m_entity_pool[reuse_index].m_mask.clear();
+
+    // Queue entry back for reuse.
+    m_free_entities.push_back(reuse_index);
+}
+
+ComponentPool& EntityManager::get_component_pool(std::size_t component_id)
+{
+#ifndef NDEBUG
+    if (component_id >= m_component_pools.size())
+    {
+        throw std::runtime_error("EntityManager::get_component, out of range");
+    }
+#endif
+    return *m_component_pools[component_id];
+}
+
+void* EntityManager::get_entity_component_mem(EntityIndex entity_index, std::size_t component_id)
+{
+    // Entity has the component, return the memory address.
+    ComponentPool& component_pool = get_component_pool(component_id);
+    return component_pool.get(entity_index);
+}
+
+bool EntityManager::entity_is_valid(EntityID entity_id)
+{
+    // Return true if version found matches the current one.
+    return m_entity_pool[get_entity_index(entity_id)].m_id == entity_id;
+}
+
+/*-----------------------*
+ |         TESTS         |
+ *-----------------------*/
+
 TEST_CASE("Creating new entities")
 {
     EntityManager em{};
@@ -257,3 +321,4 @@ TEST_CASE("Testing functions with multiple components")
         CHECK(z != nullptr);
     }
 }
+
