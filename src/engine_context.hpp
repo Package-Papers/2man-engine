@@ -10,7 +10,6 @@ namespace sf
 namespace tme
 {
   class Keyboard;
-  class Mouse;
 }
 
 namespace sf
@@ -24,6 +23,7 @@ namespace textures
 }
 
 #include "resources.hpp"
+#include "mouse.hpp"
 
 struct Context
 {

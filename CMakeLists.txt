@@ -7,6 +7,13 @@ set(CMAKE_CXX_STANDARD 23)
 # Generate the compilation database for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Build LUA as static/shared depending on the root project.
+if(BUILD_SHARED_LIBS)
+  set(LUA_ENABLE_SHARED ON)
+else()
+  set(LUA_ENABLE_SHARED OFF)
+endif()
+
 # Include dependencies
 add_subdirectory(external)
 

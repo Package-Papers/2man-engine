@@ -2,7 +2,6 @@
 #ifndef TME_RENDERING_BUTTON_SYSTEM
 #define TME_RENDERING_BUTTON_SYSTEM
 
-#include "../../mouse.hpp"
 #include <SFML/Graphics.hpp>
 
 #include "../../engine_context.hpp"
