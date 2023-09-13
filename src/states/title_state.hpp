@@ -10,7 +10,7 @@
 
 #include "../ecs/archetypes/button.hpp"
 
-#include "../ecs/systems/rendering_system.hpp"
+#include "../ecs/systems/rendering_button.hpp"
 
 class TitleState : public State
 {
@@ -38,7 +38,7 @@ class TitleState : public State
 
         m_entity_manager.get<Button>(end_entity)->action = [=, this]() { request_stack_pop(); };
 
-        m_systems.add_system<RenderingButtonsSystem>(m_entity_manager, m_context);
+        m_systems.add_system<RenderingButtonSystem>(m_entity_manager, m_context);
     }
 
     virtual void draw();

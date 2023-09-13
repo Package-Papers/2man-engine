@@ -15,7 +15,11 @@
 
 namespace tme
 {
-class Keyboard : public Input<Keyboard>
+#ifndef __cpp_explicit_this_parameter 
+class Keyboard : public tme::Input<Keyboard>
+#else
+class Keyboard : public Input
+#endif
 {
   public:
     using Keybinds = std::unordered_map<std::string, sf::Keyboard::Key>;

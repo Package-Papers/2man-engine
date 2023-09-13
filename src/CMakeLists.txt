@@ -1,6 +1,8 @@
 add_executable(TwoManEngine)
 
 target_sources(TwoManEngine 
+  PUBLIC 
+    main.cpp
   PRIVATE
     mouse.cpp
     engine.cpp
@@ -9,8 +11,6 @@ target_sources(TwoManEngine
     ecs/core/component_pool.cpp
     ecs/core/entity_manager.cpp
     ecs/entity_capture.cpp
-  PUBLIC 
-    main.cpp
 )
 
 # set_target_properties(TwoManEngine PROPERTIES CXX_CLANG_TIDY "clang-tidy;-checks=*")

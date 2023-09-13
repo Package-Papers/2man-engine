@@ -2,20 +2,20 @@
 #ifndef TME_RENDERING_BUTTON_SYSTEM
 #define TME_RENDERING_BUTTON_SYSTEM
 
+#include "../../mouse.hpp"
 #include <SFML/Graphics.hpp>
 
 #include "../../engine_context.hpp"
 #include "../../state_base.hpp"
-#include "../../mouse.hpp"
 #include "../components.hpp"
 #include "../entity_capture.hpp"
 #include "system_base.hpp"
 
-class RenderingButtonsSystem : public SystemBase
+class RenderingButtonSystem : public SystemBase
 {
 
   public:
-    RenderingButtonsSystem(EntityManager& em, Context context)
+    RenderingButtonSystem(EntityManager& em, Context context)
         : m_context(context)
         , m_rect({200, 200})
         , m_textures_cache(m_context.textures)

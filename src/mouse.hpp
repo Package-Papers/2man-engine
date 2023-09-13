@@ -13,8 +13,11 @@
 
 namespace tme
 {
-
+#ifndef __cpp_explicit_this_parameter 
 class Mouse : public tme::Input<Mouse>
+#else
+class Mouse : public Input
+#endif
 {
     enum class State
     {

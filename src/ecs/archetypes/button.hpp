@@ -4,8 +4,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../../resources.hpp"
 #include "../entity_capture.hpp"
-#include "../systems/rendering_button.hpp"
+#include "../components.hpp"
 #include "entity_object.hpp"
 
 class ButtonArchetype : public EntityObject
