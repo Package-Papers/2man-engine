@@ -6,6 +6,8 @@
 
 #include "../../engine_context.hpp"
 #include "../../state_base.hpp"
+#include "../../mouse.hpp"
+#include "../components.hpp"
 #include "../entity_capture.hpp"
 #include "system_base.hpp"
 

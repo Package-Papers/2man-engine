@@ -7,6 +7,7 @@
 // engine. This includes the main engine/game loop, the resource holder, the clock resonsible for
 // computing delta time, the state stack.
 
+#include <iostream>
 #include <filesystem>
 #include <fstream>
 #include <stdexcept>
