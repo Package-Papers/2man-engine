@@ -70,7 +70,7 @@ void tme::Engine::init_keybinds()
 
     ifs.close();
 
-    m_keyboard.set_keybinds(m_supported_keys);
+    m_input_system.keyboard.set_keybinds(m_supported_keys);
 }
 
 void tme::Engine::register_states()
@@ -102,7 +102,7 @@ void tme::Engine::handle_events()
     sf::Event event;
     while (m_window.pollEvent(event))
     {
-        m_mouse.handle_event(event);
+        m_input_system.handle_event(event);
         ImGui::SFML::ProcessEvent(m_window, event);
         if (event.type == sf::Event::Closed)
         {
@@ -147,8 +147,8 @@ void tme::Engine::update_fixed_time()
 // For example: GUI.
 void tme::Engine::update_real_time()
 {
-    m_keyboard.update();
-    m_mouse.update_position(m_window);
+    m_input_system.keyboard.update();
+    m_input_system.mouse.update_position(m_window);
     ImGui::SFML::Update(m_window, m_time_since_last_update);
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground |
@@ -176,7 +176,7 @@ void tme::Engine::fixed_update()
 
 Context tme::Engine::get_context()
 {
-    return {&m_window, &m_texture_holder, &m_font_holder, &m_keyboard, &m_mouse};
+    return {&m_window, &m_texture_holder, &m_font_holder};
 }
 
 // The main engine loop.

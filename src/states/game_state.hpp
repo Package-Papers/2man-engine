@@ -4,6 +4,8 @@
 
 #include "../state.hpp"
 
+#include "input_system.hpp"
+
 #include "../controller.hpp"
 
 #include "../ecs/ecs.hpp"
@@ -22,7 +24,6 @@ class GameState : public State
         , m_controller()
     {
         m_controller.m_entity_manager = &m_entity_manager;
-        m_controller.m_keyboard       = m_context.keyboard;
 
         LampArchetype lamp_factory{10.f, 10.f};
         auto          lamp = lamp_factory.create(m_entity_manager);
@@ -35,9 +36,11 @@ class GameState : public State
 
         m_controller.make_controller();
 
-        auto check_interactable = [=, this](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
+        auto check_interactable =
+            [=, this](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
         {
-            if (m_context.keyboard->is_key_pressed(sf::Keyboard::Key::E))
+            auto input_system = tme::InputSystem::instance();
+            if (input_system->keyboard.is_key_pressed(sf::Keyboard::Key::E))
             {
                 auto interactable = m_entity_manager->get<Interactable>(e1);
                 m_entity_manager->get<Interactable>(e1)->action(m_entity_manager, e1, e2);

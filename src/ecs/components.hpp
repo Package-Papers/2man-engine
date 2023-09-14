@@ -2,8 +2,15 @@
 #ifndef TME_COMPONENTS
 #define TME_COMPONENTS
 
-#include "core/entity.hpp"
 #include <functional>
+#include <string>
+
+#include "core/entity.hpp"
+
+namespace textures
+{
+enum class ID;
+}
 
 class EntityManager;
 

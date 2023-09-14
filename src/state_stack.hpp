@@ -2,12 +2,12 @@
 #ifndef TME_STATE_STACK
 #define TME_STATE_STACK
 
-// DO NOT TOUCH THESE HEADERS. OTHER NECESSARY 
+// DO NOT TOUCH THESE HEADERS. OTHER NECESSARY
 // INCLUDES ARE PROVIDED BY `state_base.hpp`.
 
+#include "non_copyable.hpp"
 #include <functional>
 #include <map>
-#include "non_copyable.hpp"
 
 class State;   // Provided by state base.
 class Context; // Provided by state base.

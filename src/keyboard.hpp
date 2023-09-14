@@ -15,7 +15,7 @@
 
 namespace tme
 {
-#ifndef __cpp_explicit_this_parameter 
+#ifndef __cpp_explicit_this_parameter
 class Keyboard : public tme::Input<Keyboard>
 #else
 class Keyboard : public Input

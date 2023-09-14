@@ -21,7 +21,7 @@ struct ResourceCache
         }
         else
         {
-            auto& resource = m_resource_holder->get(id);
+            auto& resource       = m_resource_holder->get(id);
             m_resource_cache[id] = &resource;
             return &resource;
         }

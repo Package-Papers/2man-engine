@@ -12,8 +12,8 @@
 #include <tuple>
 #include <vector>
 
-#include "../../debug.hpp"
 #include "../../action.hpp"
+#include "../../debug.hpp"
 #include "component.hpp"
 #include "component_pool.hpp"
 
@@ -123,14 +123,14 @@ class EntityManager
   public:
     /** Create and return a new entity.
      *
-     * If possible, this function will reuse 
+     * If possible, this function will reuse
      * any entity id which has been marked for reuse.
      */
     EntityID create_entity();
 
     /** Destroy the entity.
      *
-     * The entity index is invalidated and the version is incremented. 
+     * The entity index is invalidated and the version is incremented.
      * All components are also removed.
      *
      * @param entity_id the entity id to destroy.
@@ -140,15 +140,15 @@ class EntityManager
     /** Attach specified component(s) to the entity.
      *
      * This function excepts 1 or more components to be specified in the template arguments.
-     * 
+     *
      * Example:
-     * 
+     *
      * EntityManager em;
      * auto entity = em.create_entity();
      * auto [pos, health] = em.attach<Position, Health>(entity);
      *
      * @param entity_id the entity id to attach component(s) to.
-     * 
+     *
      */
     template <typename... Components>
     typename ComponentRet<sizeof...(Components), Components...>::RetType
@@ -161,14 +161,14 @@ class EntityManager
      *
      * This function excepts 1 or more components to be specified in the template arguments.
      * If the component does not exist, nullptr is returned.
-     * 
+     *
      * Example:
-     * 
+     *
      * EntityManager em;
      * auto entity = em.create_entity();
      * em.attach<Position, Health>(entity);
      * auto [pos, health] = em.get<Position, Health>(entity);
-     * 
+     *
      * @param entity_id the entity id to retrieve component(s) from.
      */
     template <typename... Components>
@@ -181,15 +181,15 @@ class EntityManager
     /** Remove specified component(s) from the entity.
      *
      * This function excepts 1 or more components to be specified in the template arguments.
-     * 
+     *
      * Example:
-     * 
+     *
      * EntityManager em;
      * auto entity = em.create_entity();
      * em.attach<Position, Health>(entity);
      * em.deatch<Position, Health>(entity);
      * auto [pos, health] = em.get<Position, Health>(entity); <--- [nullptr, nullptr]
-     * 
+     *
      * @param entity_id the entity id to detach component(s) from.
      */
     template <typename... Components>
@@ -199,12 +199,11 @@ class EntityManager
     [[nodiscard]] bool        has_component(EntityID entity_id);
     [[nodiscard]] EntityPool& get_entities();
 
-    
     /** Creates and queues an action onto the action stack.
      *
      * A pointer to the action which has been newly created is returned.
      */
-    [[nodiscard]] Action*     create_action();
+    [[nodiscard]] Action* create_action();
 
     /** Execute all actions whichh as been queued.
      *

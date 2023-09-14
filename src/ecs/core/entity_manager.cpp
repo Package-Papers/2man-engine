@@ -321,4 +321,3 @@ TEST_CASE("Testing functions with multiple components")
         CHECK(z != nullptr);
     }
 }
-

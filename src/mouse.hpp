@@ -9,11 +9,10 @@
 
 ////////////////////////////////////
 // Note(Appy): This file is for setting up a mouse input component.
-// NOTE: WIP 7/27/03 -- Added basic mouse structure.
 
 namespace tme
 {
-#ifndef __cpp_explicit_this_parameter 
+#ifndef __cpp_explicit_this_parameter
 class Mouse : public tme::Input<Mouse>
 #else
 class Mouse : public Input

@@ -7,9 +7,9 @@
 // engine. This includes the main engine/game loop, the resource holder, the clock resonsible for
 // computing delta time, the state stack.
 
-#include <iostream>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <stdexcept>
 #include <unordered_map>
 
@@ -17,6 +17,7 @@
 #include <imgui.h>
 
 #include "engine_context.hpp"
+#include "input_system.hpp"
 #include "resources.hpp"
 #include "states/game_state.hpp"
 #include "states/menu_state.hpp"
@@ -75,8 +76,7 @@ class Engine final
 
     // Input components.
     std::unordered_map<std::string, sf::Keyboard::Key> m_supported_keys;
-    Mouse                                              m_mouse;
-    Keyboard                                           m_keyboard;
+    InputSystem                                        m_input_system;
 };
 } /* namespace tme */
 

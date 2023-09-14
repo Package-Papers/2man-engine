@@ -2,8 +2,8 @@
 #ifndef TME_MAP
 #define TME_MAP
 
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "layer.hpp"
 

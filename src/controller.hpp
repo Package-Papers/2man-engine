@@ -1,10 +1,12 @@
 #pragma
 #ifndef TME_CONTROLLER
 #define TME_CONTROLLER
+
+#include <vector>
+
 #include "ecs/components.hpp"
 #include "ecs/entity_capture.hpp"
-#include "keyboard.hpp"
-#include <vector>
+#include "input_system.hpp"
 
 class EntityManager;
 
@@ -16,7 +18,6 @@ class Controller
     void update();
 
     EntityManager*        m_entity_manager;
-    tme::Keyboard*        m_keyboard;
     std::vector<EntityID> m_controllers;
     std::vector<EntityID> m_interactables;
 };
@@ -39,29 +40,29 @@ inline void Controller::get_interactables()
 
 inline void Controller::update()
 {
-
+    auto keyboard = &(tme::InputSystem::instance()->keyboard);
     for (auto e : m_controllers)
     {
         auto pos      = m_entity_manager->get<Position>(e);
         auto m_action = m_entity_manager->create_action();
-        if (m_keyboard->is_key_pressed(sf::Keyboard::Key::S))
+        if (keyboard->is_key_pressed(sf::Keyboard::Key::S))
         {
             m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->y += 1.0f; };
             m_action->targets.push_back(e);
         }
-        else if (m_keyboard->is_key_pressed(sf::Keyboard::Key::W))
+        else if (keyboard->is_key_pressed(sf::Keyboard::Key::W))
         {
             m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->y -= 1.0f; };
             m_action->targets.push_back(e);
         }
 
-        else if (m_keyboard->is_key_pressed(sf::Keyboard::Key::A))
+        else if (keyboard->is_key_pressed(sf::Keyboard::Key::A))
         {
             m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->x -= 1.0f; };
             m_action->targets.push_back(e);
         }
 
-        else if (m_keyboard->is_key_pressed(sf::Keyboard::Key::D))
+        else if (keyboard->is_key_pressed(sf::Keyboard::Key::D))
         {
             m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->x += 1.0f; };
             m_action->targets.push_back(e);

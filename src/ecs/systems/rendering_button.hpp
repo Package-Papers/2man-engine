@@ -4,10 +4,11 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../../engine_context.hpp"
-#include "../../state_base.hpp"
 #include "../components.hpp"
 #include "../entity_capture.hpp"
+#include "engine_context.hpp"
+#include "input_system.hpp"
+#include "state_base.hpp"
 #include "system_base.hpp"
 
 class RenderingButtonSystem : public SystemBase
@@ -19,6 +20,7 @@ class RenderingButtonSystem : public SystemBase
         , m_rect({200, 200})
         , m_textures_cache(m_context.textures)
         , m_text(m_context.fonts->get(fonts::ID::Aerial))
+        , m_input_system(tme::InputSystem::instance())
     {
         m_textures_cache.m_resource_holder = m_context.textures;
         m_rect.setFillColor(sf::Color::Red);
@@ -32,13 +34,15 @@ class RenderingButtonSystem : public SystemBase
         {
             auto [pos, button] = em.get<Position, Button>(e);
             m_rect.setPosition({pos->x, pos->y});
-            auto mouse_pos = m_context.mouse->get_position();
+
+            auto mouse_pos = m_input_system->mouse.get_position();
+
             if (m_rect.getGlobalBounds().contains(
                     {static_cast<float>(mouse_pos.x), static_cast<float>(mouse_pos.y)}))
             {
                 button->state = Button::State::hover;
 
-                if (m_context.mouse->is_pressed())
+                if (m_input_system->mouse.is_pressed())
                 {
                     button->state = Button::State::active;
                     button->action();
@@ -96,6 +100,7 @@ class RenderingButtonSystem : public SystemBase
     ResourceCache<sf::Texture, textures::ID> m_textures_cache;
     sf::RectangleShape                       m_rect;
     sf::Text                                 m_text;
+    tme::InputSystem*                        m_input_system;
 };
 
 #endif /* TME_RENDERING_BUTTON_SYSTEM */

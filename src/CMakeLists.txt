@@ -1,5 +1,8 @@
 add_executable(TwoManEngine)
 
+target_include_directories(TwoManEngine PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(TwoManEngine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external/doctest)
+
 target_sources(TwoManEngine 
   PRIVATE
     mouse.cpp

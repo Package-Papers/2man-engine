@@ -4,8 +4,8 @@
 
 #include <unordered_map>
 
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace textures
 {
