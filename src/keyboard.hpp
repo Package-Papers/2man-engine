@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TME_KEYBOARD
-#define TME_KEYBOARD
+#ifndef TME_INPUT_KEYBOARD
+#define TME_INPUT_KEYBOARD
 
 #include <unordered_map>
 
@@ -96,4 +96,4 @@ class Keyboard : public Input
 };
 } /* namespace tme */
 
-#endif /* TME_KEYBOARD */
+#endif /* TME_INPUT_KEYBOARD */

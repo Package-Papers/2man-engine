@@ -3,11 +3,8 @@
 #ifndef TME_INPUT_SYSTEM
 #define TME_INPUT_SYSTEM
 
-#include <iostream>
-
-#include "input.hpp"
-#include "keyboard.hpp"
 #include "mouse.hpp"
+#include "keyboard.hpp"
 
 namespace tme
 {
@@ -26,12 +23,10 @@ class InputSystem : public Input
     void impl(const sf::Event& event) noexcept;
     InputSystem()
     {
-        std::cout << "Made\n";
         singleton = this;
     }
     ~InputSystem()
     {
-        std::cout << "Destroyed\n";
         singleton = nullptr;
     }
 

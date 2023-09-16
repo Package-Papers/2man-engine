@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INPUT_MOUSE
-#define INPUT_MOUSE
+#ifndef TME_INPUT_MOUSE
+#define TME_INPUT_MOUSE
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Window.hpp>
@@ -44,4 +44,4 @@ class Mouse : public Input
 
 } /* namespace tme */
 
-#endif /* INPUT_MOUSE */
+#endif /* TME_INPUT_MOUSE */
