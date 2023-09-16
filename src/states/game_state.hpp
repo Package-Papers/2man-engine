@@ -2,7 +2,7 @@
 #ifndef GAME_STATE
 #define GAME_STATE
 
-#include "../state.hpp"
+#include "states/state.hpp"
 
 #include "input_system.hpp"
 

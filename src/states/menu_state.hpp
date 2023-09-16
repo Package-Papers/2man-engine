@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-#include "../state.hpp"
+#include "states/state.hpp"
 
 enum OptionNames
 {

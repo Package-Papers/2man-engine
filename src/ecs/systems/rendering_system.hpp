@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../../state_base.hpp"
+#include "states/state_base.hpp"
 #include "../entity_capture.hpp"
 #include "system_base.hpp"
 

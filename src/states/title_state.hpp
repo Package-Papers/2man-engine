@@ -2,15 +2,13 @@
 #ifndef TITLE_STATE
 #define TITLE_STATE
 
-#include "../state.hpp"
+#include "states/state.hpp"
 
-#include "../controller.hpp"
+#include "controller.hpp"
 
-#include "../ecs/ecs.hpp"
-
-#include "../ecs/archetypes/button.hpp"
-
-#include "../ecs/systems/rendering_button.hpp"
+#include "ecs/ecs.hpp"
+#include "ecs/archetypes/button.hpp"
+#include "ecs/systems/rendering_button.hpp"
 
 class TitleState : public State
 {
