@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "../engine_context.hpp"
+#include "core/engine/engine_context.hpp"
 #include "../structures/Vec2D.hpp"
 
 #include "tile.hpp"

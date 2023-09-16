@@ -2,10 +2,11 @@
 #ifndef TME_STATE_BASE
 #define TME_STATE_BASE
 
+#include <SFML/System/Time.hpp>
+#include <SFML/Window/Event.hpp>
+
 #include "ecs/ecs.hpp"
-#include "engine_context.hpp"
-#include "keyboard.hpp"
-#include "mouse.hpp"
+#include "core/engine/engine_context.hpp"
 
 class StateStack;
 

@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "common.hpp"
-#include "engine.hpp"
+#include "core/engine/engine.hpp"
 
 /**
  * Settings can be defined in 'settings.json'.

@@ -6,7 +6,7 @@
 
 #include "ecs/components.hpp"
 #include "ecs/entity_capture.hpp"
-#include "input_system.hpp"
+#include "core/input/input_system.hpp"
 
 class EntityManager;
 

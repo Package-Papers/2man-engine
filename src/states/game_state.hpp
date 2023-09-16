@@ -4,7 +4,7 @@
 
 #include "states/state.hpp"
 
-#include "input_system.hpp"
+#include "core/input/input_system.hpp"
 
 #include "../controller.hpp"
 

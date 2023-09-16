@@ -17,7 +17,7 @@
 #include <imgui.h>
 
 #include "engine_context.hpp"
-#include "input_system.hpp"
+#include "core/input/input_system.hpp"
 #include "resources.hpp"
 #include "states/game_state.hpp"
 #include "states/menu_state.hpp"

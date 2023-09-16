@@ -9,9 +9,8 @@
 
 #include <stdint.h>
 
-#include "../../debug.hpp"
-
-#include "../../bitmask.hpp"
+#include "debug.hpp"
+#include "core/structures/bitmask.hpp"
 #include "component.hpp"
 
 using EntityVersion               = uint32_t;

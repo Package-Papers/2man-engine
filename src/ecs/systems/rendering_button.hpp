@@ -6,8 +6,8 @@
 
 #include "../components.hpp"
 #include "../entity_capture.hpp"
-#include "engine_context.hpp"
-#include "input_system.hpp"
+#include "core/engine/engine_context.hpp"
+#include "core/input/input_system.hpp"
 #include "states/state_base.hpp"
 #include "system_base.hpp"
 
