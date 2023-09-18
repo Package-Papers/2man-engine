@@ -1,12 +1,12 @@
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "common.hpp"
-#include "core/engine/engine.hpp"
+#include "engine/common/common.hpp"
+#include "engine/core/engine.hpp"
 
 /**
  * Settings can be defined in 'settings.json'.
  */
 
-#include "settings.hpp"
+#include "engine/settings/settings.hpp"
 
 void doctest_run(int argc, char** argv)
 {

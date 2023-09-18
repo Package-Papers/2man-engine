@@ -5,13 +5,13 @@ target_include_directories(TwoManEngine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/exte
 
 target_sources(TwoManEngine 
   PRIVATE
-    core/input/mouse.cpp
-    core/engine/engine.cpp
-    map/layer.cpp
-    ecs/core/component.cpp
-    ecs/core/component_pool.cpp
-    ecs/core/entity_manager.cpp
-    ecs/entity_capture.cpp
+    engine/input/mouse.cpp
+    engine/core/engine.cpp
+    engine/map/layer.cpp
+    engine/ecs/core/component.cpp
+    engine/ecs/core/component_pool.cpp
+    engine/ecs/core/entity_manager.cpp
+    engine/ecs/entity_capture.cpp
   PUBLIC 
     main.cpp
 )
