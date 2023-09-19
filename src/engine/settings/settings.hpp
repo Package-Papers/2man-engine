@@ -11,11 +11,11 @@
 #include <string>
 
 #include "engine/common/common.hpp"
+#include "engine/window/window_context.hpp"
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
-#include "engine/window/window_context.hpp"
 
 #ifndef TME_WINDOW_WIDTH
 #define TME_WINDOW_WIDTH 1920

@@ -4,8 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "engine/states/state_base.hpp"
 #include "engine/ecs/entity_capture.hpp"
+#include "engine/states/state_base.hpp"
 #include "system_base.hpp"
 
 class RenderingSystem : public SystemBase

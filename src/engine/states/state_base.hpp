@@ -5,8 +5,8 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "engine/ecs/ecs.hpp"
 #include "engine/core/engine_context.hpp"
+#include "engine/ecs/ecs.hpp"
 
 class StateStack;
 

@@ -6,8 +6,9 @@
 
 #include "engine/controller/controller.hpp"
 
-#include "engine/ecs/ecs.hpp"
 #include "engine/ecs/archetypes/button.hpp"
+#include "engine/ecs/archetypes/drop_down_button.hpp"
+#include "engine/ecs/ecs.hpp"
 #include "engine/ecs/systems/rendering_button.hpp"
 
 class TitleState : public State
@@ -24,7 +25,7 @@ class TitleState : public State
         auto [x, y] = m_context.window->getSize();
         ButtonArchetype button_factory(100.f, 100.f, textures::ID::Button1);
         auto            start_entity = button_factory.create_button(
-                       m_entity_manager, static_cast<float>(x) / 2.f, static_cast<float>(y) / 2.f, "Start");
+            m_entity_manager, static_cast<float>(x) / 2.f, static_cast<float>(y) / 2.f, "Start");
         auto end_entity = button_factory.create_button(
             m_entity_manager, static_cast<float>(x) / 8.f, static_cast<float>(y) / 8.f, "End");
 
@@ -33,6 +34,8 @@ class TitleState : public State
             request_stack_pop();
             request_stack_push(states::MainMenu);
         };
+        DropDownButton dropdown_factory(100.f, 100.f, textures::ID::Button1);
+        auto dropdown_entity = dropdown_factory.create_button(m_entity_manager, 2, 2, "Dropdown");
 
         m_entity_manager.get<Button>(end_entity)->action = [=, this]() { request_stack_pop(); };
 

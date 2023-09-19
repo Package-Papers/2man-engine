@@ -4,12 +4,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "engine/core/engine_context.hpp"
 #include "engine/ecs/components.hpp"
 #include "engine/ecs/entity_capture.hpp"
-#include "engine/core/engine_context.hpp"
+#include "engine/ecs/systems/system_base.hpp"
 #include "engine/input/input_system.hpp"
 #include "engine/states/state_base.hpp"
-#include "engine/ecs/systems/system_base.hpp"
 
 class RenderingButtonSystem : public SystemBase
 {

@@ -3,8 +3,8 @@
 #ifndef TME_INPUT_SYSTEM
 #define TME_INPUT_SYSTEM
 
-#include "engine/input/mouse.hpp"
 #include "engine/input/keyboard.hpp"
+#include "engine/input/mouse.hpp"
 
 namespace tme
 {
