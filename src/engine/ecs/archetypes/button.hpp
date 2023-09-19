@@ -4,10 +4,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "engine/resource/resources.hpp"
+#include "engine/ecs/archetypes/entity_object.hpp"
 #include "engine/ecs/components.hpp"
 #include "engine/ecs/entity_capture.hpp"
-#include "engine/ecs/archetypes/entity_object.hpp"
+#include "engine/resource/resources.hpp"
 
 class ButtonArchetype : public EntityObject
 {

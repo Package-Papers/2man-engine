@@ -10,8 +10,8 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
-#include "engine/structures/bitmask.hpp"
 #include "engine/input/input.hpp"
+#include "engine/structures/bitmask.hpp"
 
 namespace tme
 {

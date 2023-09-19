@@ -12,8 +12,8 @@
 #include <tuple>
 #include <vector>
 
-#include "engine/ecs/action.hpp"
 #include "engine/common/debug.hpp"
+#include "engine/ecs/action.hpp"
 #include "engine/ecs/core/component.hpp"
 #include "engine/ecs/core/component_pool.hpp"
 

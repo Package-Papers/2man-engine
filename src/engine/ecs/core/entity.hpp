@@ -9,9 +9,9 @@
 
 #include <stdint.h>
 
+#include "component.hpp"
 #include "engine/common/debug.hpp"
 #include "engine/structures/bitmask.hpp"
-#include "component.hpp"
 
 using EntityVersion               = uint32_t;
 using EntityIndex                 = uint32_t;

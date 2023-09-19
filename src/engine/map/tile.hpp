@@ -4,8 +4,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "engine/resource/resources.hpp"
 #include "engine/map/tile_type.hpp"
+#include "engine/resource/resources.hpp"
 
 struct Tile
 {

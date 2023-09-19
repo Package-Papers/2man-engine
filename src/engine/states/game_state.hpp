@@ -13,6 +13,7 @@
 #include "engine/ecs/archetypes/lamp.hpp"
 #include "engine/ecs/archetypes/player.hpp"
 
+#include "engine/ecs/systems/hitbox_system.hpp"
 #include "engine/ecs/systems/rendering_system.hpp"
 #include "engine/ecs/systems/vicinity_system.hpp"
 
@@ -25,17 +26,23 @@ class GameState : public State
     {
         m_controller.m_entity_manager = &m_entity_manager;
 
-        LampArchetype lamp_factory{10.f, 10.f};
-        auto          lamp = lamp_factory.create(m_entity_manager);
-
-        LampArchetype lamp_factory2{20.f, 20.f};
-        auto          lamp2 = lamp_factory2.create(m_entity_manager);
+        LampArchetype lamp_factory{40.f, 40.f};
+        auto          lamp        = lamp_factory.create(m_entity_manager);
+        auto          lamp_hitbox = m_entity_manager.attach<Hitbox>(lamp);
+        *lamp_hitbox              = {true, 20.f, 20.f, 0.f, 0.f};
 
         PlayerArchetype player_factory{100.f, 100.f};
-        auto            player = player_factory.create(m_entity_manager);
+        auto            player        = player_factory.create(m_entity_manager);
+        auto            player_hitbox = m_entity_manager.attach<Hitbox>(player);
+        *player_hitbox                = {true, 20.f, 20.f, 0.f, 0.f};
 
         m_controller.make_controller();
 
+        register_systems();
+    }
+
+    void register_systems()
+    {
         auto check_interactable =
             [=, this](EntityManager* m_entity_manager, EntityID e1, EntityID e2)
         {
@@ -51,6 +58,8 @@ class GameState : public State
         vct->listen(check_interactable);
 
         m_systems.add_system<RenderingSystem>(m_context);
+
+        m_systems.add_system<HitboxSystem>(m_context);
     }
 
     void draw()

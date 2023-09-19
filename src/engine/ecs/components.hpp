@@ -58,4 +58,13 @@ struct Interactable
     float radius_y  = 100;
 };
 
+struct Hitbox
+{
+    bool  active;
+    float width;
+    float height;
+    float x_offset;
+    float y_offset;
+};
+
 #endif /* TME_COMPONENTS */
