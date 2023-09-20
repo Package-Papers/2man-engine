@@ -43,28 +43,37 @@ inline void Controller::update()
     auto keyboard = &(tme::InputSystem::instance()->keyboard);
     for (auto e : m_controllers)
     {
-        auto pos      = m_entity_manager->get<Position>(e);
-        auto m_action = m_entity_manager->create_action();
+        auto vel      = m_entity_manager->get<Velocity>(e);
+
+        // This should invoke a warning!
+        if (vel == nullptr) continue;
+
+
         if (keyboard->is_key_pressed(sf::Keyboard::Key::S))
         {
-            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->y += 1.0f; };
-            m_action->targets.push_back(e);
-        }
-        else if (keyboard->is_key_pressed(sf::Keyboard::Key::W))
-        {
-            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->y -= 1.0f; };
+            auto m_action = m_entity_manager->create_action();
+            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { vel->apply(0.f, 5.f); };
             m_action->targets.push_back(e);
         }
 
-        else if (keyboard->is_key_pressed(sf::Keyboard::Key::A))
+        if (keyboard->is_key_pressed(sf::Keyboard::Key::W))
         {
-            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->x -= 1.0f; };
+            auto m_action = m_entity_manager->create_action();
+            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { vel->apply(0.f, -5.f); };
             m_action->targets.push_back(e);
         }
 
-        else if (keyboard->is_key_pressed(sf::Keyboard::Key::D))
+        if (keyboard->is_key_pressed(sf::Keyboard::Key::A))
         {
-            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { pos->x += 1.0f; };
+            auto m_action = m_entity_manager->create_action();
+            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { vel->apply(-5.f, 0.f); };
+            m_action->targets.push_back(e);
+        }
+
+        if (keyboard->is_key_pressed(sf::Keyboard::Key::D))
+        {
+            auto m_action = m_entity_manager->create_action();
+            m_action->func = [=](EntityManager* m_entity_manager, EntityID e) { vel->apply(5.f, 0.f); };
             m_action->targets.push_back(e);
         }
     }

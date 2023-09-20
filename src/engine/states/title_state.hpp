@@ -72,7 +72,7 @@ inline bool TitleState::update(sf::Time dt)
         m_text_effect_time = sf::Time::Zero;
     }
 
-    m_systems.update(m_entity_manager);
+    m_systems.update(m_entity_manager, dt);
 
     return true;
 }

@@ -67,4 +67,23 @@ struct Hitbox
     float y_offset;
 };
 
+struct Velocity
+{
+    float x;
+    float y;
+    float max;
+
+
+    void apply(float vx, float vy)
+    {
+        x += vx;
+        y += vy;
+
+        if (x < -max) x = -max;
+        if (x > max) x = max;
+        if (y < -max) y = -max;
+        if (y > max) y = max;
+    }
+};
+
 #endif /* TME_COMPONENTS */

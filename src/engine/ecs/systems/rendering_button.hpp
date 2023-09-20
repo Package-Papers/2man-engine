@@ -28,7 +28,7 @@ class RenderingButtonSystem : public SystemBase
         m_rect.setOrigin({rectangle_bound.width / 2, rectangle_bound.height / 2});
     }
 
-    virtual void update(EntityManager& em) override
+    virtual void update(EntityManager& em, sf::Time dt) override
     {
         for (auto e : EntityCapture<Button>(em))
         {

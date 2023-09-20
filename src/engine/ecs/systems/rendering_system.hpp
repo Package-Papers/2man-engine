@@ -20,7 +20,7 @@ class RenderingSystem : public SystemBase
         m_rectangle_shape.setFillColor(sf::Color::White);
     }
 
-    virtual void update(EntityManager& m_entity_manager) override
+    virtual void update(EntityManager& m_entity_manager, sf::Time) override
     {
     }
 

@@ -14,6 +14,7 @@
 #include "engine/ecs/archetypes/player.hpp"
 
 #include "engine/ecs/systems/hitbox_system.hpp"
+#include "engine/ecs/systems/physics_system.hpp"
 #include "engine/ecs/systems/rendering_system.hpp"
 #include "engine/ecs/systems/vicinity_system.hpp"
 
@@ -59,17 +60,20 @@ class GameState : public State
 
         m_systems.add_system<RenderingSystem>(m_context);
 
-        m_systems.add_system<HitboxSystem>(m_context);
+        const auto hb = m_systems.add_system<HitboxSystem>(m_context);
+
+        m_systems.add_system<PhysicsSystem>(hb);
     }
 
     void draw()
     {
         draw_systems();
     }
+
     bool update(sf::Time dt)
     {
         m_controller.update();
-        update_systems();
+        update_systems(dt);
         m_entity_manager.execute_actions();
         return true;
     }

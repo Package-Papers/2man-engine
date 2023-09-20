@@ -8,7 +8,7 @@ struct VicinitySystem : public SystemBase
 {
     using Callback = std::function<void(EntityManager*, EntityID, EntityID)>;
 
-    virtual void update(EntityManager& m_entity_manager) override
+    virtual void update(EntityManager& m_entity_manager, sf::Time dt) override
     {
         for (auto e : EntityCapture<Interactable>(m_entity_manager))
         {

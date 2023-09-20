@@ -40,7 +40,7 @@ class State
     virtual void draw()                               = 0;
     virtual bool update(sf::Time dt)                  = 0;
     virtual bool handle_event(const sf::Event& event) = 0;
-    void         update_systems();
+    void         update_systems(sf::Time dt);
     void         draw_systems();
 
   public:
@@ -72,9 +72,9 @@ inline void State::request_stack_clear()
     m_state_stack->m_pending_list.push_back({StateStack::Action::Clear});
 }
 
-inline void State::update_systems()
+inline void State::update_systems(sf::Time dt)
 {
-    m_systems.update(m_entity_manager);
+    m_systems.update(m_entity_manager, dt);
 }
 
 inline void State::draw_systems()

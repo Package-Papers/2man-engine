@@ -12,7 +12,7 @@ class Systems
     template <typename C>
     uint32_t get_system_id()
     {
-        static uint32_t system_id = g_system_count++;
+        static uint32_t system_id = m_system_count++;
         return system_id;
     }
 
@@ -35,11 +35,11 @@ class Systems
         return nullptr;
     }
 
-    void update(EntityManager& em)
+    void update(EntityManager& em, sf::Time dt)
     {
         for (auto& [_, system] : m_systems)
         {
-            system->update(em);
+            system->update(em, dt);
         }
     }
 
@@ -53,7 +53,7 @@ class Systems
 
   private:
     std::unordered_map<uint32_t, std::unique_ptr<SystemBase>> m_systems;
-    uint32_t                                                  g_system_count = 0;
+    uint32_t                                                  m_system_count = 0;
 };
 
 #endif /* TME_SYSTEMS */
