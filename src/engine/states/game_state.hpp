@@ -61,8 +61,8 @@ class GameState : public State
         m_systems.add_system<RenderingSystem>(m_context);
 
         const auto hb = m_systems.add_system<HitboxSystem>(m_context);
-
         m_systems.add_system<PhysicsSystem>(hb);
+
     }
 
     void draw()

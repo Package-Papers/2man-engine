@@ -2,9 +2,10 @@
 #ifndef TME_SYSTEMS
 #define TME_SYSTEMS
 
-#include "engine/ecs/systems/system_base.hpp"
 
 #include <memory>
+
+#include "engine/ecs/systems/system_base.hpp"
 
 class Systems
 {
