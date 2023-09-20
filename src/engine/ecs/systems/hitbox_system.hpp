@@ -120,8 +120,8 @@ class HitboxSystem : public SystemBase
     {
         hb.height = info->height;
         hb.width  = info->width;
-        hb.left   = position->x - (info->width / 2.f) + info->x_offset;
-        hb.top    = position->y - (info->height / 2.f) + info->y_offset;
+        hb.left   = position->x + info->x_offset;
+        hb.top    = position->y + info->y_offset;
     }
 
     void draw(EntityManager& m_entity_manager) override
