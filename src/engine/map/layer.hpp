@@ -30,7 +30,7 @@ class Layer
         {
             for (auto x = 0; x < width; x++)
             {
-                if (m_grid.at(y, x).m_sprite_texture_id == textures::ID::Placeholder)
+                if (m_grid.at(y, x).m_type.m_sprite_texture_id == textures::ID::Placeholder)
                     continue;
 
                 draw_tile(x, y);
