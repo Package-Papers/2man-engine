@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "engine/map/tile_map.hpp"
 #include "engine/map/layer.hpp"
 
 class Map

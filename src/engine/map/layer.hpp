@@ -1,4 +1,5 @@
 #pragma once
+#include "engine/map/tile_map.hpp"
 #ifndef TME_LAYER
 #define TME_LAYER
 
@@ -46,6 +47,7 @@ class Layer
     sf::RectangleShape                             m_shape;
     std::unordered_map<textures::ID, sf::Texture*> m_texture_cache;
     sf::VertexArray                                m_vertex_array;
+    TileMap                                        m_tilemap;
 
 };
 
