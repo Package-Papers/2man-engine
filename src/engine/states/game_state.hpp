@@ -28,7 +28,7 @@ class GameState : public State
     GameState(StateStack& stack, Context context)
         : State(stack, context)
         , m_controller()
-        , m_map(context, 30, 30, 1)
+        , m_map(context, 50, 50, 1)
     {
         load_textures();
         m_controller.m_entity_manager = &m_entity_manager;
@@ -61,9 +61,12 @@ class GameState : public State
         {
             for (int j = 0; j < width; j++)
             {
-                m_map.at<0>(i, j).m_type = tile_types::FLOOR_TILE;
+                m_map.set<0>(i, j, tile_types::FLOOR_TILE);
             }
         }
+
+        m_map.set<0>(0, 0, tile_types::PLACE_HOLDER_TILE);
+        m_map.set<0>(0, 1, tile_types::PLACE_HOLDER_TILE);
     }
 
     void register_systems()

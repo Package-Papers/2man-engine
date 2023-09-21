@@ -17,7 +17,7 @@ tme::Engine::Engine(const WindowContext& context)
 
     this->m_state_stack.set_context(get_context());
 
-    this->m_font_holder.load(fonts::ID::Aerial, "font.ttf");
+    this->m_font_holder.load(fonts::ID::Aerial, "meta/fonts/font.ttf");
     this->m_font_holder.get(fonts::ID::Aerial);
 
     this->register_states();

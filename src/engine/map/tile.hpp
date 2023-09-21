@@ -7,10 +7,13 @@
 #include "engine/map/tile_type.hpp"
 #include "engine/resource/resources.hpp"
 
+constexpr float TILE_SIZE = 16.f;
+
 struct Tile
 {
     TileType     m_type;
-    sf::Vector2i m_pos;
+    sf::Vector2u m_pos;
+    sf::Texture* m_texture;
 };
 
 #endif /* TME_TILE */

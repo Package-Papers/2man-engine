@@ -2,6 +2,7 @@
 #ifndef TME_MAP
 #define TME_MAP
 
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -20,11 +21,11 @@ class Map
     {
     }
 
-    void draw(sf::RenderTarget& target, const sf::RenderStates& states = sf::RenderStates::Default)
+    void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default)
     {
       for (auto& layer : m_layers)
       {
-          layer.draw(*m_context.window);
+          layer.draw(target, states);
       }
     }
 
@@ -38,6 +39,24 @@ class Map
     [[nodiscard]] Tile& at(std::size_t row, std::size_t col)
     {
       return m_layers[layer].get().at(row, col);
+    }
+
+    template <std::size_t layer>
+    [[nodiscard]] void set(std::size_t row, std::size_t col,
+                           const TileType type = tile_types::PLACE_HOLDER_TILE)
+    {
+      auto& tile  = m_layers[layer].get().at(row, col);
+      tile.m_type = type;
+
+      // Note: remove this later
+      if (type.m_sprite_texture_id == tile_types::PLACE_HOLDER_TILE.m_sprite_texture_id)
+      {
+          tile.m_texture = nullptr;
+      }
+      else
+      {
+          tile.m_texture = &m_context.textures->get(type.m_sprite_texture_id);
+      }
     }
 
     [[nodiscard]] const sf::Vector2u dims()
