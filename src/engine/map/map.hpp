@@ -22,27 +22,27 @@ class Map
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states = sf::RenderStates::Default)
     {
-        for (auto& layer : m_layers)
-        {
-            layer.draw(*m_context.window);
-        }
+      for (auto& layer : m_layers)
+      {
+          layer.draw(*m_context.window);
+      }
     }
 
     template <std::size_t layer>
     [[nodiscard]] const Tile at(std::size_t row, std::size_t col) const
     {
-        return m_layers[layer].get().at(row, col);
+      return m_layers[layer].get().at(row, col);
     }
 
     template <std::size_t layer>
     [[nodiscard]] Tile& at(std::size_t row, std::size_t col)
     {
-        return m_layers[layer].get().at(row, col);
+      return m_layers[layer].get().at(row, col);
     }
 
     [[nodiscard]] const sf::Vector2u dims()
     {
-        return m_size;
+      return m_size;
     }
 
   private:

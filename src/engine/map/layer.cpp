@@ -19,7 +19,7 @@ void Layer::draw_tile(std::size_t x, std::size_t y)
     m_shape.setPosition(pos * m_shape.getSize().x);
 
     // Set tile texture
-    auto tid = m_grid.at(y, x).m_sprite_texture_id;
+    auto tid = m_grid.at(y, x).m_type.m_sprite_texture_id;
 
     auto texture = load_texture(textures::ID::Tile1);
     m_shape.setTexture(texture);

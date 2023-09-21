@@ -11,7 +11,6 @@ struct Tile
 {
     TileType     m_type;
     sf::Vector2i m_pos;
-    textures::ID m_sprite_texture_id;
 };
 
 #endif /* TME_TILE */

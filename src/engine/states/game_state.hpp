@@ -1,4 +1,6 @@
 #pragma once
+#include "engine/map/tile_type.hpp"
+#include "engine/resource/resources.hpp"
 #ifndef GAME_STATE
 #define GAME_STATE
 
@@ -13,6 +15,8 @@
 #include "engine/ecs/archetypes/lamp.hpp"
 #include "engine/ecs/archetypes/player.hpp"
 
+#include "engine/map/map.hpp"
+
 #include "engine/ecs/systems/hitbox_system.hpp"
 #include "engine/ecs/systems/physics_system.hpp"
 #include "engine/ecs/systems/rendering_system.hpp"
@@ -24,7 +28,9 @@ class GameState : public State
     GameState(StateStack& stack, Context context)
         : State(stack, context)
         , m_controller()
+        , m_map(context, 30, 30, 1)
     {
+        load_textures();
         m_controller.m_entity_manager = &m_entity_manager;
 
         LampArchetype lamp_factory{40.f, 40.f};
@@ -40,6 +46,24 @@ class GameState : public State
         m_controller.make_controller();
 
         register_systems();
+        set_map();
+    }
+
+    void load_textures()
+    {
+        m_context.textures->load(textures::ID::Tile1, "assets/graphics/floor_tile.png");
+    }
+
+    void set_map()
+    {
+        auto [width, height] = m_map.dims();
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                m_map.at<0>(i, j).m_type = tile_types::FLOOR_TILE;
+            }
+        }
     }
 
     void register_systems()
@@ -67,6 +91,7 @@ class GameState : public State
 
     void draw()
     {
+        m_map.draw(*m_context.window);
         draw_systems();
     }
 
@@ -84,6 +109,8 @@ class GameState : public State
 
   private:
     Controller m_controller;
+    Map m_map;
+
 };
 
 #endif /* GAME_STATE */
