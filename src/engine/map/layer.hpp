@@ -2,6 +2,9 @@
 #ifndef TME_LAYER
 #define TME_LAYER
 
+#include <chrono>
+#include <iostream>
+
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -22,22 +25,6 @@ class Layer
     // Load and cache texture
     sf::Texture* load_texture(textures::ID tid);
 
-    void draw(sf::RenderTarget& target, const sf::RenderStates& states = sf::RenderStates::Default)
-    {
-        const auto [width, height] = m_grid.dim();
-
-        for (auto y = 0; y < height; y++)
-        {
-            for (auto x = 0; x < width; x++)
-            {
-                if (m_grid.at(y, x).m_type.m_sprite_texture_id == textures::ID::Placeholder)
-                    continue;
-
-                draw_tile(x, y);
-            }
-        }
-    }
-
     void draw_tile(std::size_t x, std::size_t y);
 
     const Vec2D<Tile>& get() const
@@ -50,12 +37,16 @@ class Layer
         return m_grid;
     }
 
+    void draw(sf::RenderTarget& target, sf::RenderStates states);
+
   private:
     Map*                                           m_parent_map;
     Context                                        m_context;
     Vec2D<Tile>                                    m_grid;
     sf::RectangleShape                             m_shape;
     std::unordered_map<textures::ID, sf::Texture*> m_texture_cache;
+    sf::VertexArray                                m_vertex_array;
+
 };
 
 #endif /* TME_LAYER */
