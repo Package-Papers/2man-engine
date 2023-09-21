@@ -20,7 +20,7 @@ Layer::Layer(Map* map, Context ctx, std::size_t width, std::size_t height)
         for (std::size_t c = 0; c < width; c++)
         {
             // Set tile position
-            m_grid.at(r, c).m_pos = {c, r};
+            m_grid.at(r, c).m_pos = {static_cast<unsigned int>(c), static_cast<unsigned int>(r)};
 
             sf::Vertex* triangles = &m_vertex_array[(c + r * width) * 6];
 

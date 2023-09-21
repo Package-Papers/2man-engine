@@ -42,7 +42,7 @@ class Map
     }
 
     template <std::size_t layer>
-    [[nodiscard]] void set(std::size_t row, std::size_t col,
+    void set(std::size_t row, std::size_t col,
                            const TileType type = tile_types::PLACE_HOLDER_TILE)
     {
       auto& tile  = m_layers[layer].get().at(row, col);
