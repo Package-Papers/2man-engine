@@ -1,4 +1,3 @@
-// ecs.hpp
 #pragma once
 #ifndef TME_ECS
 #define TME_ECS
