@@ -5,7 +5,6 @@
 #include <string>
 #include <map>
 #include <filesystem>
-#include <iostream>
 
 #include "SFML/Graphics/RenderTexture.hpp"
 #include "SFML/Graphics/Sprite.hpp"
