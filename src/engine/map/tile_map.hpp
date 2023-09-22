@@ -4,7 +4,11 @@
 
 #include <string>
 #include <map>
+#include <filesystem>
+#include <iostream>
 
+#include "SFML/Graphics/RenderTexture.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Vertex.hpp"
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Graphics/Texture.hpp"
@@ -36,6 +40,7 @@ public:
   };
 
    static constexpr Info DEFAULT_INFO = Info{Type::Atlas, 16, 1, 1};
+   static constexpr Info DEFAULT_DIR_INFO = Info{Type::Directory, 16, 1, 1};
 
 public:
 
@@ -49,9 +54,55 @@ public:
     else
     {
       // Directory mode
+      construct_directory_atlas(path);
     }
   }
 
+  void construct_directory_atlas(const std::string& path)
+  {
+    const std::filesystem::path tile_map_root_dir{path};
+
+    sf::RenderTexture rt{};
+
+    if (!rt.create({m_info.num_cols * m_info.size, m_info.num_rows * m_info.size}))
+    {
+        throw std::runtime_error("TileMap::construct_directory_atlas - Failed to create render texture");
+    }
+
+    std::size_t count = 0;
+
+    for (auto const& entry : std::filesystem::directory_iterator{tile_map_root_dir})
+    {
+      unsigned int col = count % m_info.num_cols;
+      unsigned int row = count / m_info.num_cols;
+
+      if (entry.is_regular_file() && 
+         (entry.path().extension() == ".png" || entry.path().extension() == ".jpeg" || entry.path().extension() == ".jpg"))
+      {
+        sf::Texture texture;
+
+        if (!texture.loadFromFile(entry.path()))
+        {
+          throw std::runtime_error("TileMap::construct_directory_atlas - Failed to load " + entry.path().string());
+        }
+
+        sf::Sprite tile_sprite{texture};
+        tile_sprite.setPosition({
+          static_cast<float>(col * m_info.size), static_cast<float>(row * m_info.size)
+        });
+
+        rt.draw(tile_sprite);
+
+        auto tile_name = entry.path().filename();
+        m_position_mapping[tile_name] = {row, col};
+      }
+
+      count++;
+    }
+
+    // Copy the texture map
+    m_texture_map = rt.getTexture();
+  }
 
   void construct_atlas(const std::string& path)
   {

@@ -6,7 +6,7 @@ Layer::Layer(Map* map, Context ctx, std::size_t width, std::size_t height)
     : m_parent_map(map)
     , m_context{ctx}
     , m_grid(width, height)
-    , m_tilemap("assets/graphics/floor_tile.png")
+    , m_tilemap("assets/graphics/tilemap/", TileMap::DEFAULT_DIR_INFO)
 {
     auto size = sf::Vector2f{TILE_SIZE, TILE_SIZE};
     m_shape.setSize(size);
@@ -32,7 +32,7 @@ Layer::Layer(Map* map, Context ctx, std::size_t width, std::size_t height)
             triangles[4].position = sf::Vector2f((c + 1) * TILE_SIZE, r * TILE_SIZE);
             triangles[5].position = sf::Vector2f((c + 1) * TILE_SIZE, (r + 1) * TILE_SIZE);
 
-            m_tilemap.set_vertex("tile_0", triangles);
+            m_tilemap.set_vertex("floor_tile.png", triangles);
         }
     }
 }
