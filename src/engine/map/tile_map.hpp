@@ -94,7 +94,7 @@ public:
         rt.draw(tile_sprite);
 
         auto tile_name = entry.path().filename();
-        m_position_mapping[tile_name] = {row, col};
+        m_position_mapping[tile_name.string()] = {row, col};
       }
 
       count++;
