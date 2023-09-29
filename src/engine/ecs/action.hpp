@@ -9,18 +9,34 @@
 
 class EntityManager;
 
+/**
+ * @brief This object encapsulates a function which runs on the ECS world.
+ *
+ * This object is mainly used by the EntityManager. Actions are queued into the
+ * a stack which is then flushed at the end of each frame.
+ */
 struct Action
 {
-    std::vector<EntityID>                            targets;
-    std::function<void(EntityManager* em, EntityID)> func;
-
-    void execute(EntityManager* em)
+    /**
+     * @brief Executes the action on all entities specified.
+     */
+    void execute(EntityManager* const em)
     {
-        for (auto e : targets)
+        for (const auto& e : targets)
         {
             func(em, e);
         }
     }
+
+    /**
+     * Target entities the action acts upon.
+     */
+    std::vector<EntityID>                            targets;
+
+    /**
+     * The action to be executed by the ECS entity manager.
+     */ 
+    std::function<void(EntityManager* const em, EntityID)> func; 
 };
 
 #endif /* TME_ACTION */
