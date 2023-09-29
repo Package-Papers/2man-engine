@@ -28,13 +28,40 @@
 
 namespace tme
 {
+/**
+ * @brief The core engine class.
+ */
 class Engine final
 {
   public:
-    // No default construction.
+    /**
+     * Default constructor is forbidden.
+     * @brief Forbid default constructor.
+     */
     Engine() = delete;
+
+    /**
+     * @brief Deconstructor.
+     */
     ~Engine();
+
+    /**
+     * Creates a new Engine instance with the window constructed
+     * according to the window context passed in.
+     * @brief Constructor.
+     */
     explicit Engine(const WindowContext& context);
+
+    /**
+     * @brief The main loop of the engine.
+     *
+     * The following core events are run: (in order)
+     * - Delta time update
+     * - Events handling
+     * - Real time update
+     * - Fixed time update
+     * - Render call
+     */
     void run();
 
   private:
