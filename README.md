@@ -8,11 +8,9 @@ cmake -S . -B build
 cmake --build build --target dev
 ``` 
 
-# Contributions
-> Note: Format your code with clang-format and clang-tidy.
+> Note: Documentation is still very lacking. 
 
-This repository comes with a simple pre-commit configuration which runs clang-tidy and clang-format. To install the pre-commit script, you can simply run the following:
+# Features
+- Entity Component System
+- ECS based input system
 
-```sh
-./install_precommit.sh
-```
