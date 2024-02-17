@@ -13,9 +13,12 @@
 
 extern uint32_t g_component_count;
 
+// Return a unique id assigned to a given component type.
 template <typename C>
 uint32_t get_component_id()
 {
+    // Each template specialization invokes an ID increment.
+    // Subsequent calls by the same type will yield the ID without incrementing.
     static uint32_t component_id = g_component_count++;
     return component_id;
 }
