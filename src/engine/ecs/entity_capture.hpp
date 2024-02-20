@@ -15,6 +15,9 @@
 #include "engine/ecs/core/entity.hpp"
 #include "engine/ecs/core/entity_manager.hpp"
 
+/**
+ * The EntityCapture returns an interable which contains all entities which satisfies the component query.
+ */
 template <typename... Components>
 struct EntityCapture
 {

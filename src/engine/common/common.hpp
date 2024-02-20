@@ -12,6 +12,9 @@
 #define MASK1(n, p) ((MASK(n)) << (p))
 #define MASK0(n, p) (~(MASK1(n, p)))
 
+/**
+ * Convert interger into bool. A postiive value yields true.
+ */
 [[nodiscard]] constexpr bool int_to_bool(int n) noexcept
 {
     return n > 0;

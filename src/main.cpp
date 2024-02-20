@@ -8,6 +8,9 @@
 
 #include "engine/settings/settings.hpp"
 
+/**
+ * Set up and initialize doctest.
+ */
 void doctest_run(int argc, char** argv)
 {
     doctest::Context ctx;

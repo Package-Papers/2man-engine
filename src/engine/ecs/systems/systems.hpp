@@ -10,6 +10,9 @@
 class Systems
 {
   public:
+    /**
+     * Retrieve system unique ID.
+     */
     template <typename C>
     uint32_t get_system_id()
     {
@@ -17,6 +20,9 @@ class Systems
         return system_id;
     }
 
+    /**
+     * Add system to the systems pool.
+     */
     template <typename System, typename... Args>
     System* add_system(Args&&... args)
     {
@@ -25,6 +31,9 @@ class Systems
         return static_cast<System*>(m_systems[system_id].get());
     }
 
+    /**
+     * Retrieve the system of specified type.
+     */
     template <typename System>
     System* get_system()
     {
@@ -36,6 +45,9 @@ class Systems
         return nullptr;
     }
 
+    /**
+     * Loop through all systems and update each.
+     */
     void update(EntityManager& em, sf::Time dt)
     {
         for (auto& [_, system] : m_systems)
@@ -44,6 +56,9 @@ class Systems
         }
     }
 
+    /**
+     * Draw all systems.
+     */
     void draw(EntityManager& em)
     {
         for (auto& [_, system] : m_systems)
